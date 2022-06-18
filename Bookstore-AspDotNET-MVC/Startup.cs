@@ -1,5 +1,7 @@
+using Bookstore_AspDotNET_MVC.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +26,16 @@ namespace Bookstore_AspDotNET_MVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<BOOKSTOREContext>();
+
+            services.AddSingleton<IConfiguration>(Configuration);
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSession(options => {
+                options.Cookie.Name = "user_id";
+                options.IdleTimeout = TimeSpan.FromHours(1);
+            });
+            services.AddMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,7 +55,9 @@ namespace Bookstore_AspDotNET_MVC
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
+            app.UseStatusCodePages();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

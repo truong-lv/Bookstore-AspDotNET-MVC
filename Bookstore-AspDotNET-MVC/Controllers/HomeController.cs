@@ -1,4 +1,5 @@
-﻿using Bookstore_AspDotNET_MVC.Models;
+﻿using Bookstore_AspDotNET_MVC.Data;
+using Bookstore_AspDotNET_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,15 +13,18 @@ namespace Bookstore_AspDotNET_MVC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly BOOKSTOREContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, BOOKSTOREContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            List<Book> books = _context.Books.ToList();
+            return View(books);
         }
 
         public IActionResult Privacy()
