@@ -31,7 +31,7 @@ namespace Bookstore_AspDotNET_MVC.Models
         [Required]
         [Column("gender")]
         [MaxLength(1)]
-        public byte[] Gender { get; set; }
+        public bool Gender { get; set; }
         [Column("password")]
         [StringLength(250)]
         public string Password { get; set; }

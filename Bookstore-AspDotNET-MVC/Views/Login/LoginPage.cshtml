@@ -1,0 +1,31 @@
+﻿
+
+@{
+    ViewData["Title"] = "Login";
+    var mes = TempData["ThongBao"] as string;
+
+}
+
+<h1>Trang đăng nhập</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
+        {
+            <div class="form-group">
+                <label for="userName" class="control-label">Tài khoản:</label>
+                <input id="userName" name="username" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="passWord" class="control-label">Mật khẩu:</label>
+                <input id="passWord" name="pass" class="form-control" type="password" />
+                <span class="text-danger">@mes</span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Đăng nhập" class="btn btn-primary" id="btn-login" />
+            </div>
+        }
+    </div>
+</div>
+

@@ -16,6 +16,8 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="Views\Home\" />
   </ItemGroup>
 
 </Project>

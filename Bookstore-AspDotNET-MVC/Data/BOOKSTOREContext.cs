@@ -36,7 +36,7 @@ namespace Bookstore_AspDotNET_MVC.Data
         public virtual DbSet<UserAddress> UserAddresses { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Userinfor> Userinfors { get; set; }
-        public virtual DbSet<Village> Villages { get; set; }
+        public virtual DbSet<Ward> Wards { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -56,12 +56,10 @@ namespace Bookstore_AspDotNET_MVC.Data
                 entity.HasKey(e => e.AddressId)
                     .HasName("PK__address___CAA247C8D3EE980F");
 
-                entity.Property(e => e.VillageId).IsUnicode(false);
-
-                entity.HasOne(d => d.Village)
+                entity.HasOne(d => d.Warrd)
                     .WithMany(p => p.AddressDetails)
-                    .HasForeignKey(d => d.VillageId)
-                    .HasConstraintName("FK_ADDRESS_DETAIL_VILLAGE");
+                    .HasForeignKey(d => d.WarrdId)
+                    .HasConstraintName("FK_address_detail_ward");
             });
 
             modelBuilder.Entity<Author>(entity =>
@@ -117,14 +115,10 @@ namespace Bookstore_AspDotNET_MVC.Data
 
             modelBuilder.Entity<District>(entity =>
             {
-                entity.Property(e => e.DistrictId).IsUnicode(false);
-
-                entity.Property(e => e.ProvinceId).IsUnicode(false);
-
                 entity.HasOne(d => d.Province)
                     .WithMany(p => p.Districts)
                     .HasForeignKey(d => d.ProvinceId)
-                    .HasConstraintName("FK_DISTRICT_PROVINCE");
+                    .HasConstraintName("FK_district_province");
             });
 
             modelBuilder.Entity<Item>(entity =>
@@ -180,11 +174,6 @@ namespace Bookstore_AspDotNET_MVC.Data
                 entity.Property(e => e.IdPayment).ValueGeneratedNever();
 
                 entity.Property(e => e.PaymentType).IsUnicode(false);
-            });
-
-            modelBuilder.Entity<Province>(entity =>
-            {
-                entity.Property(e => e.ProvinceId).IsUnicode(false);
             });
 
             modelBuilder.Entity<PublishingCompany>(entity =>
@@ -264,16 +253,12 @@ namespace Bookstore_AspDotNET_MVC.Data
                 entity.Property(e => e.Phone).IsUnicode(false);
             });
 
-            modelBuilder.Entity<Village>(entity =>
+            modelBuilder.Entity<Ward>(entity =>
             {
-                entity.Property(e => e.VillageId).IsUnicode(false);
-
-                entity.Property(e => e.DistrictId).IsUnicode(false);
-
                 entity.HasOne(d => d.District)
-                    .WithMany(p => p.Villages)
+                    .WithMany(p => p.Wards)
                     .HasForeignKey(d => d.DistrictId)
-                    .HasConstraintName("FK_VILLAGE_DISTRICT");
+                    .HasConstraintName("FK_ward_district");
             });
 
             OnModelCreatingPartial(modelBuilder);

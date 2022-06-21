@@ -18,14 +18,13 @@ namespace Bookstore_AspDotNET_MVC.Models
 
         [Key]
         [Column("province_id")]
-        [StringLength(255)]
-        public string ProvinceId { get; set; }
+        public long ProvinceId { get; set; }
         [Column("province_name")]
-        [StringLength(45)]
+        [StringLength(100)]
         public string ProvinceName { get; set; }
-        [Column("province_type")]
-        [StringLength(255)]
-        public string ProvinceType { get; set; }
+        [Column("province_code")]
+        [StringLength(20)]
+        public string ProvinceCode { get; set; }
 
         [InverseProperty(nameof(District.Province))]
         public virtual ICollection<District> Districts { get; set; }

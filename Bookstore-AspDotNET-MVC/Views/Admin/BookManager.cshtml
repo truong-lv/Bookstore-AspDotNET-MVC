@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Bookstore_AspDotNET_MVC.Models.Book>
 
 @{
-    ViewData["Title"] = "index";
+    ViewData["Title"] = "BookManager";
 }
 
-<h1>index</h1>
+<h1>BookManager</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -14,9 +14,6 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.BookName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DescribeBook)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Picture)
@@ -47,9 +44,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.BookName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DescribeBook)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Picture)

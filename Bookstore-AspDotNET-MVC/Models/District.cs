@@ -9,31 +9,30 @@ using Microsoft.EntityFrameworkCore;
 namespace Bookstore_AspDotNET_MVC.Models
 {
     [Table("district")]
+    [Index(nameof(ProvinceId), Name = "_province_id")]
     public partial class District
     {
         public District()
         {
-            Villages = new HashSet<Village>();
+            Wards = new HashSet<Ward>();
         }
 
         [Key]
         [Column("district_id")]
-        [StringLength(255)]
-        public string DistrictId { get; set; }
+        public long DistrictId { get; set; }
         [Column("district_name")]
-        [StringLength(45)]
+        [StringLength(100)]
         public string DistrictName { get; set; }
-        [Column("district_type")]
-        [StringLength(255)]
-        public string DistrictType { get; set; }
+        [Column("district_prefix")]
+        [StringLength(100)]
+        public string DistrictPrefix { get; set; }
         [Column("province_id")]
-        [StringLength(255)]
-        public string ProvinceId { get; set; }
+        public long? ProvinceId { get; set; }
 
         [ForeignKey(nameof(ProvinceId))]
         [InverseProperty("Districts")]
         public virtual Province Province { get; set; }
-        [InverseProperty(nameof(Village.District))]
-        public virtual ICollection<Village> Villages { get; set; }
+        [InverseProperty(nameof(Ward.District))]
+        public virtual ICollection<Ward> Wards { get; set; }
     }
 }

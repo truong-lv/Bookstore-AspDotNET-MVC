@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Bookstore_AspDotNET_MVC</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <div th:fragment="admin-header(action)">
+            <nav class="navbar navbar-dark fixed-top bg-primary flex-md-nowrap p-0 shadow">
+                <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">
+                    <img style="max-height: 30px;" alt="book-store" src="m">
+                    Book store
+                </a>
+
+                <div class="input-group col-sm-6 col-md-5">
+                    <!-- find book -->
+                    <form class="form-inline col-md-12">
+                        <input class="form-control col-md-10" type="search" placeholder="Search" aria-label="Search" name="searchvalue">
+                        <button class="btn btn-secondary" type="submit" style="color: white">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+
+
+
+                <ul class="navbar-nav px-3">
+                    <li class="nav-item text-nowrap d-flex align-items-center">
+                        <a class="nav-link text-light mr-4" style="font-size: 25px" ><i class="far fa-user-circle"></i></a>
+                        <a class="nav-link text-light mr-1" style="font-size: 25px; "><i class="fas fa-sign-out-alt"></i></a>
+                    </li>
+                </ul>
+
+
+
+
+            </nav>
+
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
+                <span data-feather="home"></span>
+            </button>
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - Bookstore_AspDotNET_MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

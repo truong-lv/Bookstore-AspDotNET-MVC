@@ -23,13 +23,12 @@ namespace Bookstore_AspDotNET_MVC.Models
         [Column("address_name")]
         [StringLength(45)]
         public string AddressName { get; set; }
-        [Column("village_id")]
-        [StringLength(255)]
-        public string VillageId { get; set; }
+        [Column("warrd_id")]
+        public long? WarrdId { get; set; }
 
-        [ForeignKey(nameof(VillageId))]
-        [InverseProperty("AddressDetails")]
-        public virtual Village Village { get; set; }
+        [ForeignKey(nameof(WarrdId))]
+        [InverseProperty(nameof(Ward.AddressDetails))]
+        public virtual Ward Warrd { get; set; }
         [InverseProperty(nameof(Order.Address))]
         public virtual ICollection<Order> Orders { get; set; }
         [InverseProperty(nameof(UserAddress.Address))]

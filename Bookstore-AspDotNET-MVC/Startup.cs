@@ -1,4 +1,4 @@
-using Bookstore_AspDotNET_MVC.Data;
+﻿using Bookstore_AspDotNET_MVC.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,10 +31,12 @@ namespace Bookstore_AspDotNET_MVC
 
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSession(options => {
+            services.AddSession(options =>
+            {
                 options.Cookie.Name = "user_id";
                 options.IdleTimeout = TimeSpan.FromHours(1);
             });
+
             services.AddMemoryCache();
         }
 
@@ -64,7 +66,8 @@ namespace Bookstore_AspDotNET_MVC
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Auth}/{action=Login}");
+
             });
         }
     }
