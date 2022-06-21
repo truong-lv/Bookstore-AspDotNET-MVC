@@ -58,7 +58,9 @@ namespace Bookstore_AspDotNET_MVC.Controllers
         // Logout
         public ActionResult Logout()
         {
-            return View();
+            HttpContext.Session.Clear();
+
+            return RedirectToAction(nameof(Login));
         }
 
        

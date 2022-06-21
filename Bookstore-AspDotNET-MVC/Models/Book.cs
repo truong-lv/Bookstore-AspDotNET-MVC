@@ -31,7 +31,7 @@ namespace Bookstore_AspDotNET_MVC.Models
         [StringLength(255)]
         public string Picture { get; set; }
         [Column("price", TypeName = "decimal(19, 2)")]
-        public decimal? Price { get; set; }
+        public float Price { get; set; }
         [Column("publish_day", TypeName = "date")]
         public DateTime? PublishDay { get; set; }
         [Column("total_quantity")]

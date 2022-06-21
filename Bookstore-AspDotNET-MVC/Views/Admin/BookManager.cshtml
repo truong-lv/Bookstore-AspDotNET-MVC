@@ -2,76 +2,96 @@
 
 @{
     ViewData["Title"] = "BookManager";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h1>BookManager</h1>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-1 border-bottom position-relative">
+    <div class="m-2">
+        <button type="button" class="btn btn-success btn__add--book">
+            <i class="fas fa-plus"></i> Add new</i>
+        </button>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.BookName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Picture)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PublishDay)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalQuantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdAuthorNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdCompanyNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Picture)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublishDay)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalQuantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdAuthorNavigation.IdAuthor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdCompanyNavigation.IdCompany)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdBook">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdBook">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdBook">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+</div>
+
+<!-- TABLE VIEW -->
+<div class="table-responsive rounded-top rounded-bottom">
+    <table class="table table-bordered" id="myTable">
+        <thead>
+            <tr class="table-warning">
+                <th scope="col">
+                   ID
+                </th></th>
+                <th scope="col">
+                    Name
+                </th>
+                <th style=" width:15%" scope="col">Picture</th>
+                <th style=" width:15%" scope="col">
+                    Price
+                </th>
+                <th style=" width:15%" scope="col">
+                    Total Quantity
+                </th>
+                <th class="align-middle" style=" width:10%;" scope="col">Alter</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdBook)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookName)
+                </td>
+                <td class="align-middle text-center">
+                    <img style="height:120px;width:auto;" class="card-img-top " src=@item.Picture
+                         alt="Card image cap">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price) VNĐ
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalQuantity)
+                </td>
+
+                <td class="align-middle text-center">
+                    <button type="button" class="btn btn-warning m-1 btn__edit--book" asp-action="Edit" asp-route-id="@item.IdBook">
+                        <i class="far fa-edit"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger btn__delete--book" asp-action="Delete" asp-route-id="@item.IdBook">
+                        <i style="color:black;" class="far fa-trash-alt"></i>
+                    </button>
+                </td>
+            </tr>}
+        </tbody>
+    </table>
+
+
+    @*<div th:if="${totalPage > 1}">
+        <div class="row col-sm-10">
+            <div class="col-sm-2">
+                Total Items: [[${totalItem}]]
+            </div>
+            <a class="page-links btn btn-outline-primary" th:if="${currentPage > 1}" th:href="@{'/admin/book/' + ${pageFirst}  + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">First</a>&nbsp; &nbsp;
+            <span class="btn btn-outline-primary active" th:unless="${currentPage > 1}">First</span>&nbsp; &nbsp;
+
+            <span th:each="i : ${#numbers.sequence(1, totalPage)}">
+                <a class="page-links btn btn-outline-primary" th:if="${currentPage != i}" th:href="@{'/admin/book/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} }">[[${i}]]</a>
+                <span class="btn btn-outline-primary active" th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+            </span>
+
+            <a class="page-links btn btn-outline-primary" th:if="${currentPage < totalPage}" th:href="@{'/admin/book/' + ${currentPage +1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} }">Next</a>&nbsp; &nbsp;
+            <span class="btn btn-outline-primary active" th:unless="${currentPage < totalPage}">Next </span>&nbsp; &nbsp;
+
+            <a class="page-links btn btn-outline-primary" th:if="${currentPage < totalPage}" th:href="@{'/admin/book/'+${totalPage} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} }">Last</a>
+            <span class="btn btn-outline-primary active" th:unless="${currentPage < totalPage}">Last</span>
+        </div>
+
+    </div>*@
+
+</div>
