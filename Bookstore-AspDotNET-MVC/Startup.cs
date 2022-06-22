@@ -29,7 +29,6 @@ namespace Bookstore_AspDotNET_MVC
 
             services.AddDbContext<BOOKSTOREContext>();
 
-            services.AddSingleton<IConfiguration>(Configuration);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSession(options =>
             {

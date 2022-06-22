@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bookstore_AspDotNET_MVC.Models.Book>
+﻿@model Bookstore_AspDotNET_MVC.DTO.BookPagineDTO
 
 @{
     ViewData["Title"] = "BookManager";
@@ -38,7 +38,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Books)
             {
             <tr>
                 <td>
@@ -72,26 +72,58 @@
     </table>
 
 
-    @*<div th:if="${totalPage > 1}">
-        <div class="row col-sm-10">
-            <div class="col-sm-2">
-                Total Items: [[${totalItem}]]
-            </div>
-            <a class="page-links btn btn-outline-primary" th:if="${currentPage > 1}" th:href="@{'/admin/book/' + ${pageFirst}  + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">First</a>&nbsp; &nbsp;
-            <span class="btn btn-outline-primary active" th:unless="${currentPage > 1}">First</span>&nbsp; &nbsp;
-
-            <span th:each="i : ${#numbers.sequence(1, totalPage)}">
-                <a class="page-links btn btn-outline-primary" th:if="${currentPage != i}" th:href="@{'/admin/book/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} }">[[${i}]]</a>
-                <span class="btn btn-outline-primary active" th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
-            </span>
-
-            <a class="page-links btn btn-outline-primary" th:if="${currentPage < totalPage}" th:href="@{'/admin/book/' + ${currentPage +1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} }">Next</a>&nbsp; &nbsp;
-            <span class="btn btn-outline-primary active" th:unless="${currentPage < totalPage}">Next </span>&nbsp; &nbsp;
-
-            <a class="page-links btn btn-outline-primary" th:if="${currentPage < totalPage}" th:href="@{'/admin/book/'+${totalPage} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} }">Last</a>
-            <span class="btn btn-outline-primary active" th:unless="${currentPage < totalPage}">Last</span>
+   @if (Model.PageCount > 1) { 
+    
+    <div class="row col-sm-10">
+        <div class="col-sm-2">
+            Total Items: @Model.PageCount
         </div>
+        @if (Model.CurrentPageIndex > 1)
+        {
+            <a class="page-links btn btn-outline-primary" asp-controller="BookManager" asp-action="Index" asp-route-currentPageIndex="1">First</a>
 
-    </div>*@
+        }
+        else
+        {
+            <span class="btn btn-outline-primary active">First</span>
+        }&nbsp; &nbsp;
 
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            @if (Model.CurrentPageIndex != i)
+            {
+                <a class="page-links btn btn-outline-primary"asp-controller="BookManager" asp-action="Index" asp-route-currentPageIndex="@i">@i</a>
+
+            }
+            else
+            {
+                <span class="btn btn-outline-primary active">@i</span>
+
+            }
+        }
+
+        @if (Model.CurrentPageIndex < Model.PageCount)
+        {
+            <a class="page-links btn btn-outline-primary" asp-controller="BookManager" asp-action="Index" asp-route-currentPageIndex="@(Model.CurrentPageIndex+1)">Next</a>
+
+        }
+        else
+        {
+            <span class="btn btn-outline-primary active" >Next </span>
+
+        }&nbsp; &nbsp;
+
+        @if (Model.CurrentPageIndex < Model.PageCount)
+        {
+            <a class="page-links btn btn-outline-primary"  asp-controller="BookManager" asp-action="Index" asp-route-currentPageIndex="@Model.PageCount">Last</a>
+
+        }
+        else
+        {
+            <span class="btn btn-outline-primary active">Last</span>
+
+        }&nbsp; &nbsp;
+
+    </div>
+     }
 </div>

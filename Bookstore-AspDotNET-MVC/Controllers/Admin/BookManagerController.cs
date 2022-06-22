@@ -1,4 +1,5 @@
 ﻿using Bookstore_AspDotNET_MVC.Data;
+using Bookstore_AspDotNET_MVC.DTO;
 using Bookstore_AspDotNET_MVC.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,10 +22,28 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
             _context = context;
         }
         // GET: BookManagerController
-        public ActionResult Index()
+        public ActionResult Index(int currentPageIndex=1)
         {
-            List<Book> books = _context.Books.ToList();
-            return View("/Views/Admin/BookManager.cshtml",books);
+            return View("/Views/Admin/BookManager.cshtml",this.GetBooks(currentPageIndex));
+        }
+
+        private BookPagineDTO GetBooks(int currentPage)
+        {
+            int maxRows = 10;
+            var books = _context.Books.ToList();
+
+            BookPagineDTO bookPagine = new BookPagineDTO();
+            bookPagine.Books = books.OrderBy(book => book.IdBook)
+                        .Skip((currentPage - 1) * maxRows)
+                        .Take(maxRows).ToList();
+
+            double pageCount = (double)((decimal)books.Count() / Convert.ToDecimal(maxRows));
+
+            bookPagine.PageCount = (int)Math.Ceiling(pageCount);
+
+            bookPagine.CurrentPageIndex = currentPage;
+
+            return bookPagine;
         }
 
         // GET: BookManagerController/Details/5
