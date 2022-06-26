@@ -12,7 +12,8 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
         // GET: OrderManagerController
         public ActionResult Index()
         {
-            return View();
+            ViewData["Order"] = "active";
+            return View("/Views/Admin/Order/Index.cshtml");
         }
 
         // GET: OrderManagerController/Details/5

@@ -35,12 +35,13 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
         public ActionResult Index(int currentPageIndex=1)
         {
             ViewData["Title"] = "Book Manager";
+            ViewData["Book"] = "active";
             return View("/Views/Admin/Book/BookManager.cshtml", bookService.GetBooks(currentPageIndex));
         }
 
 
         // GET: BookManagerController/Create
-        public async Task<IActionResult> AddOrEditBook(long id=0)
+        public ActionResult AddOrEditBook(long id=0)
         {
             ViewBag.Category = categoryService.getAllCategory();
             ViewBag.Author = authorService.getAllAuthor();
