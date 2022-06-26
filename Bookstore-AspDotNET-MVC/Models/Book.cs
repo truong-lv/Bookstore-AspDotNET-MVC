@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
@@ -17,31 +18,58 @@ namespace Bookstore_AspDotNET_MVC.Models
             Items = new HashSet<Item>();
             OrderDetails = new HashSet<OrderDetail>();
             Reviews = new HashSet<Review>();
+            PublishDay = DateTime.Now;
         }
 
         [Key]
         [Column("id_book")]
         public long IdBook { get; set; }
+
+        [Required(ErrorMessage ="Tên sách không được để trống !!")]
+        [DisplayName("Tên sách")]
         [Column("book_name")]
         [StringLength(45)]
         public string BookName { get; set; }
+
+        [DisplayName("Mô tả")]
         [Column("describe_book", TypeName = "text")]
         public string DescribeBook { get; set; }
+
+        [Url(ErrorMessage = "Please enter a valid URL")]
+        [DisplayName("Ảnh")]
         [Column("picture")]
         [StringLength(255)]
         public string Picture { get; set; }
+
+        [Range(minimum: 1, maximum: 10000000,ErrorMessage = " Giá phải lớn hơn 0")]
+        [DisplayName("Giá sách")]
         [Column("price", TypeName = "decimal(19, 2)")]
         public float Price { get; set; }
+
+        [Required(ErrorMessage = "Ngày không được để trống !!")]
+        [DisplayName("Ngày xuất bản")]
         [Column("publish_day", TypeName = "date")]
-        public DateTime? PublishDay { get; set; }
+        public DateTime PublishDay { get; set; }
+
+        [Range(minimum: 1, maximum: 1000, ErrorMessage = " Số lượng phải lớn hơn 0")]
+        [DisplayName("Số lượng sách")]
         [Column("total_quantity")]
-        public int? TotalQuantity { get; set; }
+        public int TotalQuantity { get; set; }
+
+        [Required(ErrorMessage = "Trường này không được để trống !!")]
+        [DisplayName("Tác giả")]
         [Column("id_author")]
-        public long? IdAuthor { get; set; }
+        public long IdAuthor { get; set; }
+
+        [Required(ErrorMessage = "Trường này không được để trống !!")]
+        [DisplayName("Thể loại")]
         [Column("category_id")]
-        public long? CategoryId { get; set; }
+        public long CategoryId { get; set; }
+
+        [Required(ErrorMessage = "Trường này không được để trống !!")]
+        [DisplayName("Nhà xuất bản")]
         [Column("id_company")]
-        public long? IdCompany { get; set; }
+        public long IdCompany { get; set; }
 
         [ForeignKey(nameof(CategoryId))]
         [InverseProperty("Books")]

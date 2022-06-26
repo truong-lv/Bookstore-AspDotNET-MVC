@@ -8,9 +8,10 @@
 <h1>BookManager</h1>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-1 border-bottom position-relative">
     <div class="m-2">
-        <button type="button" class="btn btn-success btn__add--book">
+        <a type="submit" class="btn btn-success btn__add--book text-white"  
+           onclick="showInPopup('@Url.Action("AddOrEditBook","BookManager",null,Context.Request.Scheme)','Thêm sách mới')">
             <i class="fas fa-plus"></i> Add new</i>
-        </button>
+        </a>
     </div>
 
 
@@ -60,12 +61,15 @@
                 </td>
 
                 <td class="align-middle text-center">
-                    <button type="button" class="btn btn-warning m-1 btn__edit--book" asp-action="Edit" asp-route-id="@item.IdBook">
+                    <button type="button" class="btn btn-warning m-1 btn__edit--book" 
+                            onclick="showInPopup('@Url.Action("AddOrEditBook","BookManager",new { id= item.IdBook },Context.Request.Scheme)','Sửa sách mới')">
                         <i class="far fa-edit"></i>
                     </button>
-                    <button type="button" class="btn btn-danger btn__delete--book" asp-action="Delete" asp-route-id="@item.IdBook">
+                    <form asp-action="Delete" asp-route-id="@item.IdBook" onsubmit="return ajaxDeleteBook(this);" class="d-inline">
+                    <button type="submit" class="btn btn-danger btn__delete--book">
                         <i style="color:black;" class="far fa-trash-alt"></i>
                     </button>
+                    </form>
                 </td>
             </tr>}
         </tbody>

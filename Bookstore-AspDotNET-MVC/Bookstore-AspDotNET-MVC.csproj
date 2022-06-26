@@ -19,7 +19,6 @@
     <Folder Include="Models\" />
     <Folder Include="Views\Home\" />
     <Folder Include="wwwroot\image\" />
-    <Folder Include="wwwroot\js\Admin\" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,100 @@
+﻿@model Bookstore_AspDotNET_MVC.Models.Book
+@{
+    ViewData["Title"] = "AddBook";
+    Layout = null;
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddOrEditBook" asp-route-id="@Model.IdBook" onsubmit="return ajaxPostBook(this);" autocomplete="off">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdBook" />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="BookName" class="control-label"></label>
+                        <input asp-for="BookName" class="form-control" />
+                        <span asp-validation-for="BookName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="CategoryId" class="control-label"></label>
+                        <select asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(ViewBag.Category, "CategoryId", "Name","CategoryId"))">
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="IdCompany" class="control-label"></label>
+                        <select asp-for="IdCompany" class="form-control" asp-items="@(new SelectList(ViewBag.Company, "IdCompany", "CompanyName", "IdCompany"))">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="IdAuthor" class="control-label"></label>
+                        <select asp-for="IdAuthor" class="form-control" asp-items="@(new SelectList(ViewBag.Author, "IdAuthor", "AuthorName", "IdAuthor"))">
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="PublishDay" class="control-label"></label>
+                        <input type="date" asp-for="PublishDay" class="form-control" />
+                        <span asp-validation-for="PublishDay" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Picture" class="control-label"></label>
+                        <input asp-for="Picture" class="form-control" />
+                        <span asp-validation-for="Picture" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="TotalQuantity" class="control-label"></label>
+                        <input asp-for="TotalQuantity" class="form-control" />
+                        <span asp-validation-for="TotalQuantity" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DescribeBook" class="control-label"></label>
+                <textarea asp-for="DescribeBook" class="form-control"></textarea>
+                <span asp-validation-for="DescribeBook" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="+ Thêm sách" class="btn btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

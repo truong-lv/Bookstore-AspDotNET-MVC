@@ -1,8 +1,10 @@
 ﻿using Bookstore_AspDotNET_MVC.Data;
 using Bookstore_AspDotNET_MVC.DTO;
 using Bookstore_AspDotNET_MVC.Models;
+using Bookstore_AspDotNET_MVC.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -15,103 +17,110 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
     {
         private readonly ILogger<BookManagerController> _logger;
         private readonly BOOKSTOREContext _context;
+        private readonly BookService bookService;
+        private readonly AuthorService authorService;
+        private readonly CategoryService categoryService;
+        private readonly CompanyService companyService;
 
         public BookManagerController(ILogger<BookManagerController> logger, BOOKSTOREContext context)
         {
             _logger = logger;
             _context = context;
+            bookService = new BookService(context);
+            authorService = new AuthorService(context);
+            categoryService = new CategoryService(context);
+            companyService = new CompanyService(context);
         }
         // GET: BookManagerController
         public ActionResult Index(int currentPageIndex=1)
         {
-            return View("/Views/Admin/BookManager.cshtml",this.GetBooks(currentPageIndex));
+            ViewData["Title"] = "Book Manager";
+            return View("/Views/Admin/Book/BookManager.cshtml", bookService.GetBooks(currentPageIndex));
         }
 
-        private BookPagineDTO GetBooks(int currentPage)
-        {
-            int maxRows = 10;
-            var books = _context.Books.ToList();
-
-            BookPagineDTO bookPagine = new BookPagineDTO();
-            bookPagine.Books = books.OrderBy(book => book.IdBook)
-                        .Skip((currentPage - 1) * maxRows)
-                        .Take(maxRows).ToList();
-
-            double pageCount = (double)((decimal)books.Count() / Convert.ToDecimal(maxRows));
-
-            bookPagine.PageCount = (int)Math.Ceiling(pageCount);
-
-            bookPagine.CurrentPageIndex = currentPage;
-
-            return bookPagine;
-        }
-
-        // GET: BookManagerController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
         // GET: BookManagerController/Create
-        public ActionResult Create()
+        public async Task<IActionResult> AddOrEditBook(long id=0)
         {
-            return View();
+            ViewBag.Category = categoryService.getAllCategory();
+            ViewBag.Author = authorService.getAllAuthor();
+            ViewBag.Company = companyService.getAllCompany();
+
+
+
+            if (id == 0)
+            {
+                return View("/Views/Admin/Book/AddOrEditBook.cshtml", new Book());
+            }
+            else
+            {
+                var book = bookService.findBookById(id);
+                if (book == null)
+                {
+                    return NotFound();
+                }
+                return View("/Views/Admin/Book/AddOrEditBook.cshtml", book);
+
+            }
+
+
         }
 
         // POST: BookManagerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> AddOrEditBook(long id, Book book)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                if (id == 0)
+                {
+                    await bookService.addBook(book);
+                }
+                else
+                {
+                    try{
+                        await bookService.updateBook(book);
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (bookService.findBookById(id)==null)
+                        {
+                            return NotFound();
+                        }else
+                        {
+                            throw;
+                        }
+                    }
+                }
+
+                return Ok("Thêm sách thành công!!");
             }
-            catch
+            else
             {
-                return View();
+                ViewBag.Category = categoryService.getAllCategory();
+                ViewBag.Author = authorService.getAllAuthor();
+                ViewBag.Company = companyService.getAllCompany();
+
+                return View("/Views/Admin/Book/AddOrEditBook.cshtml", book);
             }
+            
+            
         }
 
-        // GET: BookManagerController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: BookManagerController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(long id)
         {
-            try
+            var book = bookService.findBookById(id);
+            bool isDelete=await bookService.deleteBook(book);
+            if (isDelete)
             {
-                return RedirectToAction(nameof(Index));
+                return Ok("Xóa sách thành công!!");
             }
-            catch
+            else
             {
-                return View();
-            }
-        }
-
-        // GET: BookManagerController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: BookManagerController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+                return BadRequest("Xóa sách thất bại!!");
             }
         }
     }
