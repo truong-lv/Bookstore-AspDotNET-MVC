@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Bookstore_AspDotNET_MVC.Data;
+using Bookstore_AspDotNET_MVC.Models;
+using Bookstore_AspDotNET_MVC.Service;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,80 +13,58 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
 {
     public class OrderManagerController : Controller
     {
+        private readonly ILogger<BookManagerController> _logger;
+        private readonly BOOKSTOREContext _context;
+        private readonly OrderService orderService;
+        public OrderManagerController(ILogger<BookManagerController> logger, BOOKSTOREContext context)
+        {
+            _logger = logger;
+            _context = context;
+            orderService = new OrderService(context);
+        }
         // GET: OrderManagerController
-        public ActionResult Index()
+        public ActionResult Index(int currentPageIndex = 1, int status=-1)
         {
             ViewData["Order"] = "active";
-            return View("/Views/Admin/Order/Index.cshtml");
+
+            return View("/Views/Admin/Order/Index.cshtml",orderService.GetOrdersByStatus(currentPageIndex,status));
         }
 
         // GET: OrderManagerController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Detail(long id)
         {
-            return View();
+            Order order = orderService.findOrderById(id);
+            return Ok(order.OrderDetails.Count.ToString());
+
+            if (order==null)
+            {
+                return NotFound("Sách không tồn tại");
+            }
+            else
+            {
+                return View("/Views/Admin/Order/OrderDetail.cshtml", order);
+
+            }
+
+
         }
 
-        // GET: OrderManagerController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
 
-        // POST: OrderManagerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> OrderConfirm(long id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: OrderManagerController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: OrderManagerController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: OrderManagerController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
+            await orderService.OrderConfirm(id);
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: OrderManagerController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> OrderCancle(long id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            await orderService.OrderCancle(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

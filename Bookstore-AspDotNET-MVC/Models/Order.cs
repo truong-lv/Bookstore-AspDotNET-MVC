@@ -24,13 +24,15 @@ namespace Bookstore_AspDotNET_MVC.Models
         public string NameOfCustomer { get; set; }
         [Column("order_day", TypeName = "date")]
         public DateTime? OrderDay { get; set; }
+
+        //0-Chờ duyệt, 1-Đã duyệt, 2-Đã thanh toán, 3-Đã nhận, 4-Yêu cầu hủy(chưa duyệt mới đc y/c ), 5- Đã hủy
         [Column("order_status")]
         public int? OrderStatus { get; set; }
         [Column("phone_of_customer")]
         [StringLength(10)]
         public string PhoneOfCustomer { get; set; }
         [Column("total_price", TypeName = "decimal(19, 2)")]
-        public decimal? TotalPrice { get; set; }
+        public float TotalPrice { get; set; }
         [Column("address_id")]
         public long? AddressId { get; set; }
         [Column("user_id")]

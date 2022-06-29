@@ -8,7 +8,7 @@
 <h1>BookManager</h1>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-1 border-bottom position-relative">
     <div class="m-2">
-        <a type="submit" class="btn btn-success btn__add--book text-white"  
+        <a type="submit" class="btn btn-success btn__add--book text-white"
            onclick="showInPopup('@Url.Action("AddOrEditBook","BookManager",null,Context.Request.Scheme)','Thêm sách mới')">
             <i class="fas fa-plus">Add new</i>
         </a>
@@ -23,7 +23,7 @@
         <thead>
             <tr class="table-warning">
                 <th scope="col">
-                   ID
+                    ID
                 </th>
                 <th scope="col">
                     Name
@@ -41,93 +41,112 @@
         <tbody>
             @foreach (var item in Model.Books)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdBook)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BookName)
-                </td>
-                <td class="align-middle text-center">
-                    <img style="height:120px;width:auto;" class="card-img-top " src=@item.Picture
-                         alt="Card image cap">
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price) VNĐ
-                </td>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdBook)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BookName)
+                    </td>
+                    <td class="align-middle text-center">
+                        <img style="height:120px;width:auto;" class="card-img-top " src=@item.Picture
+                             alt="Card image cap">
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price) VNĐ
+                    </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.TotalQuantity)
-                </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalQuantity)
+                    </td>
 
-                <td class="align-middle text-center">
-                    <button type="button" class="btn btn-warning m-1 btn__edit--book" 
-                            onclick="showInPopup('@Url.Action("AddOrEditBook","BookManager",new { id= item.IdBook },Context.Request.Scheme)','Sửa sách mới')">
-                        <i class="far fa-edit"></i>
-                    </button>
-                    <form asp-action="Delete" asp-route-id="@item.IdBook" onsubmit="return ajaxDeleteBook(this);" class="d-inline">
-                    <button type="submit" class="btn btn-danger btn__delete--book">
-                        <i style="color:black;" class="far fa-trash-alt"></i>
-                    </button>
-                    </form>
-                </td>
-            </tr>}
+                    <td class="align-middle text-center">
+                        <button type="button" class="btn btn-warning m-1 btn__edit--book"
+                                onclick="showInPopup('@Url.Action("AddOrEditBook","BookManager",new { id= item.IdBook },Context.Request.Scheme)','Sửa sách mới')">
+                            <i class="far fa-edit"></i>
+                        </button>
+                        <form asp-action="Delete" asp-route-id="@item.IdBook" onsubmit="return ajaxDeleteBook(this);" class="d-inline">
+                            <button type="submit" class="btn btn-danger btn__delete--book">
+                                <i style="color:black;" class="far fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+}
         </tbody>
     </table>
 
 
-   @if (Model.PageCount > 1) { 
-    
-    <div class="row col-sm-10">
-        <div class="col-sm-2">
-            Total Items: @Model.PageCount
-        </div>
-        @if (Model.CurrentPageIndex > 1)
-        {
-            <a class="page-links btn btn-outline-primary" asp-controller="BookManager" asp-action="Index" asp-route-currentPageIndex="1">First</a>
+    @if (Model.PageCount > 1)
+    {
 
-        }
-        else
-        {
-            <span class="btn btn-outline-primary active">First</span>
-        }&nbsp; &nbsp;
-
-        @for (int i = 1; i <= Model.PageCount; i++)
-        {
-            @if (Model.CurrentPageIndex != i)
+        <div class="row col-sm-10">
+            <div class="col-sm-2">
+                Total Items: @Model.PageCount
+            </div>
+            @if (Model.CurrentPageIndex > 1)
             {
-                <a class="page-links btn btn-outline-primary"asp-controller="BookManager" asp-action="Index" asp-route-currentPageIndex="@i">@i</a>
+                <a class="page-links btn btn-outline-primary" asp-controller="BookManager" asp-action="Index" asp-route-currentPageIndex="1">First</a>
 
             }
             else
             {
-                <span class="btn btn-outline-primary active">@i</span>
+                <span class="btn btn-outline-primary active">First</span>
+            }&nbsp; &nbsp;
+
+            @for (int i = 1; i <= Model.PageCount; i++)
+            {
+                @if (Model.CurrentPageIndex != i)
+                {
+                    <a class="page-links btn btn-outline-primary" asp-controller="BookManager" asp-action="Index" asp-route-currentPageIndex="@i">@i</a>
+
+                }
+                else
+                {
+                    <span class="btn btn-outline-primary active">@i</span>
+
+                }
+            }
+
+            @if (Model.CurrentPageIndex < Model.PageCount)
+            {
+                <a class="page-links btn btn-outline-primary" asp-controller="BookManager" asp-action="Index" asp-route-currentPageIndex="@(Model.CurrentPageIndex+1)">Next</a>
 
             }
-        }
+            else
+            {
+                <span class="btn btn-outline-primary active">Next </span>
 
-        @if (Model.CurrentPageIndex < Model.PageCount)
-        {
-            <a class="page-links btn btn-outline-primary" asp-controller="BookManager" asp-action="Index" asp-route-currentPageIndex="@(Model.CurrentPageIndex+1)">Next</a>
+            }&nbsp; &nbsp;
 
-        }
-        else
-        {
-            <span class="btn btn-outline-primary active" >Next </span>
+            @if (Model.CurrentPageIndex < Model.PageCount)
+            {
+                <a class="page-links btn btn-outline-primary" asp-controller="BookManager" asp-action="Index" asp-route-currentPageIndex="@Model.PageCount">Last</a>
 
-        }&nbsp; &nbsp;
+            }
+            else
+            {
+                <span class="btn btn-outline-primary active">Last</span>
 
-        @if (Model.CurrentPageIndex < Model.PageCount)
-        {
-            <a class="page-links btn btn-outline-primary"  asp-controller="BookManager" asp-action="Index" asp-route-currentPageIndex="@Model.PageCount">Last</a>
+            }&nbsp; &nbsp;
 
-        }
-        else
-        {
-            <span class="btn btn-outline-primary active">Last</span>
-
-        }&nbsp; &nbsp;
-
-    </div>
-     }
+        </div>
+    }
 </div>
+
+<!-- ===================CUSTOME POP-UP MODAL=================== -->
+<div class="modal" tabindex="-1" role="dialog" id="form-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/Admin/bookAjaxHandler.js" asp-append-version="true"></script>

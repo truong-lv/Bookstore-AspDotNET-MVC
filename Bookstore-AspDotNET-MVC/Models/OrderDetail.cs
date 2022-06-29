@@ -15,7 +15,7 @@ namespace Bookstore_AspDotNET_MVC.Models
         [Column("id")]
         public long Id { get; set; }
         [Column("price", TypeName = "decimal(19, 2)")]
-        public decimal? Price { get; set; }
+        public float Price { get; set; }
         [Column("quantity")]
         public int Quantity { get; set; }
         [Column("id_book")]

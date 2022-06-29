@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bookstore_AspDotNET_MVC.Models.Order>
+﻿@model Bookstore_AspDotNET_MVC.DTO.OrderPagineDTO
 
 @{
     ViewData["Title"] = "OrderManager";
@@ -6,76 +6,216 @@
 }
 
 <h1>OrderManager</h1>
+<br />
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-1 border-bottom">
+    <div class="m-2 col-md-6">
+        <!-- STATUS -->
+        <div class="btn-group" role="group"
+             aria-label="Basic outlined example">
+            @*//0-Chờ duyệt, 1-Đã duyệt, 2-Đã nhận, 3-Yêu cầu hủy(chưa duyệt mới đc y/c ), 4- Đã hủy*@
+            @if (Model.Status == -1)
+            {<a class="btn btn-outline-primary active">Tất cả </a>}
+            else
+            {<a class="btn btn-outline-primary" asp-controller="OrderManager" asp-action="Index" asp-route-currentPageIndex="1" asp-route-status="-1">Tất cả</a>}
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NameOfCustomer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDay)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneOfCustomer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdPaymentNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NameOfCustomer)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderDay)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderStatus)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhoneOfCustomer)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TotalPrice)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address.AddressId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdPaymentNavigation.IdPayment)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.UserId)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.OrderId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
-                </td>
+            @if (Model.Status == 0)
+            {<a class="btn btn-outline-primary active">Chờ duyệt</a> }
+            else
+            {<a class="btn btn-outline-primary" asp-controller="OrderManager" asp-action="Index" asp-route-currentPageIndex="1" asp-route-status="0">Chờ duyệt</a>}
+
+            @if (Model.Status == 1)
+            {<a class="btn btn-outline-primary active">Đã duyệt </a>}
+            else
+            {<a class="btn btn-outline-primary" asp-controller="OrderManager" asp-action="Index" asp-route-currentPageIndex="1" asp-route-status="1">Đã duyệt</a>}
+
+
+            @if (Model.Status == 2)
+            {<a class="btn btn-outline-primary active">Đã nhận</a>}
+            else
+            {<a class="btn btn-outline-primary" asp-controller="OrderManager" asp-action="Index" asp-route-currentPageIndex="1" asp-route-status="2">Đã nhận</a>}
+
+            @if (Model.Status == 3)
+            {<a class="btn btn-outline-primary active">Yêu cầu hủy</a>}
+            else
+            {<a class="btn btn-outline-primary" asp-controller="OrderManager" asp-action="Index" asp-route-currentPageIndex="1" asp-route-status="3">Yêu cầu hủy</a>}
+
+            @if (Model.Status == 4)
+            {<a class="btn btn-outline-primary active">Đã hủy</a>}
+            else
+            {<a class="btn btn-outline-primary" asp-controller="OrderManager" asp-action="Index" asp-route-currentPageIndex="1" asp-route-status="4">Đã hủy</a>}
+        </div>
+    </div>
+
+    <!-- find book -->
+    <form class="form-inline col-md-5 form-search-order">
+        <div class="form-row">
+            <input type="text" class="form-control input-delete d-none" name="statusOrderSearch">
+            <div class="form-group col-md-5">
+                <label for="datepickerfrom">Ngày bắt đầu:</label>
+                <input name="startDate" class="form-control col-md-12 start-Date" id="datepickerfrom" type="date" />
+
+            </div>
+            <div class="form-group col-md-5">
+                <label for="datepickerfrom">Ngày kết thúc:</label>
+                <input name="endDate" class="form-control col-md-12 end-Date" id="datepickerfrom" type="date" />
+            </div>
+            <div class="form-group col-md-2">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit" style="color: white">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <br>
+</div>
+<!-- TABLE VIEW -->
+<div class="table-responsive rounded-top rounded-bottom">
+    <table class="table table-bordered" id="myTable">
+        <thead>
+            <tr class="table-warning">
+                <th class="align-middle text-center" scope="col">
+                    ID
+                </th>
+                <th class="align-middle text-center" scope="col">
+                    Khách hàng
+                </th>
+                <th class="align-middle text-center" scope="col">
+                    Thời gian
+                </th>
+                <th class="align-middle text-center" style="width: 15%"
+                    scope="col">Giá</th>
+                <th class="align-middle text-center" style="width: 15%"
+                    scope="col">Trạng thái</th>
+                <th class="align-middle" style="width: 10%;" scope="col">Alter</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.Orders)
+            {
+                <tr>
+                    <td class="align-middle text-center">@order.OrderId</td>
+                    <td class="align-middle">@order.NameOfCustomer</td>
+                    <td class="align-middle text-center">@order.OrderDay</td>
+                    <td class="align-middle text-center">@order.TotalPrice VNĐ</td>
+                    @*//0-Chờ duyệt, 1-Đã duyệt, 2-Đã thanh toán, 3-Đã nhận, 4-Yêu cầu hủy(chưa duyệt mới đc y/c ), 5- Đã hủy*@
+                    <!-- status order -->
+                    <td>
+
+                        @if (order.OrderStatus == 0)
+                        {<p>Chờ duyệt</p>
+                            <form asp-action="OrderConfirm" asp-route-id="@order.OrderId" class="d-inline" onsubmit="return orderConfirmHandler(this)">
+                                <button type="submit" class="btn btn-outline-primary">
+                                    Xác nhận duyệt
+                                </button>
+                            </form>}
+
+                        @if (order.OrderStatus == 1)
+                        {<p>Đã duyệt</p>}
+
+                        @if (order.OrderStatus == 2)
+                        {<p>Đã nhận</p>}
+
+                        @if (order.OrderStatus == 3)
+                        {<p>Yêu cầu nhận hủy</p>
+                            <form asp-action="OrderCancle" asp-route-id="@order.OrderId" class="d-inline" onsubmit="return orderCancleHandler(this)">
+                                <button type="submit" class="btn btn-outline-danger">
+                                    Xác nhận hủy
+                                </button>
+                            </form>}
+                        @if (order.OrderStatus == 4)
+                        {<p>Đã hủy</p>}
+
+                    </td>
 
 
+                    <td class="align-middle text-center">
+                        <form asp-action="Detail" asp-route-id="@order.OrderId" class="d-inline" onsubmit="return getOrderDetail(this)">
+                            <button type="submit" id="button_detail" class="btn btn-warning m-1 btn__edit--order">
+                                Chi tiết
+                                <!-- <i class="far fa-edit"></i> -->
+                            </button>
+                        </form>
+                       
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+    @if (Model.PageCount > 1)
+    {
+
+        <div class="row col-sm-10">
+            <div class="col-sm-2">
+                Total Items: @Model.PageCount
+            </div>
+            @if (Model.CurrentPageIndex > 1)
+            {
+                <a class="page-links btn btn-outline-primary" asp-controller="OrderManager" asp-action="Index" asp-route-currentPageIndex="1" asp-route-status="@Model.Status">First</a>
+
+            }
+            else
+            {
+                <span class="btn btn-outline-primary active">First</span>
+            }&nbsp; &nbsp;
+
+            @for (int i = 1; i <= Model.PageCount; i++)
+            {
+                @if (Model.CurrentPageIndex != i)
+                {
+                    <a class="page-links btn btn-outline-primary" asp-controller="OrderManager" asp-action="Index" asp-route-currentPageIndex="@i">@i</a>
+
+                }
+                else
+                {
+                    <span class="btn btn-outline-primary active">@i</span>
+
+                }
+            }
+
+            @if (Model.CurrentPageIndex < Model.PageCount)
+            {
+                <a class="page-links btn btn-outline-primary" asp-controller="OrderManager" asp-action="Index" asp-route-currentPageIndex="@(Model.CurrentPageIndex+1)">Next</a>
+
+            }
+            else
+            {
+                <span class="btn btn-outline-primary active">Next </span>
+
+            }&nbsp; &nbsp;
+
+            @if (Model.CurrentPageIndex < Model.PageCount)
+            {
+                <a class="page-links btn btn-outline-primary" asp-controller="OrderManager" asp-action="Index" asp-route-currentPageIndex="@Model.PageCount">Last</a>
+
+            }
+            else
+            {
+                <span class="btn btn-outline-primary active">Last</span>
+
+            }&nbsp; &nbsp;
+
+        </div>
+    }
+</div>
+
+@*<div class="container-order-detail animated bounceInDown">
+    <article class="card">
+    </article>
+</div>*@
+
+<div class="modal" tabindex="-1" role="dialog" id="form-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="container-order-detail animated bounceInDown">
+                <article class="card">
+                </article>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<script src="~/js/Admin/orderHandler.js" asp-append-version="true"></script>
