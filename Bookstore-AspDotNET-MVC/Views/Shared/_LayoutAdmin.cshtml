@@ -73,12 +73,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link">
+                            <a class="nav-link @ViewData["Review"]" asp-controller="ReviewManager" asp-action="Index">
                                 <i class="far fa-comments mr-2"></i>Reviews
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link">
+                            <a class="nav-link @ViewData["Account"]" asp-controller="AccountManager" asp-action="Index">
                                 <i class="fas fa-users mr-2"></i>Customers
                             </a>
                         </li>
@@ -112,7 +112,7 @@
         </div>
         
         <footer class="border-top footer text-muted">
-            <div class="container">
+            <div class="container invisible">
                 &copy; 2022 - Bookstore_AspDotNET_MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
         </footer>

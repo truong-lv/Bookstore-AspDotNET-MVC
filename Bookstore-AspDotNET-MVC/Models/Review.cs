@@ -21,7 +21,7 @@ namespace Bookstore_AspDotNET_MVC.Models
         [StringLength(200)]
         public string Comments { get; set; }
         [Column("star")]
-        public double Star { get; set; }
+        public int Star { get; set; }
         [Column("time", TypeName = "datetime")]
         public DateTime? Time { get; set; }
 

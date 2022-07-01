@@ -1,0 +1,149 @@
+﻿@model Bookstore_AspDotNET_MVC.DTO.BookReviewPagineDTO
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="~/css/Admin/Reivew.css" />
+<h1>Index</h1>
+
+<!-- TABLE VIEW -->
+<div class="table-responsive rounded-top rounded-bottom">
+    <table class="table table-bordered" id="myTable">
+        <thead>
+            <tr class="table-warning">
+                <th class="align-middle text-center" scope="col">
+                    Mã sách
+                </th>
+                <th class="align-middle text-center" scope="col">
+                    Tên sách
+                </th>
+                <th class="align-middle text-center" scope="col">Ảnh</th>
+                <th class="align-middle text-center" scope="col">
+                    Tổng số lượt đánh giá
+                </th>
+                <th class="align-middle text-center" scope="col">Alter</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model.BookReviewDTOs)
+            {
+                <tr>
+                    <td>@book.Book.IdBook</td>
+                    <td>@book.Book.BookName</td>
+                    <td class="align-middle text-center">
+                        <img style="height:120px;width:auto;" class="card-img-top " src="@book.Book.Picture"
+                             alt="Card image cap">
+                    </td>
+                    <td>
+                        @foreach (var star in book.ListStart)
+                        {
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="ratings">
+                                    @if (star.star >= 1)
+                                    {<i class="fa fa-star rating-color"></i>}
+                                    else
+                                    {
+                                        <i class="fa fa-star"></i>
+                                    }
+
+                                    @if (star.star >= 2)
+                                    {<i class="fa fa-star rating-color"></i>}
+                                    else
+                                    {
+                                        <i class="fa fa-star"></i>
+                                    }
+
+                                    @if (star.star >= 3)
+                                    {<i class="fa fa-star rating-color"></i>}
+                                    else
+                                    {
+                                        <i class="fa fa-star"></i>
+                                    }
+
+                                    @if (star.star >= 4)
+                                    {<i class="fa fa-star rating-color"></i>}
+                                    else
+                                    {
+                                        <i class="fa fa-star"></i>
+                                    }
+
+                                    @if (star.star >= 5)
+                                    {<i class="fa fa-star rating-color"></i>}
+                                    else
+                                    {
+                                        <i class="fa fa-star"></i>
+                                    }
+                                </div>
+                                <h5 class="review-count align-self-end">@star.count</h5>
+                            </div>
+                            <hr style="width: 120px; margin-top: 2px; margin-bottom: 2px">
+                        }
+                    </td>
+
+                    <td class="align-middle text-center">
+                        <a type="button" class="btn btn-warning m-1 btn__edit--book" asp-controller="ReviewManager" asp-action="Detail" asp-route-id="@book.Book.IdBook" >
+                            <i class="far fa-edit"></i> Chi tiết
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<!-- Page number -->
+@if (Model.PageCount > 1)
+{
+
+    <div class="row col-sm-10">
+        <div class="col-sm-2">
+            Total Items: @Model.PageCount
+        </div>
+        @if (Model.CurrentPageIndex > 1)
+        {
+            <a class="page-links btn btn-outline-primary" asp-controller="ReviewManager" asp-action="Index" asp-route-currentPageIndex="1">First</a>
+
+        }
+        else
+        {
+            <span class="btn btn-outline-primary active">First</span>
+        }&nbsp; &nbsp;
+
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            @if (Model.CurrentPageIndex != i)
+            {
+                <a class="page-links btn btn-outline-primary" asp-controller="ReviewManager" asp-action="Index" asp-route-currentPageIndex="@i">@i</a>
+
+            }
+            else
+            {
+                <span class="btn btn-outline-primary active">@i</span>
+
+            }
+        }
+
+        @if (Model.CurrentPageIndex < Model.PageCount)
+        {
+            <a class="page-links btn btn-outline-primary" asp-controller="ReviewManager" asp-action="Index" asp-route-currentPageIndex="@(Model.CurrentPageIndex+1)">Next</a>
+
+        }
+        else
+        {
+            <span class="btn btn-outline-primary active">Next </span>
+
+        }&nbsp; &nbsp;
+
+        @if (Model.CurrentPageIndex < Model.PageCount)
+        {
+            <a class="page-links btn btn-outline-primary" asp-controller="ReviewManager" asp-action="Index" asp-route-currentPageIndex="@Model.PageCount">Last</a>
+
+        }
+        else
+        {
+            <span class="btn btn-outline-primary active">Last</span>
+
+        }&nbsp; &nbsp;
+
+    </div>
+}

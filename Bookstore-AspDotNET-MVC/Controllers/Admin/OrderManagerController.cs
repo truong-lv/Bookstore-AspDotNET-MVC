@@ -13,10 +13,10 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
 {
     public class OrderManagerController : Controller
     {
-        private readonly ILogger<BookManagerController> _logger;
+        private readonly ILogger<OrderManagerController> _logger;
         private readonly BOOKSTOREContext _context;
         private readonly OrderService orderService;
-        public OrderManagerController(ILogger<BookManagerController> logger, BOOKSTOREContext context)
+        public OrderManagerController(ILogger<OrderManagerController> logger, BOOKSTOREContext context)
         {
             _logger = logger;
             _context = context;

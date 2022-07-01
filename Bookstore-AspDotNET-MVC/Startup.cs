@@ -1,8 +1,11 @@
 ﻿using Bookstore_AspDotNET_MVC.Data;
+using Bookstore_AspDotNET_MVC.IService;
+using Bookstore_AspDotNET_MVC.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,7 +30,11 @@ namespace Bookstore_AspDotNET_MVC
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<BOOKSTOREContext>();
+            var connectionString = Configuration.GetConnectionString("BOOKSTOREDatabase");
+
+            services.AddDbContext<BOOKSTOREContext>(options=>options.UseSqlServer(connectionString));
+
+            //services.AddScoped<IAccountService, AccountService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSession(options =>

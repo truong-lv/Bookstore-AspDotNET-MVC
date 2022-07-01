@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
@@ -23,24 +24,40 @@ namespace Bookstore_AspDotNET_MVC.Models
         [Key]
         [Column("user_id")]
         public long UserId { get; set; }
+
+        [Required(ErrorMessage = "Tuổi không được để trống !!")]
+        [DisplayName("Tuổi")]
         [Column("age")]
         public int Age { get; set; }
+
+        [EmailAddress(ErrorMessage = "Email không hợp lệ !!")]
+        [DisplayName("Email")]
         [Column("email")]
         [StringLength(255)]
         public string Email { get; set; }
-        [Required]
+
+        [DisplayName("Giới tính")]
+        [Required(ErrorMessage = "Giới không được để trống !!")]
         [Column("gender")]
-        [MaxLength(1)]
-        public bool Gender { get; set; }
+        public int Gender { get; set; }
+
+        [Required(ErrorMessage = "Mật khẩu không được để trống !!")]
+        [DisplayName("Mật khẩu")]
         [Column("password")]
         [StringLength(250)]
         public string Password { get; set; }
+
+        [DisplayName("SĐT")]
         [Column("phone")]
         [StringLength(10)]
         public string Phone { get; set; }
+
+        [Required(ErrorMessage = "Tên tài khoản không được để trống !!")]
+        [DisplayName("Tên tài khoản")]
         [Column("username")]
         [StringLength(255)]
         public string Username { get; set; }
+
 
         [InverseProperty(nameof(Item.User))]
         public virtual ICollection<Item> Items { get; set; }
