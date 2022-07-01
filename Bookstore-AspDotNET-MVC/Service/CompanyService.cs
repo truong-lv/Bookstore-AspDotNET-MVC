@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Bookstore_AspDotNET_MVC.Models;
+using Bookstore_AspDotNET_MVC.IService;
 
 namespace Bookstore_AspDotNET_MVC.Service
 {
-    public class CompanyService
+    public class CompanyService: ICompanyService
     {
         private readonly BOOKSTOREContext _context;
 

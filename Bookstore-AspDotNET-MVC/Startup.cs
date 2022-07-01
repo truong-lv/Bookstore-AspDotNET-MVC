@@ -34,7 +34,13 @@ namespace Bookstore_AspDotNET_MVC
 
             services.AddDbContext<BOOKSTOREContext>(options=>options.UseSqlServer(connectionString));
 
-            //services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IAuthorService, AuthorService>();
+            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICompanyService, CompanyService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IReviewService, ReviewService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSession(options =>

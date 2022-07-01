@@ -1,4 +1,5 @@
 ﻿using Bookstore_AspDotNET_MVC.Data;
+using Bookstore_AspDotNET_MVC.IService;
 using Bookstore_AspDotNET_MVC.Models;
 using Bookstore_AspDotNET_MVC.Service;
 using Microsoft.AspNetCore.Http;
@@ -17,13 +18,12 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
     {
         private readonly ILogger<AccountManagerController> _logger;
         private readonly BOOKSTOREContext _context;
-        private readonly AccountService accountService;
+        private readonly IAccountService accountService;
 
-        public AccountManagerController(ILogger<AccountManagerController> logger, BOOKSTOREContext context)
+        public AccountManagerController(ILogger<AccountManagerController> logger, IAccountService accountService)
         {
             _logger = logger;
-            _context = context;
-            accountService = new AccountService(context);
+            this.accountService = accountService;
         }
         // GET: AccountManagerController
         public ActionResult Index(int currentPageIndex = 1)

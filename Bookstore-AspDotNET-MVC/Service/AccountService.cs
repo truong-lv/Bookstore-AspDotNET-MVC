@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Bookstore_AspDotNET_MVC.Service
 {
-    public class AccountService
+    public class AccountService: IAccountService
     {
         private readonly BOOKSTOREContext _context;
 

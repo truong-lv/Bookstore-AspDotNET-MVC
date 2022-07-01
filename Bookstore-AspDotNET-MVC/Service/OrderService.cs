@@ -1,5 +1,6 @@
 ﻿using Bookstore_AspDotNET_MVC.Data;
 using Bookstore_AspDotNET_MVC.DTO;
+using Bookstore_AspDotNET_MVC.IService;
 using Bookstore_AspDotNET_MVC.Models;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Bookstore_AspDotNET_MVC.Service
 {
-    public class OrderService
+    public class OrderService:IOrderService
     {
         private readonly BOOKSTOREContext _context;
 

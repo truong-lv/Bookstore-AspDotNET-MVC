@@ -1,5 +1,6 @@
 ﻿using Bookstore_AspDotNET_MVC.Data;
 using Bookstore_AspDotNET_MVC.DTO;
+using Bookstore_AspDotNET_MVC.IService;
 using Bookstore_AspDotNET_MVC.Models;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Bookstore_AspDotNET_MVC.Service
 {
-    public class BookService
+    public class BookService:IBookService
     {
         private readonly BOOKSTOREContext _context;
 

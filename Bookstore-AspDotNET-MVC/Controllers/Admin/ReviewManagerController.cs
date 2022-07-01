@@ -1,4 +1,5 @@
 ﻿using Bookstore_AspDotNET_MVC.Data;
+using Bookstore_AspDotNET_MVC.IService;
 using Bookstore_AspDotNET_MVC.Models;
 using Bookstore_AspDotNET_MVC.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +15,14 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
     {
         private readonly ILogger<ReviewManagerController> _logger;
         private readonly BOOKSTOREContext _context;
-        private readonly ReviewService reviewService;
-        private readonly BookService bookService;
-        public ReviewManagerController(ILogger<ReviewManagerController> logger, BOOKSTOREContext context)
+        private readonly IReviewService reviewService;
+        private readonly IBookService bookService;
+        public ReviewManagerController(ILogger<ReviewManagerController> logger, BOOKSTOREContext context, IReviewService reviewService, IBookService bookService)
         {
             _logger = logger;
             _context = context;
-            reviewService = new ReviewService(context);
-            bookService = new BookService(context);
+            this.reviewService = reviewService;
+            this.bookService = bookService;
         }
         public IActionResult Index(int currentPageIndex = 1)
         {

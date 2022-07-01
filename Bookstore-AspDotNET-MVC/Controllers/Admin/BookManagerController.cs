@@ -1,5 +1,6 @@
 ﻿using Bookstore_AspDotNET_MVC.Data;
 using Bookstore_AspDotNET_MVC.DTO;
+using Bookstore_AspDotNET_MVC.IService;
 using Bookstore_AspDotNET_MVC.Models;
 using Bookstore_AspDotNET_MVC.Service;
 using Microsoft.AspNetCore.Http;
@@ -17,19 +18,18 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
     {
         private readonly ILogger<BookManagerController> _logger;
         private readonly BOOKSTOREContext _context;
-        private readonly BookService bookService;
-        private readonly AuthorService authorService;
-        private readonly CategoryService categoryService;
-        private readonly CompanyService companyService;
+        private readonly IBookService bookService;
+        private readonly IAuthorService authorService;
+        private readonly ICategoryService categoryService;
+        private readonly ICompanyService companyService;
 
-        public BookManagerController(ILogger<BookManagerController> logger, BOOKSTOREContext context)
+        public BookManagerController(ILogger<BookManagerController> logger, IBookService bookService, IAuthorService authorService, ICategoryService categoryService, ICompanyService companyService)
         {
             _logger = logger;
-            _context = context;
-            bookService = new BookService(context);
-            authorService = new AuthorService(context);
-            categoryService = new CategoryService(context);
-            companyService = new CompanyService(context);
+            this.bookService = bookService;
+            this.authorService = authorService;
+            this.categoryService = categoryService;
+            this.companyService = companyService;
         }
         // GET: BookManagerController
         public ActionResult Index(int currentPageIndex=1)

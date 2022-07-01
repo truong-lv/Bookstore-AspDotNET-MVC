@@ -1,4 +1,5 @@
 ﻿using Bookstore_AspDotNET_MVC.Data;
+using Bookstore_AspDotNET_MVC.IService;
 using Bookstore_AspDotNET_MVC.Models;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Bookstore_AspDotNET_MVC.Service
 {
-    public class CategoryService
+    public class CategoryService:ICategoryService
     {
         private readonly BOOKSTOREContext _context;
 

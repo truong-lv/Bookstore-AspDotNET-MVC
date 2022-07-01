@@ -14,5 +14,10 @@ namespace Bookstore_AspDotNET_MVC.IService
         Userinfor findUserById(long id);
 
         Task<bool> addUser(Userinfor user);
+
+
+        Task<bool> updateUser(Userinfor user);
+        Task<bool> deleteUser(Userinfor user);
+
     }
 }

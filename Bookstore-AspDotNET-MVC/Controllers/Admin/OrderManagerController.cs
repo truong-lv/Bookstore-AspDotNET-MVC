@@ -1,4 +1,5 @@
 ﻿using Bookstore_AspDotNET_MVC.Data;
+using Bookstore_AspDotNET_MVC.IService;
 using Bookstore_AspDotNET_MVC.Models;
 using Bookstore_AspDotNET_MVC.Service;
 using Microsoft.AspNetCore.Http;
@@ -15,12 +16,11 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
     {
         private readonly ILogger<OrderManagerController> _logger;
         private readonly BOOKSTOREContext _context;
-        private readonly OrderService orderService;
-        public OrderManagerController(ILogger<OrderManagerController> logger, BOOKSTOREContext context)
+        private readonly IOrderService orderService;
+        public OrderManagerController(ILogger<OrderManagerController> logger, IOrderService orderService)
         {
             _logger = logger;
-            _context = context;
-            orderService = new OrderService(context);
+            this.orderService = orderService;
         }
         // GET: OrderManagerController
         public ActionResult Index(int currentPageIndex = 1, int status=-1)
