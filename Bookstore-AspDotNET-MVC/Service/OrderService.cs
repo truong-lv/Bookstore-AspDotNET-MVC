@@ -2,6 +2,7 @@
 using Bookstore_AspDotNET_MVC.DTO;
 using Bookstore_AspDotNET_MVC.IService;
 using Bookstore_AspDotNET_MVC.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,7 +94,18 @@ namespace Bookstore_AspDotNET_MVC.Service
 
         public Order findOrderById(long id)
         {
-            return _context.Orders.Find(id);
+            var order = _context.Orders.Include(o => o.OrderDetails)
+                                        .ThenInclude(od => od.IdBookNavigation)
+                                            .ThenInclude(b=>b.IdCompanyNavigation)
+                                        .Include(o => o.OrderDetails)
+                                        .ThenInclude(od => od.IdBookNavigation)
+                                            .ThenInclude(b => b.IdAuthorNavigation)
+                                        .Include(o => o.OrderDetails)
+                                        .ThenInclude(od => od.IdBookNavigation)
+                                            .ThenInclude(b => b.Category)
+                                        .First(o=>o.OrderId==id);
+            
+            return order;
         }
     }
 }

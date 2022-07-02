@@ -17,7 +17,6 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
     public class BookManagerController : Controller
     {
         private readonly ILogger<BookManagerController> _logger;
-        private readonly BOOKSTOREContext _context;
         private readonly IBookService bookService;
         private readonly IAuthorService authorService;
         private readonly ICategoryService categoryService;
@@ -67,7 +66,7 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
 
         }
 
-        // POST: BookManagerController/Create
+        // POST: BookManagerController/Create - CORS
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrEditBook(long id, Book book)

@@ -15,7 +15,6 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
     public class OrderManagerController : Controller
     {
         private readonly ILogger<OrderManagerController> _logger;
-        private readonly BOOKSTOREContext _context;
         private readonly IOrderService orderService;
         public OrderManagerController(ILogger<OrderManagerController> logger, IOrderService orderService)
         {
@@ -34,7 +33,7 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
         public ActionResult Detail(long id)
         {
             Order order = orderService.findOrderById(id);
-            return Ok(order.OrderDetails.Count.ToString());
+            //return Ok(order.OrderDetails.Count.ToString());
 
             if (order==null)
             {

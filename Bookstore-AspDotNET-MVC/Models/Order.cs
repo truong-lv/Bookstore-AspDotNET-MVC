@@ -49,6 +49,7 @@ namespace Bookstore_AspDotNET_MVC.Models
         [ForeignKey(nameof(UserId))]
         [InverseProperty(nameof(Userinfor.Orders))]
         public virtual Userinfor User { get; set; }
+
         [InverseProperty(nameof(OrderDetail.Order))]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }

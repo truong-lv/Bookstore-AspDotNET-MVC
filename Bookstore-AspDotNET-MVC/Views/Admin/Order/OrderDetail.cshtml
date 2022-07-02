@@ -1,4 +1,4 @@
-﻿@model Bookstore_AspDotNET_MVC.Models.Order
+﻿@model Bookstore_AspDotNET_MVC.Models.Order;
 
 @{
     ViewData["Title"] = "OrderDetail";
@@ -29,49 +29,76 @@
                 <i class="fa fa-box"></i>
             </span> <span class="text">Chờ xác nhận</span>
         </div>
-        <div class="confirm step active">
-            <span class="icon">
-                <i class="fa fa-check"></i>
-            </span> <span class="text">Xác nhận</span>
-        </div>
-        <div class="done step active">
-
-            @if (Model.OrderStatus == 5)
-            {
+        @if (Model.OrderStatus >= 1)
+        {
+            <div class="confirm step active">
+                <span class="icon">
+                    <i class="fa fa-check"></i>
+                </span> <span class="text">Đã duyệt</span>
+            </div>
+        }
+        else if (Model.OrderStatus < 1)
+        {
+            <div class="confirm step">
+                <span class="icon">
+                    <i class="fa fa-check"></i>
+                </span> <span class="text">Đã duyệt</span>
+            </div>
+        }
+        else if(Model.OrderStatus == 4 && Model.OrderStatus >= 1)
+        {
+            <div class="done step active">
                 <span class="icon">
                     <i class="fas fa-times"></i>
                 </span>
                 <span class="text">Đã hủy</span>
-            }
-            else
-            {
-                <span class="icon">
-                    <i class="fa fa-user"></i>
-                </span>
-                <span class="text">Đã nhận</span>
-            }
+            </div>
+        }
 
+        @if (Model.OrderStatus >= 2 && Model.OrderStatus != 4)
+        {
+            <div class="confirm step active">
+                <span class="icon">
+                    <i class="fa fa-check"></i>
+                </span> <span class="text">Đã nhận</span>
+            </div>
+        }
+
+
+
+
+        @if (Model.OrderStatus >= 2)
+        {
+        <div class="done step active">
+            <span class="icon">
+                <i class="fa fa-user"></i>
+            </span>
+            <span class="text">Đã nhận</span>
         </div>
+        }
+
     </div>
+
     <hr>
     <ul class="row order-detail" id="listOrderDetail">
-        @foreach(var detail in Model.OrderDetails) {
-        <li class="col-md-4">
-            <figure class="itemside mb-3">
-                <div class="aside">
-                    <img src="@detail.IdBookNavigation.Picture"
-                         class="img-sm border">
-                </div>
-                <figcaption class="info align-self-center">
-                    <p class="title" id="book-name">
-                        @detail.IdBookNavigation.BookName <br> 
-                        <span class="text-muted" id="book-author"> @detail.IdBookNavigation.IdAuthorNavigation.AuthorName</span>
-                    </p>
-                    <span class="text-muted" id="book-price"> @detail.IdBookNavigation.Price VNĐ</span>
-                    x <span class="text-muted" id="order-quantity"> @detail.Quantity</span>
-                </figcaption>
-            </figure>
-        </li>
+        @foreach (var detail in Model.OrderDetails)
+        {
+            <li class="col-md-4">
+                <figure class="itemside mb-3">
+                    <div class="aside">
+                        <img src="@detail.IdBookNavigation.Picture"
+                                class="img-sm border">
+                    </div>
+                    <figcaption class="info align-self-center">
+                        <p class="title" id="book-name">
+                            @detail.IdBookNavigation.BookName <br>
+                            <span class="text-muted" id="book-author"> @detail.IdBookNavigation.IdAuthorNavigation.AuthorName</span>
+                        </p>
+                        <span class="text-muted" id="book-price"> @detail.IdBookNavigation.Price VNĐ</span>
+                        x <span class="text-muted" id="order-quantity"> @detail.Quantity</span>
+                    </figcaption>
+                </figure>
+            </li>
         }
 
     </ul>
@@ -81,8 +108,8 @@
         <strong class="text-danger text-boild">@Model.TotalPrice VNĐ </strong>
     </p>
     <hr>
-    <a style="color: white;cursor: pointer;" class="btn btn-warning btn-close-from"  data-dismiss="modal">
+    <a style="color: white;cursor: pointer;" class="btn btn-warning btn-close-from" data-dismiss="modal">
         <i class="fa fa-chevron-left"></i> Trở về
     </a>
-</div>
+    </div>
 

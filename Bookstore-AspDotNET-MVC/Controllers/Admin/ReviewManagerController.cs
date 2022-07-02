@@ -14,14 +14,12 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
     public class ReviewManagerController : Controller
     {
         private readonly ILogger<ReviewManagerController> _logger;
-        private readonly BOOKSTOREContext _context;
         private readonly IReviewService reviewService;
         private readonly IBookService bookService;
-        public ReviewManagerController(ILogger<ReviewManagerController> logger, BOOKSTOREContext context, IReviewService reviewService, IBookService bookService)
+        public ReviewManagerController(ILogger<ReviewManagerController> logger, IReviewService reviewService, IBookService bookService)
         {
             _logger = logger;
-            _context = context;
-            this.reviewService = reviewService;
+            this.reviewService = reviewService;                                                                                                          
             this.bookService = bookService;
         }
         public IActionResult Index(int currentPageIndex = 1)
@@ -33,16 +31,7 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
         public IActionResult Detail(int id)
         {
             ViewData["Review"] = "active";
-            Book book = bookService.findBookById(id);
-            book.IdAuthorNavigation = _context.Authors.Find(book.IdAuthor);
-            book.Category = _context.Categories.Find(book.CategoryId);
-            book.IdCompanyNavigation = _context.PublishingCompanies.Find(book.IdCompany);
-            book.Reviews = _context.Reviews.Where(r => r.IdBook == book.IdBook).OrderByDescending(r => r.Time).ToList();
-            foreach(var review in book.Reviews)
-            {
-                review.IdBookNavigation = _context.Books.Find(review.IdBook);
-                review.User = _context.Userinfors.Find(review.UserId);
-            }
+            Book book = bookService.findBookReviewById(id);
 
             return View("/Views/Admin/Review/ReviewDetail.cshtml", book);
         }

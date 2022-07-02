@@ -3,6 +3,7 @@ using Bookstore_AspDotNET_MVC.DTO;
 using Bookstore_AspDotNET_MVC.IService;
 using Bookstore_AspDotNET_MVC.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,19 @@ namespace Bookstore_AspDotNET_MVC.Service
         public Book findBookById(long idBook)
         {
             return _context.Books.Find(idBook);
+        }
+
+        public Book findBookReviewById(long idBook)
+        {
+
+            return _context.Books.Include(b => b.Category)
+                                  .Include(b => b.IdAuthorNavigation)
+                                  .Include(b => b.IdCompanyNavigation)
+                                  .Include(b => b.Reviews)
+                                  .ThenInclude(r => r.IdBookNavigation)
+                                  .Include(b => b.Reviews)
+                                  .ThenInclude(r => r.User)
+                                  .First(b=>b.IdBook==idBook);
         }
 
         public async Task<bool> addBook(Book book)

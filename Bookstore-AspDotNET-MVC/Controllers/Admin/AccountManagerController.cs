@@ -17,7 +17,6 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
     public class AccountManagerController : Controller
     {
         private readonly ILogger<AccountManagerController> _logger;
-        private readonly BOOKSTOREContext _context;
         private readonly IAccountService accountService;
 
         public AccountManagerController(ILogger<AccountManagerController> logger, IAccountService accountService)
