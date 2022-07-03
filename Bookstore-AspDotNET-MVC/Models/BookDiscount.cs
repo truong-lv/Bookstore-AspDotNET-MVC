@@ -15,14 +15,14 @@ namespace Bookstore_AspDotNET_MVC.Models
         [Column("id_book")]
         public long IdBook { get; set; }
         [Key]
-        [Column("id_dícount")]
-        public long IdDícount { get; set; }
+        [Column("id_discount")]
+        public long IdDiscount { get; set; }
 
         [ForeignKey(nameof(IdBook))]
         [InverseProperty(nameof(Book.BookDiscounts))]
         public virtual Book IdBookNavigation { get; set; }
-        [ForeignKey(nameof(IdDícount))]
+        [ForeignKey(nameof(IdDiscount))]
         [InverseProperty(nameof(Discount.BookDiscounts))]
-        public virtual Discount IdDícountNavigation { get; set; }
+        public virtual Discount IdDiscountNavigation { get; set; }
     }
 }

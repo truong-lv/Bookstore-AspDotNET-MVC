@@ -41,6 +41,7 @@ namespace Bookstore_AspDotNET_MVC
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IReviewService, ReviewService>();
+            services.AddScoped<IDiscountService, DiscountService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSession(options =>

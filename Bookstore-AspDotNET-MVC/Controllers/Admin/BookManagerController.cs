@@ -94,7 +94,7 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
                     }
                 }
 
-                return Ok("Thêm sách thành công!!");
+                return Ok("Thêm thành công!!");
             }
             else
             {

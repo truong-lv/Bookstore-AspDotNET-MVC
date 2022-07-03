@@ -26,7 +26,7 @@ ajaxPostBook = form => {
             contentType: false,
             processData: false,
             success: function (res) {
-                if (res === "Thêm sách thành công!!") {
+                if (res === "Thêm thành công!!") {
                     window.location.reload();
                 } else {
                     $("#form-modal .modal-body").html(res);
@@ -46,9 +46,9 @@ ajaxPostBook = form => {
 
 
 //==========CALL AJAX DELETE BOOK=================
-ajaxDeleteBook = form => {
+ajaxDeleteBook = (form,cap) => {
     const id=form.action.substring(form.action.lastIndexOf("=")+1)
-    if (confirm(`bạn có mún xóa sách có id =${id} không ?`))
+    if (confirm(`bạn có mún xóa ${cap} có id =${id} không ?`))
     try {
         $.ajax({
             type: "POST",
@@ -57,14 +57,12 @@ ajaxDeleteBook = form => {
             contentType: false,
             processData: false,
             success: function (res) {
-                if (res === "Xóa sách thành công!!") {
-                    window.location.reload();
-                } else {
-                   alert(res)
-                }
-
+                alert(res)
+                window.location.reload();
+               
             },
             error: function (er) {
+                alert(er.responseText)
                 //console.log(er.responseText);
             }
 

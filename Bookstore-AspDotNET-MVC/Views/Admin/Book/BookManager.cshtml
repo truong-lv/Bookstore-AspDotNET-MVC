@@ -66,7 +66,7 @@
                                 onclick="showInPopup('@Url.Action("AddOrEditBook","BookManager",new { id= item.IdBook },Context.Request.Scheme)','Sửa sách mới')">
                             <i class="far fa-edit"></i>
                         </button>
-                        <form asp-action="Delete" asp-route-id="@item.IdBook" onsubmit="return ajaxDeleteBook(this);" class="d-inline">
+                        <form asp-action="Delete" asp-route-id="@item.IdBook" onsubmit="return ajaxDeleteBook(this,'Sách');" class="d-inline">
                             <button type="submit" class="btn btn-danger btn__delete--book">
                                 <i style="color:black;" class="far fa-trash-alt"></i>
                             </button>

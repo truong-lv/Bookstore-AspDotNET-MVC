@@ -1,60 +1,163 @@
-﻿@model IEnumerable<Bookstore_AspDotNET_MVC.Models.Discount>
+﻿@model Bookstore_AspDotNET_MVC.DTO.DiscountPagineDTO
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Discount";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Discount</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.StartTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContentDiscount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DiscountPercent)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContentDiscount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiscountPercent)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdDiscount">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdDiscount">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdDiscount">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-1 border-bottom position-relative">
+    <div class="m-2">
+        <a type="submit" class="btn btn-success btn__add--book text-white"
+           onclick="showInPopup('@Url.Action("AddOrEditDiscount","DiscountManager",null,Context.Request.Scheme)','Thêm khuyến mãi mới')">
+            <i class="fas fa-plus">Add new</i>
+        </a>
+    </div>
+
+
+</div>
+
+<!-- TABLE VIEW -->
+<div class="table-responsive rounded-top rounded-bottom">
+    <table class="table table-bordered" id="myTable">
+        <thead>
+            <tr class="table-warning">
+                <th scope="col">
+                    ID
+                </th>
+                <th scope="col">
+                    Start time
+                </th>
+                <th scope="col">
+                    End time
+                </th>
+                <th scope="col">
+                    Content
+                </th>
+                <th scope="col">
+                    Value
+                </th>
+                <th scope="col">
+                    Apply
+                </th>
+                <th class="align-middle text-center" scope="col">Alter</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Discounts)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdDiscount)
+                    </td>
+                    <td>
+                       @item.StartTime.ToShortDateString()
+                    </td>
+                    <td>
+                       @item.EndTime.ToShortDateString()
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContentDiscount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiscountPercent)
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-info m-1"
+                                onclick="showInPopup('@Url.Action("AddOrEditDiscount","DiscountManager",new { id= item.IdDiscount },Context.Request.Scheme)','Sửa khuyến mãi')">
+                            @Html.DisplayFor(modelItem => item.BookDiscounts.Count) books
+                        </button>
+                        
+                    </td>
+
+                    <td class="align-middle text-center">
+                        <button type="button" class="btn btn-warning m-1 btn__edit--book"
+                                onclick="showInPopup('@Url.Action("AddOrEditDiscount","DiscountManager",new { id= item.IdDiscount },Context.Request.Scheme)','Sửa khuyến mãi')">
+                            <i class="far fa-edit"></i>
+                        </button>
+                        <form asp-action="Delete" asp-route-id="@item.IdDiscount" onsubmit="return ajaxDeleteBook(this,'khuyến mãi');" class="d-inline">
+                            <button type="submit" class="btn btn-danger btn__delete--book">
+                                <i style="color:black;" class="far fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+    @if (Model.PageCount > 1)
+    {
+
+        <div class="row col-sm-10">
+            <div class="col-sm-2">
+                Total Items: @Model.PageCount
+            </div>
+            @if (Model.CurrentPageIndex > 1)
+            {
+                <a class="page-links btn btn-outline-primary" asp-controller="DiscountManager" asp-action="Index" asp-route-currentPageIndex="1" asp-route-status="@Model.Status">First</a>
+
+            }
+            else
+            {
+                <span class="btn btn-outline-primary active">First</span>
+            }&nbsp; &nbsp;
+
+            @for (int i = 1; i <= Model.PageCount; i++)
+            {
+                @if (Model.CurrentPageIndex != i)
+                {
+                    <a class="page-links btn btn-outline-primary" asp-controller="DiscountManager" asp-action="Index" asp-route-currentPageIndex="@i">@i</a>
+
+                }
+                else
+                {
+                    <span class="btn btn-outline-primary active">@i</span>
+
+                }
+            }
+
+            @if (Model.CurrentPageIndex < Model.PageCount)
+            {
+                <a class="page-links btn btn-outline-primary" asp-controller="DiscountManager" asp-action="Index" asp-route-currentPageIndex="@(Model.CurrentPageIndex+1)">Next</a>
+
+            }
+            else
+            {
+                <span class="btn btn-outline-primary active">Next </span>
+
+            }&nbsp; &nbsp;
+
+            @if (Model.CurrentPageIndex < Model.PageCount)
+            {
+                <a class="page-links btn btn-outline-primary" asp-controller="DiscountManager" asp-action="Index" asp-route-currentPageIndex="@Model.PageCount">Last</a>
+
+            }
+            else
+            {
+                <span class="btn btn-outline-primary active">Last</span>
+
+            }&nbsp; &nbsp;
+
+        </div>
+    }
+</div>
+
+<!-- ===================CUSTOME POP-UP MODAL=================== -->
+<div class="modal" tabindex="-1" role="dialog" id="form-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/Admin/bookAjaxHandler.js" asp-append-version="true"></script>

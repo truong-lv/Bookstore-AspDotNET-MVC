@@ -93,7 +93,7 @@ namespace Bookstore_AspDotNET_MVC.Data
 
             modelBuilder.Entity<BookDiscount>(entity =>
             {
-                entity.HasKey(e => new { e.IdBook, e.IdDícount });
+                entity.HasKey(e => new { e.IdBook, e.IdDiscount });
 
                 entity.HasOne(d => d.IdBookNavigation)
                     .WithMany(p => p.BookDiscounts)
@@ -101,16 +101,16 @@ namespace Bookstore_AspDotNET_MVC.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_book_discount_book");
 
-                entity.HasOne(d => d.IdDícountNavigation)
+                entity.HasOne(d => d.IdDiscountNavigation)
                     .WithMany(p => p.BookDiscounts)
-                    .HasForeignKey(d => d.IdDícount)
+                    .HasForeignKey(d => d.IdDiscount)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_book_discount_discount");
             });
 
             modelBuilder.Entity<Discount>(entity =>
             {
-                entity.Property(e => e.IdDiscount).ValueGeneratedNever();
+                entity.HasKey(e => e.IdDiscount).HasName("PK_discount");
             });
 
             modelBuilder.Entity<District>(entity =>
