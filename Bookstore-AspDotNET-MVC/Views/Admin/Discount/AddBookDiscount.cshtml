@@ -1,0 +1,25 @@
+﻿@model Bookstore_AspDotNET_MVC.Models.BookDiscount
+
+@{
+    ViewData["Title"] = "AddBookDiscount";
+    Layout = null;
+}
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddBookDiscount">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdBook" class="control-label"></label>
+                <select asp-for="IdBook" class ="form-control" asp-items="@(new SelectList(ViewBag.Books,"IdBook","BookName"))"></select>
+            </div>
+                <input type="hidden" asp-for="IdDiscount" />
+            <div class="form-group">
+                <input type="submit" value="Thêm" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

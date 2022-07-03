@@ -38,7 +38,7 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-1 border-bottom position-relative">
     <div class="m-2">
         <a type="submit" class="btn btn-success btn__add--book text-white"
-           onclick="showInPopup('@Url.Action("AddOrEditBook","BookManager",null,Context.Request.Scheme)','Thêm sách mới')">
+           onclick="showInPopup('@Url.Action("AddBookDiscount","DiscountManager",new { id= Model.IdDiscount },Context.Request.Scheme)','Thêm sách áp dụng')">
             <i class="fas fa-plus">Add new</i>
         </a>
     </div>
@@ -86,7 +86,7 @@
                     </td>
 
                     <td class="align-middle text-center">
-                        <form asp-action="Delete" asp-route-id="@item.IdDiscount" onsubmit="return ajaxDeleteBook(this,'khuyến mãi');" class="d-inline">
+                        <form asp-action="DeleteBookDiscount" asp-route-idDiscount="@item.IdDiscount" asp-route-idBook="@item.IdBookNavigation.IdBook" onsubmit="return ajaxDeleteBook(this,'hủy áp dụng khuyến mãi cho sách');" class="d-inline">
                             <button type="submit" class="btn btn-danger btn__delete--book">
                                 <i style="color:black;" class="far fa-trash-alt"></i>
                             </button>
@@ -96,6 +96,20 @@
             }
         </tbody>
     </table>
-
-
 </div>
+<!-- ===================CUSTOME POP-UP MODAL=================== -->
+<div class="modal" tabindex="-1" role="dialog" id="form-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/Admin/bookAjaxHandler.js" asp-append-version="true"></script>

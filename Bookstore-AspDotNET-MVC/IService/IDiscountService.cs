@@ -20,5 +20,13 @@ namespace Bookstore_AspDotNET_MVC.IService
         Task<bool> deleteDiscount(Discount discount);
 
         Discount findDiscountWithBookById(long id);
+
+        BookDiscount findBookDiscountById(long idDiscount, long idBook);
+
+        List<Book> getAllBookNotHaveDiscount(long id);
+
+        Task<bool> addBookDiscount(BookDiscount bookDiscount);
+
+        Task<bool> deleteBookDiscount(BookDiscount bookDiscount);
     }
 }

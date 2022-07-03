@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ namespace Bookstore_AspDotNET_MVC.Models
     {
         [Key]
         [Column("id_book")]
+        [DisplayName("Tên sách")]
         public long IdBook { get; set; }
         [Key]
         [Column("id_discount")]

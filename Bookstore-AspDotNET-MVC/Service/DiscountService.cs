@@ -85,11 +85,49 @@ namespace Bookstore_AspDotNET_MVC.Service
             return _context.Discounts.Find(id);
         }
 
+
+        //Book Discount
         public Discount findDiscountWithBookById(long id)
         {
             return _context.Discounts.Include(d=>d.BookDiscounts)
                                       .ThenInclude(bd=>bd.IdBookNavigation).First(b=>b.IdDiscount==id);
         }
 
+
+        public List<Book> getAllBookNotHaveDiscount(long id)
+        {
+            List<long> idBooks= _context.BookDiscounts.Where(bd => bd.IdDiscount == id).Select(bd => bd.IdBook).ToList();
+
+            List<Book> listBook = _context.Books.Where(b => !idBooks.Contains(b.IdBook)).ToList();
+
+            return listBook;
+        }
+
+        public BookDiscount findBookDiscountById( long idBook,long idDiscount)
+        {
+            return _context.BookDiscounts.Find(idBook, idDiscount);
+        }
+
+        public async Task<bool> addBookDiscount(BookDiscount bookDiscount)
+        {
+            _context.Add(bookDiscount);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> deleteBookDiscount(BookDiscount bookDiscount)
+        {
+            try
+            {
+                _context.Remove(bookDiscount);
+                await _context.SaveChangesAsync();
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
     }
 }

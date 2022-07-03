@@ -110,5 +110,53 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
             ViewData["Discount"] = "active";
             return View("/Views/Admin/Discount/BookDiscount.cshtml", discountService.findDiscountWithBookById(id));
         }
+
+        public IActionResult AddBookDiscount(long id)
+        {
+            var discount = discountService.findDiscountById(id);
+            if (discount == null)
+            {
+                return NotFound();
+            }
+            BookDiscount bookDiscount = new BookDiscount();
+            bookDiscount.IdDiscount = id;
+
+            ViewBag.Books = discountService.getAllBookNotHaveDiscount(id);
+            return View("/Views/Admin/Discount/AddBookDiscount.cshtml", bookDiscount);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddBookDiscount(BookDiscount bookDiscount)
+        {
+           
+            try
+            {
+                await discountService.addBookDiscount(bookDiscount);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(BookDiscount),new { id=bookDiscount.IdDiscount }); ;
+           
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteBookDiscount( long idBook, long idDiscount)
+        {
+            var bookDiscount = discountService.findBookDiscountById(idBook,idDiscount);
+            bool isDelete = await discountService.deleteBookDiscount(bookDiscount);
+            if (isDelete)
+            {
+                return Ok("Xóa khuyến mãi sách thành công!!");
+            }
+            else
+            {
+                return BadRequest("Xóa khuyến mãi sách thất bại!!");
+            }
+        }
     }
 }
