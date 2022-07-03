@@ -64,11 +64,11 @@
                         @Html.DisplayFor(modelItem => item.DiscountPercent)
                     </td>
                     <td>
-                        <button type="button" class="btn btn-outline-info m-1"
-                                onclick="showInPopup('@Url.Action("AddOrEditDiscount","DiscountManager",new { id= item.IdDiscount },Context.Request.Scheme)','Sửa khuyến mãi')">
-                            @Html.DisplayFor(modelItem => item.BookDiscounts.Count) books
-                        </button>
-                        
+                        <form asp-action="BookDiscount" asp-route-id="@item.IdDiscount">
+                            <button type="submit" class="btn  btn-outline-info m-1">
+                                @Html.DisplayFor(modelItem => item.BookDiscounts.Count) books
+                            </button>
+                        </form>
                     </td>
 
                     <td class="align-middle text-center">

@@ -85,5 +85,11 @@ namespace Bookstore_AspDotNET_MVC.Service
             return _context.Discounts.Find(id);
         }
 
+        public Discount findDiscountWithBookById(long id)
+        {
+            return _context.Discounts.Include(d=>d.BookDiscounts)
+                                      .ThenInclude(bd=>bd.IdBookNavigation).First(b=>b.IdDiscount==id);
+        }
+
     }
 }

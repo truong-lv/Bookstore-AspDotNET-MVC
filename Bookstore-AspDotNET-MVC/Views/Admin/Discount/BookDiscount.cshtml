@@ -1,0 +1,101 @@
+﻿@using System.Globalization;
+@model Bookstore_AspDotNET_MVC.Models.Discount
+
+@{
+    ViewData["Title"] = "BookDiscount";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row book-detail p-2 ml-4 mr-5 ">
+    <div class="col-md-12">
+        <h3>Nội dung: @Model.ContentDiscount</h3>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-xs-6 col-md-6">
+                        <p>Mã: <strong>@Model.IdDiscount</strong></p>
+                    </div>
+                    <div class="col-xs-6 col-md-6">
+                        <p>Trạng thái: <strong>@Model.Status</strong></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-md-6">
+                        <p>Từ: <strong>@Model.StartTime.ToShortDateString()</strong></p>
+                    </div>
+                    <div class="col-xs-6 col-md-6">
+                        <p>Đến: <strong>@Model.EndTime.ToShortDateString()</strong></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<br>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-1 border-bottom position-relative">
+    <div class="m-2">
+        <a type="submit" class="btn btn-success btn__add--book text-white"
+           onclick="showInPopup('@Url.Action("AddOrEditBook","BookManager",null,Context.Request.Scheme)','Thêm sách mới')">
+            <i class="fas fa-plus">Add new</i>
+        </a>
+    </div>
+</div>
+<!-- TABLE VIEW -->
+<div class="table-responsive rounded-top rounded-bottom">
+    <table class="table table-bordered" id="myTable">
+        <thead>
+            <tr class="table-warning">
+                <th scope="col">
+                    ID
+                </th>
+                <th scope="col">
+                    Name
+                </th>
+                <th style=" width:15%" scope="col">Picture</th>
+                <th style=" width:15%" scope="col">
+                    Price
+                </th>
+                <th style=" width:15%" scope="col">
+                    Total Quantity
+                </th>
+                <th class="align-middle" style=" width:10%;" scope="col">Alter</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.BookDiscounts)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdBookNavigation.IdBook)
+                    </td>
+                    <td>
+                        @item.IdBookNavigation.BookName
+                    </td>
+                    <td class="align-middle text-center">
+                        <img style="height:120px;width:auto;" class="card-img-top " src=@item.IdBookNavigation.Picture
+                             alt="Card image cap">
+                    </td>
+                    <td>
+                        @(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", item.IdBookNavigation.Price)) VNĐ
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdBookNavigation.TotalQuantity)
+                    </td>
+
+                    <td class="align-middle text-center">
+                        <form asp-action="Delete" asp-route-id="@item.IdDiscount" onsubmit="return ajaxDeleteBook(this,'khuyến mãi');" class="d-inline">
+                            <button type="submit" class="btn btn-danger btn__delete--book">
+                                <i style="color:black;" class="far fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>

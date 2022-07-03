@@ -103,5 +103,12 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
                 return BadRequest("Xóa khuyến mãi thất bại!!");
             }
         }
+
+
+        public IActionResult BookDiscount(long id)
+        {
+            ViewData["Discount"] = "active";
+            return View("/Views/Admin/Discount/BookDiscount.cshtml", discountService.findDiscountWithBookById(id));
+        }
     }
 }
