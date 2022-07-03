@@ -1,0 +1,102 @@
+﻿@model List<int>;
+
+@{
+    ViewData["Title"] = "Statisticts";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="~/css/Admin/Statisticts.css" />
+
+<div class="statistics_card row  mb-5">
+    <div class=" col-md-3 animated fadeIn">
+        <div class="card prod-p-card card-red" style="background-color: #FF5370">
+            <div class="card-body">
+                <div class="row align-items-center m-b-30">
+                    <div class="col">
+                        <h6 class="m-b-5 text-white">Total Profit</h6>
+                        <h5 class="m-b-0 f-w-700 text-white"> @ViewData["TotalProfit"] VNĐ</h5>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-money-bill-alt text-c-red f-18"></i>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class=" col-md-3 animated fadeIn">
+        <div class="card prod-p-card card-red" style="background-color: #4099FF">
+            <div class="card-body">
+                <div class="row align-items-center m-b-30">
+                    <div class="col">
+                        <h6 class="m-b-5 text-white">Total Oders</h6>
+                        <h5 class="m-b-0 f-w-700 text-white">@ViewData["TotalOder"]</h5>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-database text-c-blue f-18"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class=" col-md-3 animated fadeIn">
+        <div class="card prod-p-card card-red" style="background-color: #2ed8b6">
+            <div class="card-body">
+                <div class="row align-items-center m-b-30">
+                    <div class="col">
+                        <h6 class="m-b-5 text-white">Average Price</h6>
+                        <h5 class="m-b-0 f-w-700 text-white">@ViewData["AveragePrice"] VNĐ</h5>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-dollar-sign text-c-green f-18"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class=" col-md-3 animated fadeIn">
+        <div class="card prod-p-card card-red" style="background-color: #FFB64D">
+            <div class="card-body">
+                <div class="row align-items-center m-b-30">
+                    <div class="col">
+                        <h6 class="m-b-5 text-white">Total Users</h6>
+                        <h5 class="m-b-0 f-w-700 text-white">150</h5>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-tags text-c-yellow f-18"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="card mb-4">
+    <div class="row p-2">
+        <div class="col-md-10"></div>
+        @*<form method="post" class="col-md-2 d-flex" asp-controller="Statistict" asp-action="GetMoneyPerMonthByYear" > 
+            <select id="year" name="year">
+                @foreach(var year in Model)
+            {
+                <option value="@year">@year</option>
+            }
+            </select>
+            <button type="submit" class="btn btn-info ml-1">Xem</button>
+        </form>*@
+    </div>
+
+    <div class="card-body"><canvas id="myAreaChart" width="100%" height="30"></canvas></div>
+    <div style="font-size: 24px" class="align-middle m-2 text-center">
+        <i class="fas fa-chart-area me-1"></i>
+        THỐNG KÊ DOANH THU
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="~/js/Admin/statistictHandler.js" asp-append-version="true"></script>

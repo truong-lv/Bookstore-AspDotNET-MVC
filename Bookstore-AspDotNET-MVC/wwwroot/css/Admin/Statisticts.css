@@ -1,0 +1,57 @@
+﻿.prod-p-card i {
+    background-color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    padding: 11px 0;
+    font-size: 18px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    -webkit-box-shadow: 0 8px 15px rgb(62 57 107 / 20%);
+    box-shadow: 0 8px 15px rgb(62 57 107 / 20%);
+}
+
+.text-c-red {
+    color: #FF5370;
+}
+
+.text-c-blue {
+    color: #4099ff;
+}
+
+.text-c-green {
+    color: #2ed8b6;
+}
+
+.text-c-yellow {
+    color: #FFB64D;
+}
+
+.f-w-700 {
+    font-weight: 700;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.label {
+    border-radius: 4px;
+    font-size: 75%;
+    padding: 4px 7px;
+    margin-right: 5px;
+    font-weight: 400;
+    color: #fff;
+}
+
+.label {
+    border-radius: 2px;
+    color: #fff;
+    font-size: 12px;
+    line-height: 1;
+    margin-bottom: 0;
+    text-transform: capitalize;
+}

@@ -107,5 +107,57 @@ namespace Bookstore_AspDotNET_MVC.Service
             
             return order;
         }
+
+        public List<float> getMoneyPerMonthByYear(int year)
+        {
+            //Get price in year per month
+            List<float> listPrice = _context.Orders.Where(o => o.OrderDay.Value.Year == year && o.OrderStatus == 2)
+                                                    .GroupBy(o => o.OrderDay.Value.Month)
+                                                    .Select(g => g.Sum(b => b.TotalPrice)).ToList();
+            //Get month with above price 
+            List<int> listMonth = _context.Orders.Where(o => o.OrderDay.Value.Year == year && o.OrderStatus == 2)
+                                                    .GroupBy(o => o.OrderDay.Value.Month)
+                                                    .Select(g=>g.Key).ToList();
+            // Mapping price and month respectively
+            //initial list
+            List<float> listPricePerMonth = new List<float>();
+            for(int i = 0; i <= 11; i++)
+            {
+                listPricePerMonth.Add(0);
+            }
+
+            for(int i=0;i<listPrice.Count;i++)
+            {
+                listPricePerMonth[listMonth[i]] = listPrice[i];
+            }
+
+
+            return listPricePerMonth;
+        }
+
+        public List<int> getListOrderYear()
+        {
+            return _context.Orders.Where(o => o.OrderStatus == 2)
+                                    .GroupBy(o => o.OrderDay.Value.Year)
+                                    .Select(g => g.Key).ToList();
+        }
+
+        public float getTotalProfit()
+        {
+            return _context.Orders.Sum(o => o.TotalPrice);
+        }
+
+        public int getTotalOder()
+        {
+            return _context.Orders.Count();
+        }
+
+        public float getAveragePrice()
+        {
+            int sumYear = this.getListOrderYear().Count();
+            float totalPrice = this.getTotalProfit();
+
+            return totalPrice / sumYear;
+        }
     }
 }

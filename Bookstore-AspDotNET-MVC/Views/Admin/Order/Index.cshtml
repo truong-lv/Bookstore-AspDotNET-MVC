@@ -1,4 +1,5 @@
-﻿@model Bookstore_AspDotNET_MVC.DTO.OrderPagineDTO
+﻿@using System.Globalization;
+@model Bookstore_AspDotNET_MVC.DTO.OrderPagineDTO
 
 @{
     ViewData["Title"] = "OrderManager";
@@ -97,7 +98,7 @@
                     <td class="align-middle text-center">@order.OrderId</td>
                     <td class="align-middle">@order.NameOfCustomer</td>
                     <td class="align-middle text-center">@order.OrderDay</td>
-                    <td class="align-middle text-center">@order.TotalPrice VNĐ</td>
+                    <td class="align-middle text-center"> @(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", order.TotalPrice)) VNĐ</td>
                     @*//0-Chờ duyệt, 1-Đã duyệt, 2-Đã thanh toán, 3-Đã nhận, 4-Yêu cầu hủy(chưa duyệt mới đc y/c ), 5- Đã hủy*@
                     <!-- status order -->
                     <td>
@@ -136,7 +137,7 @@
                                 <!-- <i class="far fa-edit"></i> -->
                             </button>
                         </form>
-                       
+
                     </td>
                 </tr>
             }
@@ -202,9 +203,9 @@
 </div>
 
 @*<div class="container-order-detail animated bounceInDown">
-    <article class="card">
-    </article>
-</div>*@
+        <article class="card">
+        </article>
+    </div>*@
 
 <div class="modal" tabindex="-1" role="dialog" id="form-modal">
     <div class="modal-dialog" role="document">
@@ -213,7 +214,7 @@
                 <article class="card">
                 </article>
             </div>
-            
+
         </div>
     </div>
 </div>

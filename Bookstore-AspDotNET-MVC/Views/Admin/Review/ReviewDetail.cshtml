@@ -1,4 +1,5 @@
-﻿@model Bookstore_AspDotNET_MVC.Models.Book
+﻿@using System.Globalization;
+@model Bookstore_AspDotNET_MVC.Models.Book
 
 @{
     ViewData["Title"] = "ReviewDetail";
@@ -33,7 +34,7 @@
                         <p>Ngày xuất bản: <strong>@Model.PublishDay.ToShortDateString()</strong></p>
                     </div>
                 </div>
-                <h5 class="text-danger">@Model.Price VNĐ</h5>
+                <h5 class="text-danger"> @(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", Model.Price)) VNĐ</h5>
                 <p class="text-muted">Số lượng tồn: <strong>@Model.TotalQuantity</strong></p>
             </div>
 
@@ -54,12 +55,15 @@
             </div>
             <div class="panel-body">
                 <ul class="list-group">
-                    @foreach(var review in Model.Reviews) {
+                    @foreach (var review in Model.Reviews)
+                    {
                         <li class="list-group-item animated fadeInDown">
                             <div class="row">
                                 <div class="col-xs-1 col-md-1">
-                                    @if (review.User.Gender == 0) {<img src="~/image/user.png" class="img-circle img-responsive" alt="" style="width:60px" />}
-                                    else { <img src="~/image/user-girl.png" class="img-circle img-responsive" alt="" style="width:60px" />}
+                                    @if (review.User.Gender == 0)
+                                    {<img src="~/image/user.png" class="img-circle img-responsive" alt="" style="width:60px" />}
+                                    else
+                                    { <img src="~/image/user-girl.png" class="img-circle img-responsive" alt="" style="width:60px" />}
                                 </div>
                                 <div class="col-xs-10 col-md-10">
                                     <div>
@@ -111,7 +115,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-1 col-md-1">
-                                    <form asp-action="Delete" asp-route-idBook="@review.IdBook"asp-route-idUser="@review.UserId" onsubmit="return ajaxDeleteReview(this);" class="d-inline">
+                                    <form asp-action="Delete" asp-route-idBook="@review.IdBook" asp-route-idUser="@review.UserId" onsubmit="return ajaxDeleteReview(this);" class="d-inline">
                                         <button type="submit" class="btn btn-danger">
                                             <i style="color:black;" class="far fa-trash-alt"></i>
                                         </button>

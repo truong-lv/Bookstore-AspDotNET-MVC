@@ -19,5 +19,15 @@ namespace Bookstore_AspDotNET_MVC.IService
 
         Order findOrderById(long id);
 
+        List<float> getMoneyPerMonthByYear(int year);
+
+        List<int> getListOrderYear();
+
+        float getTotalProfit();
+
+        int getTotalOder();
+
+        float getAveragePrice();
+
     }
 }

@@ -9,6 +9,8 @@
           crossorigin="anonymous" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/Admin/AdminStyle.css" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
     <header>
@@ -58,7 +60,7 @@
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column nav-style" style="font-size:1rem;">
                         <li class="nav-item">
-                            <a class="nav-link">
+                            <a class="nav-link @ViewData["Statistict"]" asp-controller="Statistict" asp-action="Index">
                                 <i class="fas fa-chart-area mr-2"></i>Statistics
                             </a>
                         </li>
@@ -117,7 +119,7 @@
             </div>
         </footer>
     </div>
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         

@@ -1,4 +1,5 @@
-﻿@model Bookstore_AspDotNET_MVC.DTO.BookPagineDTO
+﻿@using System.Globalization;
+@model Bookstore_AspDotNET_MVC.DTO.BookPagineDTO
 
 @{
     ViewData["Title"] = "BookManager";
@@ -53,7 +54,7 @@
                              alt="Card image cap">
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Price) VNĐ
+                        @(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", item.Price)) VNĐ
                     </td>
 
                     <td>
@@ -72,7 +73,7 @@
                         </form>
                     </td>
                 </tr>
-}
+            }
         </tbody>
     </table>
 
