@@ -38,34 +38,6 @@ namespace Bookstore_AspDotNET_MVC.Controllers
             return View("Views/Login/LoginPage.cshtml",objLoginModel);
         }
 
-        // POST: login with username vs password
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        //public ActionResult Login(String username, String pass)
-        //{
-
-        //    var user = _context.Userinfors.Where(u => u.Username == username && u.Password == pass).FirstOrDefault();
-        //    if (user != null)
-        //    {
-        //        int checkAdmin = user.UserRoles.Count(ur => ur.IdRole == 1);
-        //        HttpContext.Session.SetString("username", user.Username);
-        //        if (checkAdmin == 0)
-        //        {
-        //            HttpContext.Session.SetString("role", "ROLE_USER");
-        //        }
-        //        else
-        //        {
-        //            HttpContext.Session.SetString("role", "ROLE_ADMIN");
-        //        }
-        //        return Redirect(Url.Action("Index", "BookManager"));
-        //    }
-        //    else
-        //    {
-        //        TempData["ThongBao"] = "Tài khoản hoặc mật khẩu không hợp lệ";
-        //        return RedirectToAction(nameof(Login));
-        //    }
-
-        //}
 
 
         [HttpPost]
