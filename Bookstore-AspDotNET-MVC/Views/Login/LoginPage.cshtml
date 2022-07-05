@@ -1,4 +1,4 @@
-﻿
+﻿@model Bookstore_AspDotNET_MVC.Models.LoginModel
 
 @{
     ViewData["Title"] = "Login";
@@ -10,22 +10,34 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
-        {
+        <form asp-action="Login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (!string.IsNullOrEmpty(ViewBag.Message))
+            {
+                <span class="text-danger">
+                    @ViewBag.Message
+                </span>
+            }
             <div class="form-group">
-                <label for="userName" class="control-label">Tài khoản:</label>
-                <input id="userName" name="username" class="form-control" />
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="passWord" class="control-label">Mật khẩu:</label>
-                <input id="passWord" name="pass" class="form-control" type="password" />
-                <span class="text-danger">@mes</span>
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-            
             <div class="form-group">
-                <input type="submit" value="Đăng nhập" class="btn btn-primary" id="btn-login" />
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="RememberLogin" /> @Html.DisplayNameFor(model => model.RememberLogin)
+                    </label>
+                </div>
             </div>
-        }
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
-</div>
-
+</div>     

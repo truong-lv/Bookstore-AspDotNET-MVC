@@ -2,6 +2,8 @@
 using Bookstore_AspDotNET_MVC.IService;
 using Bookstore_AspDotNET_MVC.Models;
 using Bookstore_AspDotNET_MVC.Service;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Bookstore_AspDotNET_MVC.Controllers.Admin
 {
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "ROLE_ADMIN")]
     public class ReviewManagerController : Controller
     {
         private readonly ILogger<ReviewManagerController> _logger;

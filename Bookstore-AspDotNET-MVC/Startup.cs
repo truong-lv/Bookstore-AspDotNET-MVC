@@ -1,6 +1,7 @@
 ﻿using Bookstore_AspDotNET_MVC.Data;
 using Bookstore_AspDotNET_MVC.IService;
 using Bookstore_AspDotNET_MVC.Service;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -29,7 +30,6 @@ namespace Bookstore_AspDotNET_MVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
             var connectionString = Configuration.GetConnectionString("BOOKSTOREDatabase");
 
             services.AddDbContext<BOOKSTOREContext>(options=>options.UseSqlServer(connectionString));
@@ -42,6 +42,8 @@ namespace Bookstore_AspDotNET_MVC
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IReviewService, ReviewService>();
             services.AddScoped<IDiscountService, DiscountService>();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSession(options =>
@@ -80,7 +82,6 @@ namespace Bookstore_AspDotNET_MVC
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Auth}/{action=Login}");
-
             });
         }
     }

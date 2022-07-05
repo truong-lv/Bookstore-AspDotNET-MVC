@@ -1,5 +1,7 @@
 ﻿using Bookstore_AspDotNET_MVC.Data;
 using Bookstore_AspDotNET_MVC.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;

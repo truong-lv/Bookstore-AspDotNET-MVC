@@ -3,6 +3,8 @@ using Bookstore_AspDotNET_MVC.DTO;
 using Bookstore_AspDotNET_MVC.IService;
 using Bookstore_AspDotNET_MVC.Models;
 using Bookstore_AspDotNET_MVC.Service;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace Bookstore_AspDotNET_MVC.Controllers.Admin
 {
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "ROLE_ADMIN")]
     public class BookManagerController : Controller
     {
         private readonly ILogger<BookManagerController> _logger;
@@ -30,6 +33,7 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
             this.categoryService = categoryService;
             this.companyService = companyService;
         }
+        //[Authorize]
         // GET: BookManagerController
         public ActionResult Index(int currentPageIndex=1)
         {

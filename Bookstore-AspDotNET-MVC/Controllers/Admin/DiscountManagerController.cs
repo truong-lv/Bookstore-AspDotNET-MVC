@@ -8,9 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using Bookstore_AspDotNET_MVC.Data;
 using Bookstore_AspDotNET_MVC.Models;
 using Bookstore_AspDotNET_MVC.IService;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bookstore_AspDotNET_MVC.Controllers.Admin
 {
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "ROLE_ADMIN")]
     public class DiscountManagerController : Controller
     {
         private readonly IDiscountService discountService;
