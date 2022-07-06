@@ -76,12 +76,13 @@ namespace Bookstore_AspDotNET_MVC
 
             app.UseStatusCodePages();
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Auth}/{action=Login}");
+                    pattern: "{controller=Home}/{action=Index}");
             });
         }
     }

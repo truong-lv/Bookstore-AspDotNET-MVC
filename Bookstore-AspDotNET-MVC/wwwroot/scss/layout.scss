@@ -1,0 +1,35 @@
+﻿.header {
+    background-color: steelblue;
+    display: flex;
+    min-height: 65px;
+    align-items: center;
+
+    a {
+        text-decoration: none !important;
+        color: white !important;
+    }
+
+    &--navbar {
+        .navbar_brand {
+            font-size: 1.5rem !important;
+        }
+
+        .navbar_nav {
+            text-align: center;
+            list-style-type: none;
+        }
+    }
+}
+
+.footer {
+    background-color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 15px 0;
+
+    .content {
+        margin-top: 5px;
+        word-wrap: break-word;
+    }
+}

@@ -3,42 +3,60 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Bookstore_AspDotNET_MVC</title>
+    <title>@ViewData["Title"]</title>
     <link rel="icon" type="image/png" sizes="32x32" href="~/image/icon-book-shop-64.png" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/reset.css" />
+    <link rel="stylesheet" href="~/css/grid.css" />
+    <link rel="stylesheet" href="~/css/layout.css" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Bookstore</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Giỏ hàng</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    <header class="header">
+        <nav class="header--navbar grid wide row">
+            <a class="navbar_brand c-10 " asp-area="" asp-controller="Home" asp-action="Index">Bookstore</a>
+
+            <ul class="navbar_nav c-2 row">
+                <li class="nav_item c-6">
+                    <a class="nav_link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Giỏ hàng</a>
+                </li>
+                <li class="nav_item c-6">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a class="nav_link" asp-area="" asp-controller="Auth" asp-action="Logout">Đăng xuất</a>
+                    }
+                    else
+                    {
+                        <a class="nav_link" asp-area="" asp-controller="Auth" asp-action="Login">Đăng nhập</a>
+                    }
+                </li>
+            </ul>
         </nav>
     </header>
-    <div class="container">
+
+    <div class="container grid wide">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - Bookstore_AspDotNET_MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="footer">
+        <div class="container grid wide row">
+           <div class="col c-4">
+               <strong>GIỚI THIỆU</strong>
+               <div class="content">
+               Bookstore.com nhận đặt hàng trực tuyến và giao hàng tận nơi. KHÔNG hỗ trợ đặt mua và nhận hàng trực tiếp tại văn phòng cũng như tất cả Hệ Thống Bookstore trên toàn quốc.</div>
+           </div>
+           <div class="col c-4">
+               <strong>LIÊN HỆ</strong>
+               <div class="content">
+                   60-62 Lê Lợi, Q.1, TP. HCM
+               </div>
+           </div>
+           <div class="col c-4">
+               <strong>TRUY CẬP NHANH</strong>
+               <div class="content">
+                   Bookstore.com 
+               </div>
+           </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
