@@ -1,4 +1,6 @@
 ﻿using Bookstore_AspDotNET_MVC.Data;
+using Bookstore_AspDotNET_MVC.DTO;
+using Bookstore_AspDotNET_MVC.IService;
 using Bookstore_AspDotNET_MVC.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -15,17 +17,24 @@ namespace Bookstore_AspDotNET_MVC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly BOOKSTOREContext _context;
+        private readonly IBookService bookService;
+        private readonly IAuthorService authorService;
+        private readonly ICategoryService categoryService;
+        private readonly ICompanyService companyService;
 
-        public HomeController(ILogger<HomeController> logger, BOOKSTOREContext context)
+        public HomeController(ILogger<HomeController> logger, BOOKSTOREContext context, IBookService bookService, IAuthorService authorService, ICategoryService categoryService, ICompanyService companyService)
         {
             _logger = logger;
-            _context = context;
+            this.bookService = bookService;
+            this.authorService = authorService;
+            this.categoryService = categoryService;
+            this.companyService = companyService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int currentPageIndex = 1)
         {
-            List<Book> books = _context.Books.ToList();
+            BookPagineDTO books = bookService.GetBooks(currentPageIndex);
+            ViewBag.listCategory = categoryService.getAllCategory();
             return View(books);
         }
 

@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link rel="icon" type="image/png" sizes="32x32" href="~/image/icon-book-shop-64.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+          crossorigin="anonymous" />
+
     <link rel="stylesheet" href="~/css/reset.css" />
     <link rel="stylesheet" href="~/css/grid.css" />
     <link rel="stylesheet" href="~/css/layout.css" />
@@ -12,28 +15,40 @@
 <body>
     <header class="header">
         <nav class="header--navbar grid wide row">
-            <a class="navbar_brand c-10 " asp-area="" asp-controller="Home" asp-action="Index">Bookstore</a>
+            <a class="navbar_brand c-6 " asp-area="" asp-controller="Home" asp-action="Index">
+                <img class="navbar_brand--icon" src="~/image/icon-book-shop-64.png" />&nbsp;
+                <span class="navbar_brand--name">Bookstore</span>
+            </a>
 
-            <ul class="navbar_nav c-2 row">
-                <li class="nav_item c-6">
-                    <a class="nav_link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Giỏ hàng</a>
+            <ul class="navbar_nav c-6">
+                <li class="nav_item">
+                    <a class="nav_link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">
+                        <i class="fas fa-shopping-cart"></i>
+                        Giỏ hàng
+                    </a>
                 </li>
-                <li class="nav_item c-6">
+                <li class="nav_item">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a class="nav_link" asp-area="" asp-controller="Auth" asp-action="Logout">Đăng xuất</a>
+                        <a class="nav_link" asp-area="" asp-controller="Auth" asp-action="Logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Đăng xuất
+                        </a>
                     }
                     else
                     {
-                        <a class="nav_link" asp-area="" asp-controller="Auth" asp-action="Login">Đăng nhập</a>
+                        <a class="nav_link" asp-area="" asp-controller="Auth" asp-action="Login">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Đăng nhập
+                        </a>
                     }
                 </li>
             </ul>
         </nav>
     </header>
 
-    <div class="container grid wide">
-        <main role="main" class="pb-3">
+    <div class="container">
+        <main role="main" class="grid wide">
             @RenderBody()
         </main>
     </div>

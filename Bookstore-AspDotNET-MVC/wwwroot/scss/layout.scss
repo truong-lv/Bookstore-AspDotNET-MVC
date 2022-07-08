@@ -12,14 +12,40 @@
     &--navbar {
         .navbar_brand {
             font-size: 1.5rem !important;
+            display: flex;
+            align-items: center;
+
+            &--icon {
+                width: 50px;
+            }
+
+            &--name {
+                font-weight: 100;
+                font-family: Arial, Helvetica, sans-serif;
+            }
         }
 
         .navbar_nav {
+            display: flex;
+            justify-content: end;
+            align-items: center;
             text-align: center;
             list-style-type: none;
+            .nav_item{
+                margin-left: 30px;
+
+                :hover{
+                    color:aquamarine;
+                }
+            }
         }
     }
 }
+
+.container{
+    margin:10px 0;
+}
+
 
 .footer {
     background-color: white;
