@@ -56,6 +56,30 @@
     }
 }
 
+.topbuy {
+    margin-top: 10px;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+
+    &-caption {
+        font-weight: bold;
+        width: 100%;
+        padding: 8px;
+
+        img {
+            width: 30px;
+            height: auto
+        }
+    }
+
+    .items-wrap {
+        height: 280px;
+        min-width: 250px;
+        margin-bottom: 8px;
+    }
+}
+
 
 .card-body .itemside, .itemside {
     position: relative;
@@ -79,7 +103,6 @@
 
 .card-body .itemside .aside, .itemside .aside {
     position: relative;
-    -ms-flex-negative: 0;
     flex-shrink: 0
 }
 

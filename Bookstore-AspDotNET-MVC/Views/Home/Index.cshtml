@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="~/css/home.css" />
 <link rel="stylesheet" href="~/css/sliderStyle.css" />
 <!--Slick Carousel Slider-->
+<link rel="stylesheet" type="text/css" href="~/css/slick/slick.css" />
+<link rel="stylesheet" type="text/css" href="~/css/slick/slick-theme.css" />
 <!-- ======================================INTRO====================================== -->
 <div class="row intro">
     <div class="col c-3 category">
@@ -50,16 +52,16 @@
 </div>
 
 <!-- ===============================SLIDER SLICK TOP BUY====================================== -->
-<div class="row card topbuy" style="align-items: center;">
-    <div class="font-weight-bold w-100 p-2">
-        <img style="width: 30px; height: auto" src="~/image/ico_dealhot.png">&ensp;
+<div class="row topbuy card">
+    <div class="topbuy-caption ">
+        <img src="~/image/ico_dealhot.png">&ensp;
         <strong>SÁCH ĐƯỢC YÊU THÍCH</strong>
     </div> <br>
-    <div class="items">
-        @foreach(var topBook in ViewBag.listTopBuy)
-         {
-            <div class="col-md-4 col-lg-3 wow bounceIn mb-3" style="height: 280px;min-width: 250px">
-                <a href="#" class="itemside border">
+    <div class="items row">
+        @foreach (var topBook in ViewBag.listTopBuy)
+        {
+            <div class="col c-3 items-wrap">
+                <a href=@topBook.IdBook class="itemside border">
                     <span class="aside text-center">
                         <img src=@topBook.Picture class="img-sm">
                     </span>
@@ -81,3 +83,14 @@
 
 
 <script src="~/js/mySlider.js" asp-append-version="true"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.items').slick({
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 2000,
+        });
+    });
+</script>

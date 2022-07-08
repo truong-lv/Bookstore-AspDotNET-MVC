@@ -90,13 +90,12 @@ namespace Bookstore_AspDotNET_MVC.Service
         public List<Book> getTopBuy()
         {
 
-            List<Book> list =  _context.Orders.Where(o=>o.OrderStatus==1)
-                               .Join(_context.OrderDetails,o=>o.OrderId ,od=>od.OrderId,(o,od)=> od)
-                               .Join(_context.Books, od => od.IdBook, b => b.IdBook, (o, b) => b)
-                               .Include(b=>b.IdAuthorNavigation).ToList()
-                               .GroupBy(b => b.IdBook)
-                               .OrderByDescending(b => b.Sum(x => x.IdBook)).SelectMany(g=>g)
-                               .Take(10).ToList();
+            List<Book> list =  _context.OrderDetails.Where(o=>o.Order.OrderStatus==1)
+                               .Include(od=>od.IdBookNavigation)
+                               .ThenInclude(b => b.IdAuthorNavigation).ToList()
+                               .GroupBy(ob => ob.IdBookNavigation)
+                               .OrderByDescending(b => b.Sum(x => x.IdBook)).Select(b=>b.Key)
+                               .ToList();
             return list;
         }
     }

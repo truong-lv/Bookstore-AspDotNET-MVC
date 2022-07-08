@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="~/css/reset.css" />
     <link rel="stylesheet" href="~/css/grid.css" />
     <link rel="stylesheet" href="~/css/layout.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
     <header class="header">
@@ -55,28 +56,30 @@
 
     <footer class="footer">
         <div class="container grid wide row">
-           <div class="col c-4">
-               <strong>GIỚI THIỆU</strong>
-               <div class="content">
-               Bookstore.com nhận đặt hàng trực tuyến và giao hàng tận nơi. KHÔNG hỗ trợ đặt mua và nhận hàng trực tiếp tại văn phòng cũng như tất cả Hệ Thống Bookstore trên toàn quốc.</div>
-           </div>
-           <div class="col c-4">
-               <strong>LIÊN HỆ</strong>
-               <div class="content">
-                   60-62 Lê Lợi, Q.1, TP. HCM
-               </div>
-           </div>
-           <div class="col c-4">
-               <strong>TRUY CẬP NHANH</strong>
-               <div class="content">
-                   Bookstore.com 
-               </div>
-           </div>
+            <div class="col c-4">
+                <strong>GIỚI THIỆU</strong>
+                <div class="content">
+                    Bookstore.com nhận đặt hàng trực tuyến và giao hàng tận nơi. KHÔNG hỗ trợ đặt mua và nhận hàng trực tiếp tại văn phòng cũng như tất cả Hệ Thống Bookstore trên toàn quốc.
+                </div>
+            </div>
+            <div class="col c-4">
+                <strong>LIÊN HỆ</strong>
+                <div class="content">
+                    60-62 Lê Lợi, Q.1, TP. HCM
+                </div>
+            </div>
+            <div class="col c-4">
+                <strong>TRUY CẬP NHANH</strong>
+                <div class="content">
+                    Bookstore.com
+                </div>
+            </div>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+ 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
