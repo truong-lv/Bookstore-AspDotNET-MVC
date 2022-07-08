@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="wwwroot\image\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties package_1json__JsonSchema="https://json.schemastore.org/pre-commit-config.json" /></VisualStudio></ProjectExtensions>

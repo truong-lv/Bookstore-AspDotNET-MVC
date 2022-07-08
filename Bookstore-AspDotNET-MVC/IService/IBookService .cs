@@ -20,5 +20,7 @@ namespace Bookstore_AspDotNET_MVC.IService
 
         Task<bool> deleteBook(Book book);
 
+        List<Book> getTopBuy();
+
     }
 }
