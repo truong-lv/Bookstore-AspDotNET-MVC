@@ -109,5 +109,19 @@ namespace Bookstore_AspDotNET_MVC.Service
                                .ToList();
             return list;
         }
+
+        public List<Book> getBookSameAuthor(long idAuthor)
+        {
+            List<Book> list = _context.Books.Where(b=>b.IdAuthor==idAuthor)
+                                .Include(b => b.Category)
+                                .Include(b => b.IdAuthorNavigation)
+                                .Include(b => b.IdCompanyNavigation)
+                                .Include(b => b.Reviews)
+                                .ThenInclude(r => r.IdBookNavigation)
+                                .Include(b => b.Reviews)
+                                .ThenInclude(r => r.User).Take(11)
+                               .ToList();
+            return list;
+        }
     }
 }

@@ -57,6 +57,7 @@ namespace Bookstore_AspDotNET_MVC.Controllers
                     //A claim is a statement about a subject by an issuer and    
                     //represent attributes of the subject that are useful in the context of authentication and authorization operations.
                     var claims = new List<Claim>() {
+                        new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                         new Claim(ClaimTypes.Name, user.Username),
                         //new Claim(ClaimTypes.Role, user.UserRoles.ElementAt(0).IdRoleNavigation.RoleName),
                     };

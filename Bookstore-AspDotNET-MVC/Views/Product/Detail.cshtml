@@ -1,10 +1,11 @@
-﻿@model Bookstore_AspDotNET_MVC.Models.Book
+﻿@using System.Globalization;
+@model Bookstore_AspDotNET_MVC.Models.Book
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link rel="stylesheet" href="~/css/bookDetail.css" />
 <link rel="stylesheet" href="~/css/book.css" />
+<link rel="stylesheet" href="~/css/bookDetail.css" />
 
 <div class="row book-detail ">
     <div class="col m-4 l-4" style="text-align: center">
@@ -32,8 +33,12 @@
             </div>
 
 
-            <h3 class="text-danger book-price">@Model.Price VNĐ</h3>
-            <p class="text-muted">Số lượng tồn: <strong>@Model.TotalQuantity</strong></p><br />
+            <p class="text-muted">Số lượng tồn: <strong>@Model.TotalQuantity</strong>
+            <p>
+                Giá:
+                <strong class="text-danger book-price"> @(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", Model.Price)) VNĐ</strong>
+            </p>
+            <br />
             <h3 class="">Đặt hàng</h3>
             <input type="number" id="quantity"
                    class="input-quantity" style="width: 70px" th:value="1"
@@ -47,7 +52,9 @@
 </div>
 
 <div class="row book-description ">
-    <h4 class="description-title">MÔ TẢ SẢN PHẨM</h4>
+    <div class="card-caption">
+        <strong>MÔ TẢ VỀ SÁCH</strong>
+    </div>
     @foreach (var decripton in ViewBag.listDecription)
     {
         <p class="text-muted description-content">@decripton</p>
@@ -55,25 +62,162 @@
     }
 </div>
 
+<!-- ==============================BOOK SAME AUTHOR ======================================-->
+<div class="row topnew card">
+    <div class="card-caption">
+        <strong>SÁCH CÙNG TÁC GIẢ</strong>
+    </div>
 
+    <div class="card-body">
+        <ul class="row items-wrap">
+            @foreach (var newBook in ViewBag.listBookSameAuthor)
+            {
+                <li class="col l-2-4 m-3">
+                    <a class="itemside border" asp-controller="Book" asp-action="ProductDetail" asp-route-id="@newBook.IdBook">
+                        <span class="aside text-center">
+                            <img src=@newBook.Picture class="img-sm">
+                        </span>
+                        <span class="info">
+                            <span class="title" id="book-name">
+                                @newBook.BookName <br>
+                                <span class="text-muted">@newBook.IdAuthorNavigation.AuthorName</span>
+                            </span>
+                            <span class="text-danger font-weight-bold" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", @newBook.Price)) đ</span>
+                        </span>
+                    </a> <br>
+                </li>
 
-<h4 class="p-2 ">ĐÁNH GIÁ SẢN PHẨM</h4>
-<div class="row d-flex justify-content-left">
-    <div class="card-review text-center mb-5">
-        <div class="rate  py-3 ">
-            <div class="form-group">
-                <label for="comment">Ý kiến của bạn về sản phẩm</label>
-                <textarea oninput="saveComment()" class="form-control" id="comment" name="comment" maxlength="199" rows="1"></textarea>
-            </div>
-
-            <div class="buttons px-4 mt-0">
-                <button class="btn btn-warning btn-block rating-submit" onclick="onComment()">
-                    Đánh giá
-                </button>
-            </div>
-        </div>
+            }
+        </ul>
     </div>
 </div>
+
+<!-- ==============================BOOK REVIEW ======================================-->
+<div class="row review">
+    <div class="card-caption">
+        <strong>SÁNH GIÁ SẢN PHẨM</strong>
+    </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        @if (ViewBag.checkReview == false)
+        {
+            <div class="review-container">
+                <div class="card-review text-center mb-5">
+                    <div class="rate  py-3 ">
+                        <div class="rating">
+                            <input type="radio" name="rating" value="5" id="5" checked="checked">
+                            <label for="5">☆</label>
+                            <input type="radio" name="rating" value="4" id="4">
+                            <label for="4">☆</label>
+                            <input type="radio" name="rating" value="3" id="3">
+                            <label for="3">☆</label>
+                            <input type="radio" name="rating" value="2" id="2">
+                            <label for="2">☆</label>
+                            <input type="radio" name="rating" value="1" id="1">
+                            <label for="1">☆</label>
+                        </div>
+                        <div class="comment">
+                            <label for="comment">Ý kiến của bạn về sản phẩm</label>
+                            <textarea class="form-control" id="comment" name="comment"
+                                      maxlength="199" rows="1"></textarea>
+                        </div>
+
+                        <button class="btn-send btn-warning btn-block rating-submit">
+                            Đánh giá
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <div class="container d-flex justify-content-left">
+                <p id="inform-review-message"
+                   style="color: red; font-size: 20px; font-weight: bold">
+                    <i class="fa fa-bell" aria-hidden="true"></i> Bạn đã đánh giá sản
+                    phẩm này!
+                    <button type="button" class="btn btn-info" id="btn-review-again">Đánh giá lại</button>
+                </p>
+
+                <div class="card-review text-center mb-5" id="review-again-block" style="display: none">
+
+                    <div class="rate  py-3 ">
+
+                        <div class="rating">
+                            <input type="radio" name="rating" value="5" id="5"
+                                   th:checked="true"><label for="5">☆</label> <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
+                            <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label> <input type="radio" name="rating" value="2"
+                                                                                                               id="2"><label for="2">☆</label> <input type="radio"
+                                                                                                                                                      name="rating" value="1" id="1"><label for="1">☆</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Ý kiến của bạn về sản phẩm</label>
+                            <textarea class="form-control" id="comment" name="comment"
+                                      maxlength="199" rows="1"></textarea>
+                        </div>
+
+                        <div class="buttons px-4 mt-0">
+                            <button class="btn btn-warning btn-block rating-submit ">
+                                Đánh giá
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="review">
+            <div class="review-container">
+                <p class="message-login">
+                    <i class="fa fa-bell" aria-hidden="true"></i> Hãy đăng nhập và đóng góp cùng cộng đồng BookStore bạn nhé!
+                </p>
+            </div>
+        </div>
+    }
+</div>
+<!-- LOAD COMMENT -->
+<div class="list-comment row ">
+    <div class="col m-12 l-12">
+        @foreach(var review in Model.Reviews)
+        {
+            <div class="row comment-wrap">
+                <div class="col l-1">
+                    @if (review.User.Gender == 0)
+                    {<img src="~/image/user.png" class="img-circle" alt=@review.User.Username />}
+                    else
+                    { <img src="~/image/user-girl.png" class="img-circle" alt=@review.User.Username/>}
+                </div>
+                <div class="l-11 mb-2">
+                    <span style="display: inline">@review.User.Username</span>
+                    @if (review.Star == 1)
+                    {<span style="color: orange">☆</span>}
+                    @if (review.Star == 2)
+                    {<span style="color: orange">☆☆</span>}
+                    @if (review.Star == 3)
+                    {<span style="color: orange">☆☆☆</span>}
+                    @if (review.Star == 4)
+                    {<span style="color: orange">☆☆☆☆</span>}
+                    @if (review.Star == 5)
+                    {<span style="color: orange">☆☆☆☆☆</span>}
+
+                    <!-- <i class="fa fa-user-circle-o" aria-hidden="true"></i> -->
+
+                    <p style=" color: gray">
+                        <i class="fa fa-quote-left" aria-hidden="true"
+                           ></i>@review.Comments <i class="fa fa-quote-right" aria-hidden="true"></i>
+                    </p>
+                    <i class="fas fa-clock"></i>
+                    <p style="display: inline" >@review.Time</p>
+
+                </div>
+            </div>
+         }
+    </div>
+</div>
+
 <script type="text/javascript">
     //Lưu comment vào sessionStorage
     function saveComment() {

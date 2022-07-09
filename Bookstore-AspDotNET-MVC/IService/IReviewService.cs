@@ -16,6 +16,5 @@ namespace Bookstore_AspDotNET_MVC.IService
         Review findReviewById(long idBook, long idUser);
         Task<bool> deleteReview(Review review);
 
-
     }
 }

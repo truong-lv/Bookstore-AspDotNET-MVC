@@ -24,5 +24,8 @@ namespace Bookstore_AspDotNET_MVC.IService
 
         List<Book> getTopNew();
 
+        List<Book> getBookSameAuthor(long idAuthor);
+
+
     }
 }
