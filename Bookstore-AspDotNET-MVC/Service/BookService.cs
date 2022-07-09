@@ -94,7 +94,18 @@ namespace Bookstore_AspDotNET_MVC.Service
                                .Include(od=>od.IdBookNavigation)
                                .ThenInclude(b => b.IdAuthorNavigation).ToList()
                                .GroupBy(ob => ob.IdBookNavigation)
-                               .OrderByDescending(b => b.Sum(x => x.IdBook)).Select(b=>b.Key)
+                               .OrderByDescending(b => b.Sum(x => x.IdBook))
+                               .Take(10)
+                               .Select(b=>b.Key)
+                               .ToList();
+            return list;
+        }
+
+        public List<Book> getTopNew()
+        {
+            List<Book> list = _context.Books
+                               .Include(b => b.IdAuthorNavigation).ToList()
+                               .OrderByDescending(b => b.PublishDay).Take(10)
                                .ToList();
             return list;
         }

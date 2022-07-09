@@ -35,7 +35,8 @@ namespace Bookstore_AspDotNET_MVC.Controllers
         {
             BookPagineDTO books = bookService.GetBooks(currentPageIndex);
             ViewBag.listCategory = categoryService.getAllCategory();
-            ViewBag.listTopBuy=bookService.getTopBuy().Concat(bookService.getTopBuy());
+            ViewBag.listTopBuy=bookService.getTopBuy();
+            ViewBag.listTopNew=bookService.getTopNew();
             return View("~/Views/Home/Home.cshtml",books);
         }
 

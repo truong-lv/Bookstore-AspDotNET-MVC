@@ -22,5 +22,7 @@ namespace Bookstore_AspDotNET_MVC.IService
 
         List<Book> getTopBuy();
 
+        List<Book> getTopNew();
+
     }
 }
