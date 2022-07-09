@@ -40,6 +40,15 @@ namespace Bookstore_AspDotNET_MVC.Controllers
             return View("~/Views/Home/Home.cshtml",books);
         }
 
+        public ActionResult ProductDetail(long id)
+        {
+            Book book = bookService.findBookReviewById(id);
+            string[] listDecription = book.DescribeBook.Split('\n');
+            ViewBag.listDecription = listDecription;
+            ViewData["Title"] = book.BookName;
+            return View("~/Views/Product/Detail.cshtml", book);
+        }
+
         public IActionResult Privacy()
         {
             return View();

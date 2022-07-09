@@ -32,7 +32,7 @@ namespace Bookstore_AspDotNET_MVC.Models
         public string BookName { get; set; }
 
         [DisplayName("Mô tả")]
-        [Column("describe_book", TypeName = "text")]
+        [Column("describe_book", TypeName = "nvarchar(MAX)")]
         public string DescribeBook { get; set; }
 
         [Url(ErrorMessage = "Please enter a valid URL")]

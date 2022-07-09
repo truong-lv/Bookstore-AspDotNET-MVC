@@ -5,7 +5,7 @@
     ViewData["Title"] = "Home";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link rel="stylesheet" href="~/css/home.css" />
+<link rel="stylesheet" href="~/css/book.css" />
 <link rel="stylesheet" href="~/css/sliderStyle.css" />
 <!--Slick Carousel Slider-->
 <link rel="stylesheet" type="text/css" href="~/css/slick/slick.css" />
@@ -62,7 +62,7 @@
         @foreach (var topBook in ViewBag.listTopBuy)
         {
             <div class="col c-3 m-4 items-wrap">
-                <a href=@topBook.IdBook class="itemside border">
+                <a class="itemside border" asp-controller="Book" asp-action="ProductDetail" asp-route-id="@topBook.IdBook">
                     <span class="aside text-center">
                         <img src=@topBook.Picture class="img-sm">
                     </span>
@@ -91,7 +91,7 @@
             @foreach (var newBook in ViewBag.listTopNew)
             {
                 <li class="col l-2-4 m-3">
-                    <a href="#" class="itemside border">
+                    <a  class="itemside border" asp-controller="Book" asp-action="ProductDetail" asp-route-id="@newBook.IdBook">
                         <span class="aside text-center">
                             <img src=@newBook.Picture class="img-sm">
                         </span>
@@ -121,7 +121,7 @@
             @foreach (var book in Model.Books)
             {
                 <li class="col m-3 l-2-4">
-                    <a href="#" class="itemside border">
+                    <a class="itemside border" asp-controller="Book" asp-action="ProductDetail" asp-route-id="@book.IdBook">
                         <span class="aside text-center">
                             <img src=@book.Picture class="img-sm">
                         </span>

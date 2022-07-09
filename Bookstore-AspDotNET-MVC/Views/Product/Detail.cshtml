@@ -1,0 +1,116 @@
+﻿@model Bookstore_AspDotNET_MVC.Models.Book
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/bookDetail.css" />
+<link rel="stylesheet" href="~/css/book.css" />
+
+<div class="row book-detail ">
+    <div class="col m-4 l-4" style="text-align: center">
+        <img class="img-book" src=@Model.Picture
+             alt="Card image cap">
+    </div>
+    <div class="col l-8 m-8">
+        <h1>@Model.BookName</h1>
+        <div class="row col l-12 m-12">
+            <div class="row">
+                <div class="col l-6 m-6">
+                    <p>Tác giả: <strong>@Model.IdAuthorNavigation.AuthorName</strong></p>
+                </div>
+                <div class="col l-6 m-6">
+                    <p>Thể loại: <strong>@Model.Category.Name</strong></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l-6 m-6">
+                    <p>Nhà xuất bản: <strong>@Model.IdCompanyNavigation.CompanyName</strong></p>
+                </div>
+                <div class="col l-6 m-6">
+                    <p>Ngày xuất bản: <strong>@Model.PublishDay.ToShortDateString()</strong></p>
+                </div>
+            </div>
+
+
+            <h3 class="text-danger book-price">@Model.Price VNĐ</h3>
+            <p class="text-muted">Số lượng tồn: <strong>@Model.TotalQuantity</strong></p><br />
+            <h3 class="">Đặt hàng</h3>
+            <input type="number" id="quantity"
+                   class="input-quantity" style="width: 70px" th:value="1"
+                   min="1" max=@Model.TotalQuantity>
+            <button type="button" id="btn-add-to-cart" data-order-id="@Model.IdBook"
+                    class="btn-add-cart wow tada">
+                <i class="fas fa-plus-circle"></i> Thêm giỏ hàng
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="row book-description ">
+    <h4 class="description-title">MÔ TẢ SẢN PHẨM</h4>
+    @foreach (var decripton in ViewBag.listDecription)
+    {
+        <p class="text-muted description-content">@decripton</p>
+
+    }
+</div>
+
+
+
+<h4 class="p-2 ">ĐÁNH GIÁ SẢN PHẨM</h4>
+<div class="row d-flex justify-content-left">
+    <div class="card-review text-center mb-5">
+        <div class="rate  py-3 ">
+            <div class="form-group">
+                <label for="comment">Ý kiến của bạn về sản phẩm</label>
+                <textarea oninput="saveComment()" class="form-control" id="comment" name="comment" maxlength="199" rows="1"></textarea>
+            </div>
+
+            <div class="buttons px-4 mt-0">
+                <button class="btn btn-warning btn-block rating-submit" onclick="onComment()">
+                    Đánh giá
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    //Lưu comment vào sessionStorage
+    function saveComment() {
+        let value = document.getElementById("comment").value;
+        sessionStorage.setItem("recoverComment"+@Model.IdBook, value)
+    }
+    //Load lại comment từ sessionStorage, hàm này tự động chạy khi trang đc load
+    (function loadComment() {
+        let value = sessionStorage.getItem("recoverComment"+@Model.IdBook);
+        console.log(value)
+        document.getElementById("comment").value = value;
+    })()
+    //Clearn sessionStorage khi người dùng nhấn bình luận
+    function onComment(){
+        sessionStorage.removeItem("recoverComment"+@Model.IdBook);
+        document.getElementById("comment").value = "";
+        alert("Bình luận thành công")
+    }
+    $("#btn-add-to-cart").click(function (e) {
+        var bookId = $("#btn-add-to-cart").attr("data-order-id");
+        $.ajax({
+            type: "POST",
+            url: "/Cart/Order?bookId=" + bookId,
+            success: function (value) {
+                console.log(value)
+                alert("Thêm giỏ hàng thành công")
+            }, error: (er) => {
+                console.log(er.responseText)
+                if (er.status == 401) {
+                    const item = {
+                        book_id:@Model.IdBook,
+                        book_name:"@Model.BookName",
+                        price:@Model.Price
+                    }
+                    cart.addItem(item)
+                }
+            }
+        })
+    })
+</script>
