@@ -23,7 +23,7 @@ namespace Bookstore_AspDotNET_MVC.Service
         public BookPagineDTO GetBooks(int currentPage)
         {
             int maxRows = 10;
-            var books = _context.Books.ToList();
+            var books = _context.Books.Include(b=>b.IdAuthorNavigation).ToList();
 
             BookPagineDTO bookPagine = new BookPagineDTO();
 

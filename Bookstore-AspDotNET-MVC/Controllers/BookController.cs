@@ -14,15 +14,15 @@ using System.Threading.Tasks;
 
 namespace Bookstore_AspDotNET_MVC.Controllers
 {
-    public class HomeController : Controller
+    public class BookController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<BookController> _logger;
         private readonly IBookService bookService;
         private readonly IAuthorService authorService;
         private readonly ICategoryService categoryService;
         private readonly ICompanyService companyService;
 
-        public HomeController(ILogger<HomeController> logger, BOOKSTOREContext context, IBookService bookService, IAuthorService authorService, ICategoryService categoryService, ICompanyService companyService)
+        public BookController(ILogger<BookController> logger, BOOKSTOREContext context, IBookService bookService, IAuthorService authorService, ICategoryService categoryService, ICompanyService companyService)
         {
             _logger = logger;
             this.bookService = bookService;
@@ -31,12 +31,12 @@ namespace Bookstore_AspDotNET_MVC.Controllers
             this.companyService = companyService;
         }
 
-        public IActionResult Index(int currentPageIndex = 1)
+        public IActionResult Home(int currentPageIndex = 1)
         {
             BookPagineDTO books = bookService.GetBooks(currentPageIndex);
             ViewBag.listCategory = categoryService.getAllCategory();
             ViewBag.listTopBuy=bookService.getTopBuy().Concat(bookService.getTopBuy());
-            return View(books);
+            return View("~/Views/Home/Home.cshtml",books);
         }
 
         public IActionResult Privacy()

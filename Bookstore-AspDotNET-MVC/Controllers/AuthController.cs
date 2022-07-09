@@ -81,7 +81,7 @@ namespace Bookstore_AspDotNET_MVC.Controllers
 
 
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Home", "Book");
                     //return LocalRedirect("~/BookManager/Index");
                 }
                 else

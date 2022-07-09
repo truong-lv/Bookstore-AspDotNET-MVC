@@ -43,7 +43,13 @@ namespace Bookstore_AspDotNET_MVC
             services.AddScoped<IReviewService, ReviewService>();
             services.AddScoped<IDiscountService, DiscountService>();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
+            {
+                o.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                o.AccessDeniedPath = new PathString("/Erorr/AccessDenied/");
+                o.LoginPath = new PathString("/Erorr/AccessDenied/");
+                //o.LogoutPath = new PathString("/Erorr/AccessDenied/");
+            });
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSession(options =>
@@ -82,7 +88,7 @@ namespace Bookstore_AspDotNET_MVC
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}");
+                    pattern: "{controller=Book}/{action=Home}");
             });
         }
     }
