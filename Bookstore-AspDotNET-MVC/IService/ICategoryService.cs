@@ -11,6 +11,6 @@ namespace Bookstore_AspDotNET_MVC.IService
     {
         List<Category> getAllCategory();
 
-
+        Category getCategoryById(long id);
     }
 }

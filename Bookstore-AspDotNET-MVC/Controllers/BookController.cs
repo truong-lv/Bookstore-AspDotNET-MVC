@@ -67,9 +67,13 @@ namespace Bookstore_AspDotNET_MVC.Controllers
             return View("~/Views/Product/Detail.cshtml", book);
         }
 
-        public IActionResult Privacy()
+        public IActionResult GetBookSameCategory(long idCategory)
         {
-            return View();
+            Category category = categoryService.getCategoryById(idCategory);
+            List<Book> list = bookService.getBookSameCategory(idCategory);
+            ViewData["Title"] = category.Name.ToUpper();
+
+            return View("~/Views/Product/Search.cshtml", list);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

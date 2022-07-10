@@ -1,0 +1,37 @@
+﻿@using System.Globalization;
+@model IEnumerable<Bookstore_AspDotNET_MVC.Models.Book>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/book.css" />
+
+<div class="row topnew card">
+    <div class="card-caption">
+        <i class="fas fa-search"></i>&ensp;
+        <strong>@ViewData["Title"]</strong>
+    </div>
+
+    <div class="card-body c-12">
+        <ul class="row items-wrap">
+            @foreach (var book in Model)
+            {
+                <li class="col l-2-4 m-3">
+                    <a class="itemside border" asp-controller="Book" asp-action="ProductDetail" asp-route-id="@book.IdBook">
+                        <span class="aside text-center">
+                            <img src=@book.Picture class="img-sm">
+                        </span>
+                        <span class="info">
+                            <span class="title" id="book-name">
+                                @book.BookName <br>
+                                <span class="text-muted">@book.IdAuthorNavigation.AuthorName</span>
+                            </span>
+                            <span class="text-danger font-weight-bold" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", book.Price)) đ</span>
+                        </span>
+                    </a> <br>
+                </li>
+
+            }
+        </ul>
+    </div>
+</div>

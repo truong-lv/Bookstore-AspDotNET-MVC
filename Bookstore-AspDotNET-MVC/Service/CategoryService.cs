@@ -21,5 +21,10 @@ namespace Bookstore_AspDotNET_MVC.Service
         {
             return _context.Categories.ToList();
         }
+
+        public Category getCategoryById(long id)
+        {
+            return _context.Categories.Find(id);
+        }
     }
 }

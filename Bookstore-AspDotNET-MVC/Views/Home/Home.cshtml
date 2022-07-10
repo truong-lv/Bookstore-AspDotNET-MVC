@@ -19,7 +19,7 @@
                 @foreach (var category in ViewBag.listCategory)
                 {
                     <li>
-                        <a class="nav-link" asp-action="Category" asp-controller="Home" asp-route-idCategory="@category.CategoryId">@category.Name</a>
+                        <a class="nav-link" asp-action="GetBookSameCategory" asp-controller="Book" asp-route-idCategory="@category.CategoryId">@category.Name</a>
                     </li>
                 }
             </ul>
@@ -86,7 +86,7 @@
         <strong>SÁCH MỚI</strong>
     </div>
 
-    <div class="card-body">
+    <div class="card-body c-12">
         <ul class="row items-wrap">
             @foreach (var newBook in ViewBag.listTopNew)
             {
@@ -116,7 +116,7 @@
         <img src="~/image/icon-goi-y.png">&ensp;
         <strong>GỞI Ý HÔM NAY</strong>
     </div>
-    <div class="card-body">
+    <div class="card-body c-12">
         <ul class="row items-wrap">
             @foreach (var book in Model.Books)
             {

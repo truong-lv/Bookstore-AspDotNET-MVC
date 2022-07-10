@@ -26,6 +26,8 @@ namespace Bookstore_AspDotNET_MVC.IService
 
         List<Book> getBookSameAuthor(long idAuthor);
 
+        List<Book> getBookSameCategory(long idCategory);
+
 
     }
 }

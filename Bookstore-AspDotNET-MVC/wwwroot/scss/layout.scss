@@ -6,7 +6,7 @@ body {
 
 
 .header {
-    background-color: steelblue;
+    background-color: #007bff;
     display: flex;
     min-height: 65px;
     align-items: center;
@@ -38,11 +38,12 @@ body {
             align-items: center;
             text-align: center;
             list-style-type: none;
-            .nav_item{
+
+            .nav_item {
                 margin-left: 30px;
 
-                :hover{
-                    color:aquamarine;
+                :hover {
+                    color: aquamarine;
                 }
             }
         }
