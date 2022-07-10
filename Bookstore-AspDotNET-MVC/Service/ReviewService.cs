@@ -88,6 +88,19 @@ namespace Bookstore_AspDotNET_MVC.Service
             }
         }
 
-       
+        public async Task<bool> addReview(Review review)
+        {
+            try
+            {
+                _context.Add(review);
+                await _context.SaveChangesAsync();
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
     }
 }

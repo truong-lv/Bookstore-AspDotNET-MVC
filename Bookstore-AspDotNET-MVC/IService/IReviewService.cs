@@ -14,7 +14,10 @@ namespace Bookstore_AspDotNET_MVC.IService
         List<StarDTO> getBookStartByIdBook(long id);
 
         Review findReviewById(long idBook, long idUser);
+
         Task<bool> deleteReview(Review review);
+
+        Task<bool> addReview(Review review);
 
     }
 }
