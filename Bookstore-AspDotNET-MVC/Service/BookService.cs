@@ -137,5 +137,18 @@ namespace Bookstore_AspDotNET_MVC.Service
                                .ToList();
             return list;
         }
+
+        public List<Book> getBookKeySearch(string key)
+        {
+            List<Book> books = _context.Books
+                                .Where(b => b.BookName.Contains(key) 
+                                        || b.Category.Name.Contains(key)
+                                        || b.IdAuthorNavigation.AuthorName.Contains(key)
+                                        || b.IdCompanyNavigation.CompanyName.Contains(key))
+                                .Include(b => b.IdAuthorNavigation)
+                                .ToList();
+
+            return books;
+        }
     }
 }

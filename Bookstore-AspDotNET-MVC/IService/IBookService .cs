@@ -28,6 +28,8 @@ namespace Bookstore_AspDotNET_MVC.IService
 
         List<Book> getBookSameCategory(long idCategory);
 
+        List<Book> getBookKeySearch(string key);
+
 
     }
 }

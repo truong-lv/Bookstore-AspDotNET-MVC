@@ -75,6 +75,14 @@ namespace Bookstore_AspDotNET_MVC.Controllers
 
             return View("~/Views/Product/Search.cshtml", list);
         }
+        
+        public IActionResult GetBookSearch(string key)
+        {
+            List<Book> list = bookService.getBookKeySearch(key);
+            ViewData["Title"] = "Kết quả tìm kiếm cho từ khóa '" + key + "'";
+
+            return View("~/Views/Product/Search.cshtml", list);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
