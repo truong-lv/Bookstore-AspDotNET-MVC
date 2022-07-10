@@ -19,5 +19,7 @@ namespace Bookstore_AspDotNET_MVC.IService
 
         Task<bool> addReview(Review review);
 
+        Task<bool> updateReview(Review review);
+
     }
 }

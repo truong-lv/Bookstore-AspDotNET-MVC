@@ -1,4 +1,8 @@
 ﻿@using System.Globalization;
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+{
+    @Html.AntiForgeryToken()
+}
 @model Bookstore_AspDotNET_MVC.Models.Book
 
 @{
@@ -96,14 +100,14 @@
 <!-- ==============================BOOK REVIEW ======================================-->
 <div class="row review">
     <div class="card-caption">
-        <strong>SÁNH GIÁ SẢN PHẨM</strong>
+        <strong>ĐÁNH GIÁ SẢN PHẨM</strong>
     </div>
     @if (User.Identity.IsAuthenticated)
     {
         @if (ViewBag.checkReview == false)
         {
             <div class="review-container">
-                <div class="card-review text-center mb-5">
+                <div class="card-review">
                     <div class="rate  py-3 ">
                         <div class="rating">
                             <input type="radio" name="rating" value="5" id="5" checked="checked">
@@ -119,7 +123,7 @@
                         </div>
                         <div class="comment">
                             <label for="comment">Ý kiến của bạn về sản phẩm</label>
-                            <textarea class="form-control" id="comment" name="comment"
+                            <textarea id="comment" name="comment"
                                       maxlength="199" rows="1"></textarea>
                         </div>
 
@@ -133,16 +137,12 @@
         }
         else
         {
-            <div class="container d-flex justify-content-left">
-                <p id="inform-review-message"
-                   style="color: red; font-size: 20px; font-weight: bold">
-                    <i class="fa fa-bell" aria-hidden="true"></i> Bạn đã đánh giá sản
-                    phẩm này!
-                    <button type="button" class="btn btn-info" id="btn-review-again">Đánh giá lại</button>
+            <div class="review-container">
+                <p id="inform-review-message" >
+                    <i class="fa fa-bell" aria-hidden="true"></i> Bạn đã đánh giá sản phẩm này!
+                    <button type="button" id="btn-review-again">Đánh giá lại</button>
                 </p>
-
-                <div class="card-review text-center mb-5" id="review-again-block" style="display: none">
-
+                <div class="card-review" id="review-again-block" style="display: none">
                     <div class="rate  py-3 ">
                         <div class="rating">
                             <input type="radio" name="rating" value="5" id="5" checked="checked">
@@ -158,7 +158,7 @@
                         </div>
                         <div class="comment">
                             <label for="comment">Ý kiến của bạn về sản phẩm</label>
-                            <textarea class="form-control" id="comment" name="comment"
+                            <textarea id="comment" name="comment"
                                       maxlength="199" rows="1"></textarea>
                         </div>
 
@@ -184,14 +184,14 @@
 <!-- LOAD COMMENT -->
 <div class="list-comment row ">
     <div class="col m-12 l-12">
-        @foreach(var review in Model.Reviews)
+        @foreach (var review in Model.Reviews)
         {
             <div class="row comment-wrap">
                 <div class="col l-1">
                     @if (review.User.Gender == 0)
                     {<img src="~/image/user.png" class="img-circle" alt=@review.User.Username />}
                     else
-                    { <img src="~/image/user-girl.png" class="img-circle" alt=@review.User.Username/>}
+                    { <img src="~/image/user-girl.png" class="img-circle" alt=@review.User.Username />}
                 </div>
                 <div class="l-11 mb-2">
                     <span style="display: inline">@review.User.Username</span>
@@ -209,16 +209,16 @@
                     <!-- <i class="fa fa-user-circle-o" aria-hidden="true"></i> -->
 
                     <p style=" color: gray">
-                        <i class="fa fa-quote-left" aria-hidden="true"
-                           ></i>@review.Comments <i class="fa fa-quote-right" aria-hidden="true"></i>
+                        <i class="fa fa-quote-left" aria-hidden="true"></i>@review.Comments <i class="fa fa-quote-right" aria-hidden="true"></i>
                     </p>
                     <i class="fas fa-clock"></i>
-                    <p style="display: inline" >@review.Time</p>
+                    <p style="display: inline">@review.Time</p>
 
                 </div>
             </div>
-         }
+        }
     </div>
 </div>
 
 <script src="~/js/Ajax/ajaxForCart.js" asp-append-version="true"></script>
+<script src="~/js/Ajax/ajaxForReview.js" asp-append-version="true"></script>

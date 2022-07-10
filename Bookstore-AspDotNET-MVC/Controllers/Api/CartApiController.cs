@@ -26,7 +26,7 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Api
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrUpdate(long bookId, int quantity)
         {
             long userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);

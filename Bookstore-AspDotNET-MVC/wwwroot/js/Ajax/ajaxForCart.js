@@ -1,5 +1,7 @@
 $("#btn-add-to-cart").click(function() {
-			
+	var form = $('#__AjaxAntiForgeryForm');
+	var token = $('input[name="__RequestVerificationToken"]', form).val();
+
 	var id = $("#idBook").val(); 
 	var quantity = $("#quantity").val(); 
 
@@ -13,6 +15,9 @@ $("#btn-add-to-cart").click(function() {
 	$.ajax({
 		type: "POST",
 		url: `/CartApi/AddOrUpdate?bookId=${id}&quantity=${quantity}`,
+		data: {
+			__RequestVerificationToken: token
+		},
 		success: function (value) {
 			$("#quantity").val('');
 			alert(value); 

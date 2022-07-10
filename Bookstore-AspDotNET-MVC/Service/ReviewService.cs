@@ -102,5 +102,20 @@ namespace Bookstore_AspDotNET_MVC.Service
                 return false;
             }
         }
+
+        public async Task<bool> updateReview(Review review)
+        {
+            try
+            {
+                _context.Update(review);
+                await _context.SaveChangesAsync();
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
     }
 }

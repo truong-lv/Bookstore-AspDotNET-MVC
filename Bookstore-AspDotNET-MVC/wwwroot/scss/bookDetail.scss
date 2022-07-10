@@ -139,6 +139,26 @@
             font-size: 20px;
             font-weight: bold
         }
+
+        #inform-review-message {
+            color: red;
+            font-size: 20px;
+            font-weight: bold
+        }
+
+        #btn-review-again {
+            cursor: pointer;
+            color: #fff;
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+            display: inline-block;
+            font-weight: 400;
+            border: 1px solid transparent;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 0.25rem;
+        }
     }
 }
 
