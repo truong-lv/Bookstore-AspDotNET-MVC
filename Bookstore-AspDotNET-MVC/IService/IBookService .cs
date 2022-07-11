@@ -11,6 +11,8 @@ namespace Bookstore_AspDotNET_MVC.IService
     {
         BookPagineDTO GetBooks(int currentPage);
 
+        BookDTOPagine GetBookDTOs(int currentPage);
+
         Book findBookById(long idBook);
 
         Book findBookReviewById(long idBook);
@@ -20,16 +22,17 @@ namespace Bookstore_AspDotNET_MVC.IService
 
         Task<bool> deleteBook(Book book);
 
-        List<Book> getTopBuy();
+        List<BookDTO> getTopBuy();
 
-        List<Book> getTopNew();
+        List<BookDTO> getTopNew();
 
-        List<Book> getBookSameAuthor(long idAuthor);
+        List<BookDTO> getBookSameAuthor(long idAuthor);
 
-        List<Book> getBookSameCategory(long idCategory);
+        List<BookDTO> getBookSameCategory(long idCategory, int quantity=100);
 
-        List<Book> getBookKeySearch(string key);
+        List<BookDTO> getBookKeySearch(string key);
 
+        BookDTO conveBookDTO(long idBook);
 
     }
 }

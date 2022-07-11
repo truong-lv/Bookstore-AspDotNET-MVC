@@ -19,27 +19,21 @@
             else
             {<a class="btn btn-outline-primary" asp-controller="OrderManager" asp-action="Index" asp-route-currentPageIndex="1" asp-route-status="-1">Tất cả</a>}
 
-            @if (Model.Status == 0)
-            {<a class="btn btn-outline-primary active">Chờ duyệt</a> }
-            else
-            {<a class="btn btn-outline-primary" asp-controller="OrderManager" asp-action="Index" asp-route-currentPageIndex="1" asp-route-status="0">Chờ duyệt</a>}
-
             @if (Model.Status == 1)
-            {<a class="btn btn-outline-primary active">Đã duyệt </a>}
+            {<a class="btn btn-outline-primary active">Đang xử lý</a> }
             else
-            {<a class="btn btn-outline-primary" asp-controller="OrderManager" asp-action="Index" asp-route-currentPageIndex="1" asp-route-status="1">Đã duyệt</a>}
-
+            {<a class="btn btn-outline-primary" asp-controller="OrderManager" asp-action="Index" asp-route-currentPageIndex="1" asp-route-status="1">Đang xử lý</a>}
 
             @if (Model.Status == 2)
-            {<a class="btn btn-outline-primary active">Đã nhận</a>}
+            {<a class="btn btn-outline-primary active">Đang giao hàng</a>}
             else
-            {<a class="btn btn-outline-primary" asp-controller="OrderManager" asp-action="Index" asp-route-currentPageIndex="1" asp-route-status="2">Đã nhận</a>}
+            {<a class="btn btn-outline-primary" asp-controller="OrderManager" asp-action="Index" asp-route-currentPageIndex="1" asp-route-status="2">Đang giao hàng</a>}
+
 
             @if (Model.Status == 3)
-            {<a class="btn btn-outline-primary active">Yêu cầu hủy</a>}
+            {<a class="btn btn-outline-primary active">Đã giao hàng</a>}
             else
-            {<a class="btn btn-outline-primary" asp-controller="OrderManager" asp-action="Index" asp-route-currentPageIndex="1" asp-route-status="3">Yêu cầu hủy</a>}
-
+            {<a class="btn btn-outline-primary" asp-controller="OrderManager" asp-action="Index" asp-route-currentPageIndex="1" asp-route-status="3">Đã giao hàng</a>}
             @if (Model.Status == 4)
             {<a class="btn btn-outline-primary active">Đã hủy</a>}
             else
@@ -103,29 +97,22 @@
                     <!-- status order -->
                     <td>
 
-                        @if (order.OrderStatus == 0)
-                        {<p>Chờ duyệt</p>
+                        @if (order.OrderStatus == 1)
+                        {<p>Đang xử lý</p>
                             <form asp-action="OrderConfirm" asp-route-id="@order.OrderId" class="d-inline" onsubmit="return orderConfirmHandler(this)">
                                 <button type="submit" class="btn btn-outline-primary">
                                     Xác nhận duyệt
                                 </button>
                             </form>}
 
-                        @if (order.OrderStatus == 1)
-                        {<p>Đã duyệt</p>}
-
                         @if (order.OrderStatus == 2)
-                        {<p>Đã nhận</p>}
+                        {<p>Đang giao hàng</p>}
 
                         @if (order.OrderStatus == 3)
-                        {<p>Yêu cầu nhận hủy</p>
-                            <form asp-action="OrderCancle" asp-route-id="@order.OrderId" class="d-inline" onsubmit="return orderCancleHandler(this)">
-                                <button type="submit" class="btn btn-outline-danger">
-                                    Xác nhận hủy
-                                </button>
-                            </form>}
+                        {<p>Đã giao hàng</p>}
+
                         @if (order.OrderStatus == 4)
-                        {<p>Đã hủy</p>}
+                        {<p>Đã huỷ</p>}
 
                     </td>
 

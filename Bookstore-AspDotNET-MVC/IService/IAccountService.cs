@@ -19,5 +19,7 @@ namespace Bookstore_AspDotNET_MVC.IService
         Task<bool> updateUser(Userinfor user);
         Task<bool> deleteUser(Userinfor user);
 
+        long getTotalUser();
+
     }
 }

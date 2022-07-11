@@ -16,10 +16,12 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
     {
         private readonly ILogger<StatistictController> _logger;
         private readonly IOrderService orderService;
-        public StatistictController(ILogger<StatistictController> logger, IOrderService orderService)
+        private readonly IAccountService accountService;
+        public StatistictController(ILogger<StatistictController> logger, IOrderService orderService, IAccountService accountService)
         {
             this._logger = logger;
             this.orderService = orderService;
+            this.accountService = accountService;
         }
 
         public IActionResult Index()
@@ -28,6 +30,8 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
             @ViewData["TotalProfit"] = String.Format(CultureInfo.InvariantCulture, "{0:0,0}", orderService.getTotalProfit());
             @ViewData["TotalOder"] = orderService.getTotalOder();
             @ViewData["AveragePrice"] =String.Format(CultureInfo.InvariantCulture, "{0:0,0}", orderService.getAveragePrice());
+            @ViewData["TotalUser"] = accountService.getTotalUser();
+
             List<int> listYear = orderService.getListOrderYear();
 
             return View("/Views/Admin/Statisticts/Statisticts.cshtml", listYear);

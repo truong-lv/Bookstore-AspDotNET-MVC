@@ -75,7 +75,7 @@ namespace Bookstore_AspDotNET_MVC.Service
             var order = _context.Orders.Find(id);
             if (order == null) return false;
 
-            order.OrderStatus = 1;
+            order.OrderStatus = 2;
             _context.Update(order);
             await _context.SaveChangesAsync();
             return true;
@@ -111,11 +111,11 @@ namespace Bookstore_AspDotNET_MVC.Service
         public List<float> getMoneyPerMonthByYear(int year)
         {
             //Get price in year per month
-            List<float> listPrice = _context.Orders.Where(o => o.OrderDay.Value.Year == year && o.OrderStatus == 2)
+            List<float> listPrice = _context.Orders.Where(o => o.OrderDay.Value.Year == year && o.OrderStatus == 3)
                                                     .GroupBy(o => o.OrderDay.Value.Month)
                                                     .Select(g => g.Sum(b => b.TotalPrice)).ToList();
             //Get month with above price 
-            List<int> listMonth = _context.Orders.Where(o => o.OrderDay.Value.Year == year && o.OrderStatus == 2)
+            List<int> listMonth = _context.Orders.Where(o => o.OrderDay.Value.Year == year && o.OrderStatus == 3)
                                                     .GroupBy(o => o.OrderDay.Value.Month)
                                                     .Select(g=>g.Key).ToList();
             // Mapping price and month respectively
@@ -137,7 +137,7 @@ namespace Bookstore_AspDotNET_MVC.Service
 
         public List<int> getListOrderYear()
         {
-            return _context.Orders.Where(o => o.OrderStatus == 2)
+            return _context.Orders.Where(o => o.OrderStatus == 3)
                                     .GroupBy(o => o.OrderDay.Value.Year)
                                     .Select(g => g.Key).ToList();
         }

@@ -25,29 +25,51 @@
         </div>
     </article>
     <div class="track">
+        @if (Model.OrderStatus != 4)
+        {
+
         <div class="ready step active">
             <span class="icon ">
                 <i class="fa fa-box"></i>
-            </span> <span class="text">Chờ xác nhận</span>
+            </span>
+            <span class="text">Đang xử lý</span>
         </div>
-        @if (Model.OrderStatus >= 1)
+        @if (Model.OrderStatus >= 2)
+        {
+            <div class="confirm step active">
+                <span class="icon">
+                    <i class="fas fa-truck"></i>
+                </span> <span class="text">Đang giao hàng</span>
+            </div>
+        }
+        else
+        {
+            <div class="confirm step">
+                <span class="icon">
+                    <i class="fas fa-truck"></i>
+                </span> <span class="text">Đang giao hàng</span>
+            </div>
+        }
+
+        @if (Model.OrderStatus == 3)
         {
             <div class="confirm step active">
                 <span class="icon">
                     <i class="fa fa-check"></i>
-                </span> <span class="text">Đã duyệt</span>
+                </span> <span class="text">Đã giao hàng</span>
             </div>
         }
-        else if (Model.OrderStatus < 1)
+        else
         {
             <div class="confirm step">
                 <span class="icon">
                     <i class="fa fa-check"></i>
-                </span> <span class="text">Đã duyệt</span>
-            </div>
+                </span> <span class="text">Đã giao hàng</span>
+            </div>  
         }
-        else if (Model.OrderStatus == 4 && Model.OrderStatus >= 1)
-        {
+
+        }
+        else { 
             <div class="done step active">
                 <span class="icon">
                     <i class="fas fa-times"></i>
@@ -55,29 +77,6 @@
                 <span class="text">Đã hủy</span>
             </div>
         }
-
-        @if (Model.OrderStatus >= 2 && Model.OrderStatus != 4)
-        {
-            <div class="confirm step active">
-                <span class="icon">
-                    <i class="fa fa-check"></i>
-                </span> <span class="text">Đã nhận</span>
-            </div>
-        }
-
-
-
-
-        @if (Model.OrderStatus >= 2)
-        {
-            <div class="done step active">
-                <span class="icon">
-                    <i class="fa fa-user"></i>
-                </span>
-                <span class="text">Đã nhận</span>
-            </div>
-        }
-
     </div>
 
     <hr>

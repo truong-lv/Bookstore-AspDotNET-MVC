@@ -137,6 +137,7 @@ body {
         transform: rotateZ(0deg);
         transition: all 0.1s ease-out;
         border-bottom-width: 7px;
+        cursor:pointer;
 
         .spinner {
             display: block;

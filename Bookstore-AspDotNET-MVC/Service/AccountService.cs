@@ -81,5 +81,10 @@ namespace Bookstore_AspDotNET_MVC.Service
             }
         }
 
+        public long getTotalUser()
+        {
+            return _context.Userinfors.Count();
+        }
+
     }
 }

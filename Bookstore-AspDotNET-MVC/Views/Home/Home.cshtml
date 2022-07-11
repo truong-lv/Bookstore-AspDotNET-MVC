@@ -1,5 +1,5 @@
 ﻿@using System.Globalization;
-@model Bookstore_AspDotNET_MVC.DTO.BookPagineDTO
+@model Bookstore_AspDotNET_MVC.DTO.BookDTOPagine
 
 @{
     ViewData["Title"] = "Home";
@@ -66,13 +66,20 @@
                     <span class="aside text-center">
                         <img src=@topBook.Picture class="img-sm">
                     </span>
-                    <span class="info">
-                        <span class="title" id="book-name">
-                            @topBook.BookName <br>
-                            <span class="text-muted">@topBook.IdAuthorNavigation.AuthorName </span>
-                        </span>
-                        <span class="text-danger font-weight-bold" id="book-price"> @(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", @topBook.Price)) đ</span>
-                    </span>
+                    <div class="info">
+                        <p class="title" id="book-name">@topBook.BookName</p>
+                        <span class="text-muted">@topBook.AuthorName</span><br />
+                        @if (topBook.priceDiscount > 0)
+                        {
+                            <span class="text-muted price-old">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", topBook.Price)) đ</span>
+
+                            <span class="text-danger font-weight-bold" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", topBook.Price - topBook.Price* topBook.priceDiscount/100)) đ</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger font-weight-bold" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", topBook.Price)) đ</span>
+                        }
+                    </div>
                 </a>
             </div>
         }
@@ -95,13 +102,20 @@
                         <span class="aside text-center">
                             <img src=@newBook.Picture class="img-sm">
                         </span>
-                        <span class="info">
-                            <span class="title" id="book-name">
-                                @newBook.BookName <br>
-                                <span class="text-muted">@newBook.IdAuthorNavigation.AuthorName</span>
-                            </span>
-                            <span class="text-danger font-weight-bold" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", @newBook.Price)) đ</span>
-                        </span>
+                        <div class="info">
+                            <p class="title" id="book-name">@newBook.BookName</p>
+                            <span class="text-muted">@newBook.AuthorName</span><br />
+                            @if (newBook.priceDiscount > 0)
+                            {
+                                <span class="text-muted price-old">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", @newBook.Price)) đ</span>
+
+                                <span class="text-danger font-weight-bold" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", @newBook.Price - @newBook.Price*@newBook.priceDiscount/100)) đ</span>
+                            }
+                            else
+                            {
+                                <span class="text-danger font-weight-bold" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", @newBook.Price)) đ</span>
+                            }
+                        </div>
                     </a> <br>
                 </li>
 
@@ -125,13 +139,20 @@
                         <span class="aside text-center">
                             <img src=@book.Picture class="img-sm">
                         </span>
-                        <span class="info">
-                            <span class="title" id="book-name">
-                                @book.BookName <br>
-                                <span class="text-muted">@book.IdAuthorNavigation.AuthorName</span>
-                            </span>
-                            <span class="text-danger" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", @book.Price)) đ</span>
-                        </span>
+                        <div class="info">
+                            <p class="title" id="book-name">@book.BookName</p>
+                            <span class="text-muted">@book.AuthorName</span><br />
+                            @if (book.priceDiscount > 0)
+                            {
+                                <span class="text-muted price-old">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", book.Price)) đ</span>
+
+                                <span class="text-danger font-weight-bold" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", book.Price - book.Price* book.priceDiscount/100)) đ</span>
+                            }
+                            else
+                            {
+                                <span class="text-danger font-weight-bold" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", book.Price)) đ</span>
+                            }
+                        </div>
                     </a> <br>
                 </li>
 

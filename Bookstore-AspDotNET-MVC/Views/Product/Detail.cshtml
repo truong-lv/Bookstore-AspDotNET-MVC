@@ -12,11 +12,11 @@
 <link rel="stylesheet" href="~/css/bookDetail.css" />
 
 <div class="row book-detail ">
-    <div class="col m-4 l-4" style="text-align: center">
+    <div class="col m-12 l-4" style="text-align: center">
         <img class="img-book" src=@Model.Picture
              alt="Card image cap">
     </div>
-    <div class="col l-8 m-8">
+    <div class="col l-8 m-12">
         <h1>@Model.BookName</h1>
         <div class="row col l-12 m-12">
             <div class="row">
@@ -37,21 +37,47 @@
             </div>
 
 
-            <p class="text-muted">Số lượng tồn: <strong>@Model.TotalQuantity</strong>
-            <p>
-                Giá:
-                <strong class="text-danger book-price"> @(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", Model.Price)) VNĐ</strong>
-            </p>
-            <br />
-            <h3 class="">Đặt hàng</h3>
-            <input type="hidden" id="idBook" value=@Model.IdBook>
-            <input type="number" id="quantity"
-                   class="input-quantity" style="width: 70px" th:value="1"
-                   min="1" max=@Model.TotalQuantity>
-            <button type="button" id="btn-add-to-cart" data-order-id=@Model.IdBook
-                    class="btn-add-cart">
-                <i class="fas fa-plus-circle"></i> Thêm giỏ hàng
-            </button>
+            <p class="text-muted">Số lượng tồn: <strong>@Model.TotalQuantity</strong></p>
+            <div class="row">
+                <div class="c-6">
+                    <p>
+                        Giá:
+                        @if (ViewBag.BookDTO.priceDiscount > 0)
+                        {
+                            <span class="text-muted price-old">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", Model.Price)) đ</span>
+
+                            <strong class="text-danger book-price" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", Model.Price - Model.Price* ViewBag.BookDTO.priceDiscount/100)) đ</strong>
+                        }
+                        else
+                        {
+                            <strong class="text-danger book-price" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", Model.Price)) đ</strong>
+                        }
+                        @*<strong class="text-danger book-price"> @(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", Model.Price)) VNĐ</strong>*@
+                    </p>
+                    <br />
+                    <h3 class="">Đặt hàng</h3>
+                    <input type="hidden" id="idBook" value=@Model.IdBook>
+                    <input type="number" id="quantity"
+                           class="input-quantity" style="width: 70px" th:value="1"
+                           min="1" max=@Model.TotalQuantity>
+                    <button type="button" id="btn-add-to-cart" data-order-id=@Model.IdBook
+                            class="btn-add-cart">
+                        <i class="fas fa-plus-circle"></i> Thêm giỏ hàng
+                    </button>
+                </div>
+                <div class="c-6">
+                    <strong>
+                        Khuyến mãi:
+                    </strong>
+                        <ul>
+                            @foreach (var discount in ViewBag.BookDTO.discountContent)
+                            {
+                                <li class="text-muted ">@discount</li>
+                            }
+                        </ul>
+                   
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -82,13 +108,20 @@
                         <span class="aside text-center">
                             <img src=@newBook.Picture class="img-sm">
                         </span>
-                        <span class="info">
-                            <span class="title" id="book-name">
-                                @newBook.BookName <br>
-                                <span class="text-muted">@newBook.IdAuthorNavigation.AuthorName</span>
-                            </span>
-                            <span class="text-danger font-weight-bold" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", @newBook.Price)) đ</span>
-                        </span>
+                        <div class="info">
+                            <p class="title" id="book-name">@newBook.BookName</p>
+                            <span class="text-muted">@newBook.AuthorName</span><br />
+                            @if (newBook.priceDiscount > 0)
+                            {
+                                <span class="text-muted price-old">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", @newBook.Price)) đ</span>
+
+                                <span class="text-danger font-weight-bold" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", @newBook.Price - @newBook.Price*@newBook.priceDiscount/100)) đ</span>
+                            }
+                            else
+                            {
+                                <span class="text-danger font-weight-bold" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", @newBook.Price)) đ</span>
+                            }
+                        </div>
                     </a> <br>
                 </li>
 

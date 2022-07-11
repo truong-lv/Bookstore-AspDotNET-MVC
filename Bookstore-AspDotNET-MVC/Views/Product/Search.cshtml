@@ -1,5 +1,5 @@
 ﻿@using System.Globalization;
-@model IEnumerable<Bookstore_AspDotNET_MVC.Models.Book>
+@model IEnumerable<Bookstore_AspDotNET_MVC.DTO.BookDTO>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -21,13 +21,20 @@
                         <span class="aside text-center">
                             <img src=@book.Picture class="img-sm">
                         </span>
-                        <span class="info">
-                            <span class="title" id="book-name">
-                                @book.BookName <br>
-                                <span class="text-muted">@book.IdAuthorNavigation.AuthorName</span>
-                            </span>
-                            <span class="text-danger font-weight-bold" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", book.Price)) đ</span>
-                        </span>
+                        <div class="info">
+                            <p class="title" id="book-name">@book.BookName</p>
+                            <span class="text-muted">@book.AuthorName</span><br />
+                            @if (book.priceDiscount > 0)
+                            {
+                                <span class="text-muted price-old">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", book.Price)) đ</span>
+
+                                <span class="text-danger font-weight-bold" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", book.Price - book.Price* book.priceDiscount/100)) đ</span>
+                            }
+                            else
+                            {
+                                <span class="text-danger font-weight-bold" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", book.Price)) đ</span>
+                            }
+                        </div>
                     </a> <br>
                 </li>
 

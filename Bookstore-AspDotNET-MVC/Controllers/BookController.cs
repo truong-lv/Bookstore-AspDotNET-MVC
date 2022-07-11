@@ -36,7 +36,7 @@ namespace Bookstore_AspDotNET_MVC.Controllers
 
         public IActionResult Home(int currentPageIndex = 1)
         {
-            BookPagineDTO books = bookService.GetBooks(currentPageIndex);
+            BookDTOPagine books = bookService.GetBookDTOs(currentPageIndex);
             ViewBag.listCategory = categoryService.getAllCategory();
             ViewBag.listTopBuy=bookService.getTopBuy();
             ViewBag.listTopNew=bookService.getTopNew();
@@ -46,9 +46,10 @@ namespace Bookstore_AspDotNET_MVC.Controllers
         public ActionResult ProductDetail(long id)
         {
             Book book = bookService.findBookReviewById(id);
+            BookDTO bookDTO = bookService.conveBookDTO(id);
             string[] listDecription = book.DescribeBook.Split('\n');
-            List<Book> listBookSameAuthor = bookService.getBookSameAuthor(book.IdAuthor);
-            listBookSameAuthor.Remove(book);
+            List<BookDTO> listBookSameAuthor = bookService.getBookSameAuthor(book.IdAuthor);
+            listBookSameAuthor.Remove(bookDTO);
 
 
             bool checkReview = false;
@@ -61,6 +62,7 @@ namespace Bookstore_AspDotNET_MVC.Controllers
             ViewBag.listDecription = listDecription;
             ViewBag.listBookSameAuthor = listBookSameAuthor;
 
+            ViewBag.BookDTO = bookDTO;
             ViewBag.checkReview = checkReview;
             ViewData["Title"] = book.BookName;
 
@@ -70,7 +72,7 @@ namespace Bookstore_AspDotNET_MVC.Controllers
         public IActionResult GetBookSameCategory(long idCategory)
         {
             Category category = categoryService.getCategoryById(idCategory);
-            List<Book> list = bookService.getBookSameCategory(idCategory);
+            List<BookDTO> list = bookService.getBookSameCategory(idCategory);
             ViewData["Title"] = category.Name.ToUpper();
 
             return View("~/Views/Product/Search.cshtml", list);
@@ -78,7 +80,7 @@ namespace Bookstore_AspDotNET_MVC.Controllers
         
         public IActionResult GetBookSearch(string key)
         {
-            List<Book> list = bookService.getBookKeySearch(key);
+            List<BookDTO> list = bookService.getBookKeySearch(key);
             ViewData["Title"] = "Kết quả tìm kiếm cho từ khóa '" + key + "'";
 
             return View("~/Views/Product/Search.cshtml", list);
