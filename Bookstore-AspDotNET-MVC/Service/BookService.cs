@@ -116,7 +116,7 @@ namespace Bookstore_AspDotNET_MVC.Service
         public List<BookDTO> getTopBuy()
         {
 
-            List<BookDTO> list =  _context.OrderDetails.Where(o=>o.Order.OrderStatus==1)
+            List<BookDTO> list =  _context.OrderDetails.Where(o=>o.Order.OrderStatus==3)
                                .Include(od=>od.IdBookNavigation)
                                .ThenInclude(b => b.IdAuthorNavigation)
                                .Include(od => od.IdBookNavigation)

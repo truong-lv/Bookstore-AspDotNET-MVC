@@ -46,11 +46,13 @@
                         {
                             <span class="text-muted price-old">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", Model.Price)) đ</span>
 
-                            <strong class="text-danger book-price" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", Model.Price - Model.Price* ViewBag.BookDTO.priceDiscount/100)) đ</strong>
+                            <strong class="text-danger book-price" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", Model.Price - Model.Price* ViewBag.BookDTO.priceDiscount/100))đ</strong>
+                            
                         }
                         else
                         {
                             <strong class="text-danger book-price" id="book-price">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", Model.Price)) đ</strong>
+
                         }
                         @*<strong class="text-danger book-price"> @(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", Model.Price)) VNĐ</strong>*@
                     </p>
@@ -67,7 +69,7 @@
                 </div>
                 <div class="c-6">
                     <strong>
-                        Khuyến mãi:
+                        Khuyến mãi:<i> (-@ViewBag.BookDTO.priceDiscount%)</i>
                     </strong>
                         <ul>
                             @foreach (var discount in ViewBag.BookDTO.discountContent)

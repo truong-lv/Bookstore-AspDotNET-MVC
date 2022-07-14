@@ -1,6 +1,7 @@
 ﻿using Bookstore_AspDotNET_MVC.Data;
 using Bookstore_AspDotNET_MVC.IService;
 using Bookstore_AspDotNET_MVC.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,9 @@ namespace Bookstore_AspDotNET_MVC.Service
 
         public List<Item> GetUserItems(long idUser)
         {
-            return _context.Items.Where(i => i.UserId == idUser).ToList();
+            return _context.Items.Where(i => i.UserId == idUser)
+                                  .Include(i=>i.IdBookNavigation)  
+                                  .ToList();
         }
 
         public Item findItemById(long idBook, long idUser)

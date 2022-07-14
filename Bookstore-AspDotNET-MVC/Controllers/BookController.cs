@@ -37,16 +37,22 @@ namespace Bookstore_AspDotNET_MVC.Controllers
         public IActionResult Home(int currentPageIndex = 1)
         {
             BookDTOPagine books = bookService.GetBookDTOs(currentPageIndex);
+
             ViewBag.listCategory = categoryService.getAllCategory();
+
             ViewBag.listTopBuy=bookService.getTopBuy();
+
             ViewBag.listTopNew=bookService.getTopNew();
+
             return View("~/Views/Home/Home.cshtml",books);
         }
 
         public ActionResult ProductDetail(long id)
         {
             Book book = bookService.findBookReviewById(id);
+
             BookDTO bookDTO = bookService.conveBookDTO(id);
+
             string[] listDecription = book.DescribeBook.Split('\n');
             List<BookDTO> listBookSameAuthor = bookService.getBookSameAuthor(book.IdAuthor);
             listBookSameAuthor.Remove(bookDTO);

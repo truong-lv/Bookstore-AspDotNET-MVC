@@ -27,9 +27,13 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
         public IActionResult Index()
         {
             @ViewData["Statistict"] = "active";
+            
             @ViewData["TotalProfit"] = String.Format(CultureInfo.InvariantCulture, "{0:0,0}", orderService.getTotalProfit());
+            
             @ViewData["TotalOder"] = orderService.getTotalOder();
+            
             @ViewData["AveragePrice"] =String.Format(CultureInfo.InvariantCulture, "{0:0,0}", orderService.getAveragePrice());
+            
             @ViewData["TotalUser"] = accountService.getTotalUser();
 
             List<int> listYear = orderService.getListOrderYear();
