@@ -1,9 +1,11 @@
 ﻿using Bookstore_AspDotNET_MVC.Data;
 using Bookstore_AspDotNET_MVC.Models;
+using Bookstore_AspDotNET_MVC.utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -46,12 +48,15 @@ namespace Bookstore_AspDotNET_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
+                HashPassword hashPassword = new HashPassword();
+                var hasher = new PasswordHasherOptions();
+                string str = hashPassword.EncryptString(objLoginModel.Password);
                 Userinfor user = _context.Userinfors.Include(u=>u.UserRoles)
                                                 .ThenInclude(ur=>ur.IdRoleNavigation)
-                                                .Where(u => u.Username == objLoginModel.UserName && u.Password == objLoginModel.Password)
+                                                .Where(u => u.Username == objLoginModel.UserName)
                                                 .FirstOrDefault();
                 
-                if (user != null)
+                if (hashPassword.DecryptString(user.Password) == objLoginModel.Password)
                 {
 
                     //A claim is a statement about a subject by an issuer and    

@@ -52,7 +52,8 @@
             <input asp-for="Password" class="input-form" />
             <span asp-validation-for="Password" class="text-danger"></span>
         </div><br />
-
+        <p class="text-danger">@ViewBag.Erorr</p>
+        <br />
         <div class="form-group">
             <input type="submit" value="Cập nhập" class="btn btn-confirm" />
         </div>

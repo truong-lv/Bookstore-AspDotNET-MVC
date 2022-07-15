@@ -2,6 +2,7 @@
 using Bookstore_AspDotNET_MVC.IService;
 using Bookstore_AspDotNET_MVC.Models;
 using Bookstore_AspDotNET_MVC.Service;
+using Bookstore_AspDotNET_MVC.utils;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -44,6 +45,8 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
             else
             {
                 var user = accountService.findUserById(id);
+                HashPassword hashPassword = new HashPassword();
+                user.Password = hashPassword.DecryptString(user.Password);
                 if (user == null)
                 {
                     return NotFound();
@@ -59,14 +62,25 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrEditUser(long id, Userinfor user)
         {
-            
+            HashPassword hashPassword = new HashPassword();
             if (ModelState.IsValid)
             {
+                string checkErorr ="";
+                ViewBag.Erorr = "";
                 if (id == 0)
                 {
                     try
                     {
-                        await accountService.addUser(user);
+                        checkErorr = accountService.checkUserExist(user);
+                        if (checkErorr == "")
+                        {
+                            user.Password = hashPassword.EncryptString(user.Password);
+                            await accountService.addUser(user);
+                        }
+                        else {
+                            ViewBag.Erorr = checkErorr;
+                            return View("/Views/Admin/Account/AddOrEditUser.cshtml", user);
+                        }
                     }catch(Exception e)
                     {
                         return BadRequest(e.Message);
@@ -76,7 +90,16 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
                 {
                     try
                     {
-                        await accountService.updateUser(user);
+                        checkErorr = accountService.checkUserUpdateExist(user);
+                        if (checkErorr == "")
+                        {
+                            user.Password = hashPassword.EncryptString(user.Password);
+                            await accountService.updateUser(user);
+                        }
+                        else {
+                            ViewBag.Erorr = checkErorr;
+                            return View("/Views/Admin/Account/AddOrEditUser.cshtml", user);
+                        }
                     }
                     catch (DbUpdateConcurrencyException)
                     {

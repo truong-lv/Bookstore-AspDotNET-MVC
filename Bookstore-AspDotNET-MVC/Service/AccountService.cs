@@ -86,5 +86,39 @@ namespace Bookstore_AspDotNET_MVC.Service
             return _context.Userinfors.Count();
         }
 
+        public string checkUserExist(Userinfor userinfor)
+        {
+            if (_context.Userinfors.Where(u => u.Username == userinfor.Username).Count() > 0)
+            {
+                return "Username đã tồn tại";
+            }else if (_context.Userinfors.Where(u => u.Phone == userinfor.Phone).Count() > 0 && userinfor.Phone!=null)
+            {
+                return "SĐT đã tồn tại";
+            }
+            else if (_context.Userinfors.Where(u => u.Email == userinfor.Email).Count() > 0 && userinfor.Email != null)
+            {
+                return "Email đã tồn tại";
+            }
+
+            return "";
+        }
+
+        public string checkUserUpdateExist(Userinfor userinfor)
+        {
+            if (_context.Userinfors.Where(u => u.Username == userinfor.Username && u.UserId!=userinfor.UserId).Count() > 0)
+            {
+                return "Username đã tồn tại";
+            }
+            else if (_context.Userinfors.Where(u => u.Phone == userinfor.Phone && u.UserId != userinfor.UserId).Count() > 0 && userinfor.Phone != null)
+            {
+                return "SĐT đã tồn tại";
+            }
+            else if (_context.Userinfors.Where(u => u.Email == userinfor.Email && u.UserId != userinfor.UserId).Count() > 0 && userinfor.Email != null)
+            {
+                return "Email đã tồn tại";
+            }
+            return "";
+        }
+
     }
 }

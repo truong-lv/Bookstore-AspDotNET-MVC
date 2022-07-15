@@ -21,5 +21,9 @@ namespace Bookstore_AspDotNET_MVC.IService
 
         long getTotalUser();
 
+        string checkUserExist(Userinfor userinfor);
+        string checkUserUpdateExist(Userinfor userinfor);
+
+
     }
 }
