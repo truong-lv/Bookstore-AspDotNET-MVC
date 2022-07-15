@@ -27,7 +27,7 @@ namespace Bookstore_AspDotNET_MVC.Models
         [StringLength(20)]
         public string WardPrefix { get; set; }
         [Column("district_id")]
-        public long? DistrictId { get; set; }
+        public long DistrictId { get; set; }
 
         [ForeignKey(nameof(DistrictId))]
         [InverseProperty("Wards")]

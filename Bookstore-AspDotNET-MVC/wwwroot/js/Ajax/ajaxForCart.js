@@ -1,6 +1,7 @@
-$("#btn-add-to-cart").click(function() {
-	var form = $('#__AjaxAntiForgeryForm');
-	var token = $('input[name="__RequestVerificationToken"]', form).val();
+var form = $('#__AjaxAntiForgeryForm');
+var token = $('input[name="__RequestVerificationToken"]', form).val();
+$("#btn-add-to-cart").click(function () {
+	
 
 	var id = $("#idBook").val(); 
 	var quantity = $("#quantity").val(); 
@@ -29,34 +30,36 @@ $("#btn-add-to-cart").click(function() {
 })
 
 $(".quantity-book").change(function () {
-	var block = $(this).closest("div");
-	var bookId = $(this).closest("div").find(".book").attr("data-idBook");
+	var block = $(this).closest(".cart-item");
+	var bookId = $(this).closest(".cart-item").find(".book").attr("data-idBook");
 	var quantity = $(this).val();
 
 
+	if (quantity === "") { alert("Số lượng không được để trống !! "); return; }
+
+	if (Number(quantity) < Number($(this).attr("min")) || Number(quantity) > Number($(this).attr("max"))) {
+		$(this).val(1)
+		alert(`Số lượng không hợp lệ !! \nĐặt tối thiểu 1, tối đa ${$(this).attr("max")}`);
+		return;
+	}
+
 
 	$.ajax({
-		url: "/update-cart",
+		url: "/CartApi/AddOrUpdate",
 		type: "POST",
 		data: {
-			id: bookId,
+			__RequestVerificationToken: token,
+			bookId: bookId,
 			quantity: quantity
 		},
 		success: function (value) {
-
-			if (value == "1") { //vượt quá số lượng hiện có
-				alert("Vượt quá số lượng hiện có!");
-				window.location.replace("/cart/");
-
-			} else {
-
 				var price = block.find(".book-price").attr("data-book-price");
 				var priceOfItem = price * quantity;
 				var priceOfItemFormat = priceOfItem.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").replace(".00", "");
 				var totalPriceFormat = parseInt(value).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").replace(".00", "");
-				block.find(".item-price").replaceWith('<p class="item-price">Thành tiền <span style="font-weight:bold">' + priceOfItemFormat + ' VND </span> </p>');
-				$("#total-price").replaceWith('<p style="font-size:25px" id= "total-price">Tổng tiền <span style="font-weight:bold; color:red">' + totalPriceFormat + ' VND </span> </p>');
-			}
+			block.find(".item-price")
+				.replaceWith('<p class="item-price">Thành tiền: <span style="font-weight: bold">' + priceOfItemFormat+'đ</span></p >');
+				$("#total-price").replaceWith('<p style="font-size:25px" id= "total-price">Tổng tiền <span style="font-weight:bold; color:red">' + totalPriceFormat + ' đ </span> </p>');
 		}
 	})
 })
@@ -66,15 +69,16 @@ $(".quantity-book").change(function () {
 
 $(".btn-delete-item").click(function () {
 
-	var block = $(this).closest("div");
-	var bookId = $(this).closest("div").find(".book").attr("data-idBook");
+	var block = $(this).closest(".cart-item");
+	var bookId = $(this).closest(".cart-item").find(".book").attr("data-idBook");
 
 	$.ajax({
 
 		type: "POST",
-		url: "http://localhost:8080/remove-item",
+		url: "/CartApi/Delete",
 		data: {
-			id: bookId
+			__RequestVerificationToken: token,
+			bookId: bookId
 
 		},
 		success: function (value) {
@@ -87,7 +91,7 @@ $(".btn-delete-item").click(function () {
 
 				block.remove();
 				var totalPriceFormat = parseInt(value).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").replace(".00", "");
-				$("#total-price").replaceWith('<p style="font-size:25px" id= "total-price">Tổng tiền <span style="font-weight:bold; color:red">' + totalPriceFormat + ' VND </span> </p>');
+				$("#total-price").replaceWith('<p style="font-size:25px" id= "total-price">Tổng tiền <span style="font-weight:bold; color:red">' + totalPriceFormat + ' đ </span> </p>');
 			}
 		}, error: () => {
 			console.log('Error');
@@ -96,50 +100,25 @@ $(".btn-delete-item").click(function () {
 	})
 })
 $("#btn-buy").click(function () {
-
-
-
-	$.ajax({
-
-		type: "POST",
-		url: "http://localhost:8080/check-can-buy",
-		data: {
-
-		},
-		success: function (value) {
-
-			if (value == true) $("#block-info-buy").show();
-
-		}, error: () => {
-			console.log('Error');
-		}
-
-	})
-
-
+	$("#block-info-buy").css("display", "block");
 })
 
 
-$("#dropdown-province").change(function () {
+$("#dropdown-provinces").change(function () {
 
 
 	var provinceId = $(this).val();
-
-
-
-
-
 	$.ajax({
 
 		type: "POST",
-		url: "http://localhost:8080/get-district",
+		url: "/AddressAPI/getDisTrict",
 		data: {
 			provinceId: provinceId
 
 		},
 		success: function (value) {
-			console.log(value);
-			$("#dropdown-district").html(value);
+			let strHtml = value.map((ele, index) => (`<option value=${ele.districtId}>${ele.districtPrefix} ${ele.districtName}</option>`))
+			$("#dropdown-districts").html(strHtml.join(''));
 
 		}, error: () => {
 			console.log('Error');
@@ -150,26 +129,20 @@ $("#dropdown-province").change(function () {
 })
 
 
-$("#dropdown-district").change(function () {
-
+$("#dropdown-districts").change(function () {
 
 	var districtId = $(this).val();
-
-
-
-
-
 	$.ajax({
 
 		type: "POST",
-		url: "http://localhost:8080/get-village",
+		url: "/AddressAPI/getWard",
 		data: {
 			districtId: districtId
 
 		},
 		success: function (value) {
-
-			$("#dropdown-village").html(value);
+			let strHtml = value.map((ele, index) => (`<option value=${ele.wardId}>${ele.wardPrefix} ${ele.wardName}</option>`))
+			$("#dropdown-villages").html(strHtml.join(''));
 
 		}, error: () => {
 			console.log('Error');
@@ -180,24 +153,23 @@ $("#dropdown-district").change(function () {
 })
 
 
-$("#btn-verify-buy").click(function () {
-	$("#check-name-field").hide();
-	$("#check-phone-field").hide();
-	$(".alert-over-quantity").hide();
+$('#btn-verify-buys').click(function () {
+	console.log("click")
 
-	var checkValidate = true;
-	var fullname = $("#fullname").val();
-	var phone = $("#phone").val();
-	var address = $("#address").val();
-	var village = $("#dropdown-village").val();
+	let checkValidate = true;
+	const fullname = $('#fullname').val();
+	const phone = $('#phone').val();
+	const address = $('#address').val();
+	const village = $('#dropdown-villages').val();
+	const payment = $('#dropdown-payment').val();
 
-
+	console.log($('#phone').val())
 	if (fullname.length == 0) {
-		$("#check-name-field").show();
+		$(".check-name-field").css("display", "block");
 		checkValidate = false;
 	}
 	if (phone.length != 10) {
-		$("#check-phone-field").show();
+		$(".check-phone-field").css("display", "block");
 		checkValidate = false;
 	}
 
@@ -208,29 +180,21 @@ $("#btn-verify-buy").click(function () {
 			$.ajax({
 
 				type: "POST",
-				url: "http://localhost:8080/order",
+				url: "/OrderAPI/Order",
 				data: {
+					__RequestVerificationToken: token,
 					fullname: fullname,
 					phone: phone,
 					village: village,
-					address: address
+					address: address,
+					payment: payment
 
 				},
 				success: function (value) {
 
-					if (value == "false") {
-						alert("Order thất bại");
-
-					} else if (value == "true") {
 						alert("Đặt hàng thành công!");
 						location.reload();
-					} else {
-						let arr = value.split("-");
-						var id = "#over-maximum-quantity-" + arr[0];
-						$(id).find("p").replaceWith("<p>Số lượng còn lại chỉ là: " + arr[1] + "</p>");
-						$(id).show();
-
-					}
+					
 				}, error: () => {
 					console.log('Error');
 				}

@@ -54,10 +54,10 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Admin
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> OrderConfirm(long id)
+        public async Task<IActionResult> OrderConfirm(long id, int currentPageIndex, int status)
         {
             await orderService.OrderConfirm(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index),new { currentPageIndex= currentPageIndex, status=status });
         }
 
         // POST: OrderManagerController/Delete/5

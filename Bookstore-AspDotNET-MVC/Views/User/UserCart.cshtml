@@ -3,45 +3,49 @@
 {
     @Html.AntiForgeryToken()
 }
-@model  IEnumerable<Bookstore_AspDotNET_MVC.Models.Item>
+@model  Bookstore_AspDotNET_MVC.Models.ModelView.UserItem
 
 @{
+    ViewData["Title"] = "Cart";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" href="~/css/book.css" />
 <link rel="stylesheet" href="~/css/cart.css" />
 
 
-<div class="row col m-9 c-12 cart">
-    <div class="row" >
+<div class="row ">
+    <div class=" col m-8 c-12 cart" >
         <div class="m-12 c-12">
-            @foreach (var item in Model)
+            @foreach (var item in Model.itemDTOs)
             {
             <div class="cart-item row">
                 <div class="m-12 l-2 img-container"style="text-align: center">
-                    <img class="img-book" src=@item.IdBookNavigation.Picture
+                    <img class="img-book" src=@item.bookDTO.Picture
                          alt="Card image cap">
                 </div>
                 <div class="l-4 m-12">
 
-                    <p class="book" data-idBook=@item.IdBook>
+                    <p class="book" data-idBook=@item.bookDTO.IdBook >
                         <i class="fas fa-star-of-david"></i>
-                        <span style="font-size: 20px; font-weight: bold">@item.IdBookNavigation.BookName </span>
+                        <span style="font-size: 20px; font-weight: bold">@item.bookDTO.BookName </span>
                     </p>
-                    <p class="book-price" data-book-price=@item.IdBookNavigation.Price>
-                        Đơn giá: @item.IdBookNavigation.Price
+                    <p class="book-price"
+                       data-book-price=@item.realPrice()>
+                        Đơn giá: @(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", item.realPrice()))đ
                     </p>
                 </div>
                 <div class="l-2 m-3">
                     <p style="display: inline; margin-right: 20px">
                         Số lượng <input class="input-quantity quantity-book" type="number"
-                                        style="width: 70px" value=@item.QuantityBooks
-                                        th:min="1" th:max=@item.QuantityBooks>
+                                        style="width: 70px" value=@item.item.QuantityBooks
+                                        min="1" max=@item.bookDTO.TotalQuantity>
                     </p>
                 </div>
                 <div class="l-2 m-3">
                     <p class="item-price">
-                        Thành tiền: <span style="font-weight: bold">@item.QuantityBooks*@item.IdBookNavigation.Price</span>
+                        Thành tiền: <span style="font-weight: bold">
+                        @(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", item.realPrice() * item.item.QuantityBooks))đ 
+                        </span>
                     </p>
 
                 </div>
@@ -55,7 +59,9 @@
             }
 
             <p id="total-price" style="font-size: 25px; margin-top:5px">
-                Tổng tiền: <span style="color: red; font-weight: bold"> Tổng tiền</span>
+                Tổng tiền: <span style="color: red; font-weight: bold">
+                @(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", Model.totalPrice())) đ 
+                </span>
             </p>
 
             <div style="text-align: center">
@@ -70,99 +76,98 @@
         </div>
 
 
-        <div id="block-info-buy" class="col-md-6 col-sm-12" style="margin-top: 30px; display: none">
-            <div class="row">
-                <div class="col-md-1">
-                    <div class="vl"
-                         style="border-left: 6px solid green; height: 500px;"></div>
-                </div>
-
-
-
-                <div class="col-md-11">
-
-                    <h1 style="color: red;">
-                        <i class="fa fa-info-circle" aria-hidden="true">
-                            Thông tin
-                            mua hàng
-                        </i>
-                    </h1>
-
-                    <div style="width: 80%;">
-                        <div class="form-group">
-                            <label for="fullname" style="font-size: 18px; font-weight: 500">
-                                Tên
-                                khách hàng
-                            </label> <input type="text" class="form-control"
-                                            id="fullname" placeholder="Họ và tên khách hàng"
-                                            name="fullname">
-                        </div>
-
-                        <!-- CHECK NAME -->
-                        <div id="check-name-field"
-                             style="color: red; margin: 10px 0px; display:none" minLength="1">
-                            Tên không được để trống<br />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="phone" style="font-size: 18px; font-weight: 500">
-                                Số
-                                điện thoại
-                            </label> <input type="text" name="phone"
-                                            class="form-control input_user" id="phone"
-                                            placeholder="Số điện thoại" minlength="10" maxLength="10">
-                        </div>
-
-
-                        <!-- CHECK NAME -->
-                        <div id="check-phone-field"
-                             style="color: red; margin: 10px 0px; display:none" minLength="1">
-                            Số điện thoại không hợp lệ<br />
-                        </div>
-
-
-                        <label style="font-size: 20px; font-weight: 500;">
-                            Tỉnh/Thành phố
-                        </label> 
-                        <select id="dropdown-province" class="form-select" aria-label="Default select example" name="province">
-                            <option></option>
-                        </select> <br> 
-                        
-                        <label style="font-size: 20px; font-weight: 500;">Quận/Huyện</label>
-                        <select id="dropdown-district" class="form-select"
-                                aria-label="Default select example" name="district">
-                            <option ></option>
-                        </select> <br> 
-                        
-                        <label style="font-size: 20px; font-weight: 500;">Xã/phường</label>
-                        <select id="dropdown-village" class="form-select"
-                                aria-label="Default select example" name="village">
-                            <option></option>
-                        </select> <br>
-
-                        <div class="form-group">
-                            <label for="address" style="font-size: 18px; font-weight: 500">
-                                Số nhà-tên đường
-                            </label> <input type="text" class="form-control"
-                                            id="address" placeholder="Số nhà" name="address">
-                        </div>
-
-                        <br>
-                        <div style="text-align: center">
-                            <button type="button" class="btn btn-primary" id="btn-verify-buy">
-                                <i class="fa fa-check-circle" aria-hidden="true"> Xác nhận</i>
-                            </button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-
-
-        </div>
 
     </div>
+    <div id="block-info-buy" class="m-4 c-12 infor">
+        <div class="row">
+            <div class=" c-1">
+                <div class="vl"
+                     style="border-left: 6px solid green; height: 500px;"></div>
+            </div>
+
+            <div class=" c-11">
+
+                <h1 style="color: red;">
+                    <i class="fa fa-info-circle" aria-hidden="true">
+                        Thông tin mua hàng
+                    </i>
+                </h1>
+
+                <div style="width: 80%;">
+                    <div class="form-group">
+                        <label for="fullname" style="font-size: 18px; font-weight: 500">
+                            Tên khách hàng
+                        </label> <input type="text" class="input-form" id="fullname" placeholder="Họ và tên khách hàng" name="fullname">
+                    </div>
+
+                    <!-- CHECK NAME -->
+                    <div class="check check-name-field"
+                         minLength="1">
+                        Tên không được để trống<br />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone" style="font-size: 18px; font-weight: 500">
+                            Số điện thoại
+                        </label> <input type="text" name="phone"
+                                        class="input-form input_user" id="phone"
+                                        placeholder="Số điện thoại" minlength="10" maxLength="10">
+                    </div>
+
+
+                    <!-- CHECK PHONE -->
+                    <div class="check check-phone-field"
+                         minLength="1">
+                        Số điện thoại không hợp lệ<br />
+                    </div>
+
+
+                    <label style="font-size: 20px; font-weight: 500;">
+                        Tỉnh/Thành phố
+                    </label>
+                    <select id="dropdown-provinces" class="form-select">
+                        @foreach (var province in Model.provinces)
+                        {
+                            <option value=@province.ProvinceId>@province.ProvinceName</option>
+
+                        }
+                    </select>
+                    <br>
+
+                    <label style="font-size: 20px; font-weight: 500;">Quận/Huyện</label>
+                    <select id="dropdown-districts" class="form-select" asp-items="@(new SelectList(Model.districts, "DistrictId", "DistrictName"))">
+                    </select>
+                    <br>
+
+                    <label style="font-size: 20px; font-weight: 500;">Xã/phường</label>
+                    <select id="dropdown-villages" class="form-select" asp-items="@(new SelectList(Model.wards, "WardId", "WardName"))">
+                    </select>
+                    <br>
+
+                    <div class="form-group">
+                        <label for="address" style="font-size: 18px; font-weight: 500">
+                            Số nhà-tên đường
+                        </label> <input type="text" class="input-form"
+                                        id="address" placeholder="Số nhà" name="address">
+                    </div>
+                    <br>
+
+                    <label style="font-size: 20px; font-weight: 500;">Phương thức thanh toán</label>
+                    <select id="dropdown-payment" class="form-select" asp-items="@(new SelectList(Model.payments, "IdPayment", "PaymentType"))">
+                    </select>
+                    <br>
+
+                    <div style="text-align: center">
+                        <button class="btn btn-order" id="btn-verify-buys">
+                            <i class="fa fa-check-circle" aria-hidden="true"> Xác nhận</i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script src="~/js/Ajax/ajaxForCart.js" asp-append-version="true"></script>

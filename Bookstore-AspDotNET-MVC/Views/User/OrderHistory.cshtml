@@ -1,0 +1,163 @@
+﻿@using System.Globalization;
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+    @model Bookstore_AspDotNET_MVC.DTO.OrderPagineDTO
+
+@{
+    ViewData["Title"] = "Lịch sử đặt hàng";
+Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/book.css" />
+<link rel="stylesheet" href="~/css/orderHistory.css" />
+
+<div class="row">
+    <div class="l-6 c-12">
+        <!-- ======================================pagination====================================== -->
+        <div class="row ">
+            <ul class="pagination">
+                <li class="page-item">
+                    @if (Model.CurrentPageIndex > 1)
+                    {
+                        <a class="page-item_btn" asp-controller="User" asp-action="UserOrder" asp-route-currentPageIndex="1">First</a>
+                    }
+                    else
+                    {
+                        <span class="page-item_btn active">First</span>
+                    }
+
+                </li>
+                @for (int i = 1; i <= Model.PageCount; i++)
+                {
+                    <li class="page-item">
+                        @if (Model.CurrentPageIndex != i)
+                        {
+                            <a class="page-item_btn" asp-controller="User" asp-action="UserOrder" asp-route-currentPageIndex="@i">@i</a>
+
+
+                        }
+                        else
+                        {
+                            <span class="page-item_btn active">@i</span>
+
+                        }
+                    </li>
+
+                }
+
+                <li class="page-item">
+                    @if (Model.CurrentPageIndex < Model.PageCount)
+                    {
+                        <a class="page-item_btn" asp-controller="User" asp-action="UserOrder" asp-route-currentPageIndex="@Model.PageCount">Last</a>
+                    }
+                    else
+                    {
+                        <span class="page-item_btn active">Last</span>
+                    }
+                </li>
+            </ul>
+        </div>
+        <br />
+        @foreach (var order in Model.Orders)
+        {
+            <div class="order-item c-10 row">
+                <div class="c-10">
+                    <div class="row">
+                        <p class="order-date c-6" data-idBook=@order.OrderId>
+                            <i class="fas fa-clock"></i>
+                            <strong>@order.OrderDay </strong>
+                        </p>
+                        @if (order.OrderStatus == 1)
+                        {
+                            <p class="order-status c-6" style="color: blue">
+                                <i class="fas fa-hourglass-half"></i>
+                                Trạng thái: Đang xử lý
+                            </p>
+                        }
+                        @if (order.OrderStatus == 2)
+                        {
+                            <p class="order-status c-6 text-orange">
+                                <i class="fas fa-hourglass-end"></i>
+                                Trạng thái: Đang giao
+                            </p>
+                        }
+
+                        @if (order.OrderStatus == 3)
+                        {
+                            <p class="order-status c-6 text-green">
+                                <i class="fas fa-hourglass-end"></i>
+                                Trạng thái: Đã giao
+                            </p>
+                        }
+
+                        @if (order.OrderStatus == 4)
+                        {
+                            <p class="order-status c-6 text-danger">
+                                <i class="fas fa-check-circle"></i>
+                                Trạng thái: Đã hủy
+                            </p>
+
+                        }
+                    </div>
+                    <div class="row">
+                        <p class="order-name c-6">
+                            Họ tên: <span class="text-muted">@order.NameOfCustomer </span>
+                        </p>
+                        <p class="order-address c-6">
+                            Số điện thoại: <span class="text-muted">@order.PhoneOfCustomer</span>
+                        </p>
+                    </div>
+
+
+                    <p class="row order-address">
+                        Địa chỉ:
+                        <span class="text-muted">
+                            @order.Address.AddressName,
+                            @order.Address.Warrd.WardPrefix @order.Address.Warrd.WardName,
+                            @order.Address.Warrd.District.DistrictPrefix @order.Address.Warrd.District.DistrictName,
+                            @order.Address.Warrd.District.Province.ProvinceName
+                        </span>
+                    </p>
+
+                    <div class="row">
+                        <p class="order-price c-12" data-book-price=@order.TotalPrice>
+                            Tổng tiền: <span class="text-danger">@(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", order.TotalPrice))đ</span>
+                        </p>
+
+
+                    </div>
+
+
+                    <div>
+                        <a style="text-decoration: none">
+                            <button class="btn btn-info-order" data-order-id=@order.OrderId>
+                                <i class="fas fa-info-circle"></i> Xem chi tiết
+                            </button>
+                        </a>
+                        @if (order.OrderStatus == 2)
+                        {
+                            <button type="button" data-order-id=@order.OrderId class="btn btn-confirm">
+                                <i class="fas fa-ban"></i>
+                                Đã nhận hàng
+                            </button>
+                        }
+                    </div>
+                </div>
+                <div class=" c-2">
+                    @if (order.OrderStatus != 3 && order.OrderStatus != 4)
+                    {
+                        <button type="button" data-order-id=@order.OrderId class="btn btn-cancle-order">
+                            <i class="fas fa-ban"></i>
+                            Hủy
+                        </button>
+                    }
+                </div>
+            </div>
+        }
+
+    </div>
+
+    <div class="l-6  c-12 cart-container">
+
+    </div>
+
+</div>
+<script src="~/js/Ajax/ajaxForOrders.js" asp-append-version="true"></script>

@@ -19,9 +19,9 @@ namespace Bookstore_AspDotNET_MVC.Models
         [Column("quantity")]
         public int Quantity { get; set; }
         [Column("id_book")]
-        public long? IdBook { get; set; }
+        public long IdBook { get; set; }
         [Column("order_id")]
-        public long? OrderId { get; set; }
+        public long OrderId { get; set; }
 
         [ForeignKey(nameof(IdBook))]
         [InverseProperty(nameof(Book.OrderDetails))]

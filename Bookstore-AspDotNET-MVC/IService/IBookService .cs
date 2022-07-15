@@ -15,6 +15,8 @@ namespace Bookstore_AspDotNET_MVC.IService
 
         Book findBookById(long idBook);
 
+        BookDTO findBookDTOById(long idBook);
+
         Book findBookReviewById(long idBook);
         Task<bool> addBook(Book book);
 

@@ -93,13 +93,15 @@
                     <td class="align-middle">@order.NameOfCustomer</td>
                     <td class="align-middle text-center">@order.OrderDay</td>
                     <td class="align-middle text-center"> @(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", order.TotalPrice)) VNĐ</td>
-                    @*//0-Chờ duyệt, 1-Đã duyệt, 2-Đã thanh toán, 3-Đã nhận, 4-Yêu cầu hủy(chưa duyệt mới đc y/c ), 5- Đã hủy*@
+
                     <!-- status order -->
                     <td>
 
                         @if (order.OrderStatus == 1)
                         {<p>Đang xử lý</p>
-                            <form asp-action="OrderConfirm" asp-route-id="@order.OrderId" class="d-inline" onsubmit="return orderConfirmHandler(this)">
+                            <form asp-action="OrderConfirm" asp-route-id="@order.OrderId" 
+                                  asp-route-currentPageIndex="@Model.CurrentPageIndex" asp-route-status="@Model.Status"
+                                  class="d-inline" onsubmit="return orderConfirmHandler(this)">
                                 <button type="submit" class="btn btn-outline-primary">
                                     Xác nhận duyệt
                                 </button>

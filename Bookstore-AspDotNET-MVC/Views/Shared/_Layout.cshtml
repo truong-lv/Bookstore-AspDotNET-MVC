@@ -20,7 +20,7 @@
                 <img class="navbar_brand--icon" src="~/image/icon-book-shop-64.png" />&nbsp;
                 <span class="navbar_brand--name">Bookstore</span>
             </a>
-            <div class="c-6 search-bar row" asp-action="AddOrEditBook"  >
+            <div class="c-4 search-bar row" asp-action="AddOrEditBook"  >
                 @using (Html.BeginForm("GetBookSearch", "Book", FormMethod.Post))
                 {
                     <input name="key" class="m-9 l-10 search-input" type="search" placeholder="Search" aria-label="Search" >
@@ -29,11 +29,24 @@
                     </button>
                 }
             </div>
-            <ul class="navbar_nav c-3">
+            <ul class="navbar_nav c-5">
                 <li class="nav_item">
                     <a class="nav_link text-dark" asp-area="" asp-controller="Item" asp-action="UserCart">
                         <i class="fas fa-shopping-cart"></i>
                         Giỏ hàng
+                    </a>
+                </li>
+                <li class="nav_item">
+                    <a class="nav_link text-dark" asp-area="" asp-controller="User" asp-action="UserOrder">
+                        <i class="fas fa-history"></i>
+                        Lịch sử
+                    </a>
+                </li>
+
+                <li class="nav_item">
+                    <a class="nav_link text-dark" asp-area="" asp-controller="User" asp-action="UserInfo">
+                        <i class="far fa-user-circle"></i>
+                        Cá nhân
                     </a>
                 </li>
                 <li class="nav_item">

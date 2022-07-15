@@ -1,0 +1,65 @@
+﻿@model Bookstore_AspDotNET_MVC.Models.Userinfor
+
+@{
+    ViewData["Title"] = "Info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/userInfo.css" />
+
+<div class="row infor">
+    <h4 class="c-12 title">THÔNG TIN CÁ NHÂN</h4>
+    <hr />
+    <br />
+    <form asp-action="EditUser" class="c-6">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" class="input-form" asp-for="UserId" />
+
+        <div class="form-group">
+            <label asp-for="Username" class="control-label"></label>
+            <input asp-for="Username" class="input-form" />
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div><br />
+
+        <div class="form-group">
+            <label asp-for="Gender" class="control-label"></label>
+            <select asp-for="Gender" class="form-select">
+                <option value="1">Nam</option>
+                <option value="0">Nữ</option>
+            </select>
+            <span asp-validation-for="Gender" class="text-danger"></span>
+        </div><br />
+
+        <div class="form-group">
+            <label asp-for="Age" class="control-label"></label>
+            <input asp-for="Age" class="input-form" />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div><br />
+
+        <div class="form-group">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="input-form" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div><br />
+
+        <div class="form-group">
+            <label asp-for="Phone" class="control-label"></label>
+            <input asp-for="Phone" class="input-form" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div><br />
+
+        <div class="form-group">
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" class="input-form" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div><br />
+
+        <div class="form-group">
+            <input type="submit" value="Cập nhập" class="btn btn-confirm" />
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

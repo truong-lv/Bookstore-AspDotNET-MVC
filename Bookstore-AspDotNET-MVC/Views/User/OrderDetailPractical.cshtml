@@ -1,0 +1,58 @@
+﻿@using System.Globalization;
+@model Bookstore_AspDotNET_MVC.Models.Order;
+
+@{
+    ViewData["Title"] = "OrderDetail";
+    Layout = null;
+}
+<link rel="stylesheet" href="~/css/cart.css" />
+
+<div class="c-12 cart">
+    <h3>Chi tiết đơn hàng</h3>
+    @foreach (var item in Model.OrderDetails)
+    {
+        <div class="cart-item row">
+            <div class="m-12 l-4 img-container" style="text-align: center">
+                <img class="img-book" src=@item.IdBookNavigation.Picture
+                     alt="Card image cap">
+            </div>
+            <div class="l-4 m-12">
+
+                <p class="book" data-idBook=@item.IdBook>
+                    <i class="fas fa-star-of-david"></i>
+                    <span style="font-size: 20px; font-weight: bold">@item.IdBookNavigation.BookName </span>
+                </p>
+                <p class="book-price"
+                   data-book-price=@item.Price>
+                    Đơn giá: @(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", item.Price))đ
+                </p>
+            </div>
+            <div class="l-2 m-3">
+                <p style="display: inline; margin-right: 20px">
+                    Số lượng: @item.Quantity
+                </p>
+            </div>
+            <div class="l-2 m-3">
+                <p class="item-price">
+                    Thành tiền: <span class="text-danger">
+                        @(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", item.Price*item.Quantity))đ
+                    </span>
+                </p>
+
+            </div>
+        </div>
+    }
+
+    <h3 id="total-price">
+        Tổng tiền: <span class="text-danger">
+            @(String.Format(CultureInfo.InvariantCulture, "{0:0,0}", Model.TotalPrice)) đ
+        </span>
+    </h3>
+
+    <div style="text-align: center">
+        <a  asp-controller="Item" asp-action="OrderAgain" asp-route-orderId="@Model.OrderId" class="btn btn-buy">
+            <i class="fa fa-shopping-cart" aria-hidden="true"> Mua lại</i>
+        </a>
+    </div>
+
+</div>

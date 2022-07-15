@@ -71,6 +71,17 @@ namespace Bookstore_AspDotNET_MVC.Service
             return _context.Books.Find(idBook);
         }
 
+        public BookDTO findBookDTOById(long idBook)
+        {
+            return _context.Books.Where(b => b.IdBook == idBook)
+                               .Include(b => b.IdAuthorNavigation)
+                               .Include(b => b.Category)
+                               .Include(b => b.IdCompanyNavigation)
+                               .Include(b => b.BookDiscounts)
+                               .ThenInclude(bd => bd.IdDiscountNavigation)
+                               .Select(b=>converBookToBookDTO(b)).FirstOrDefault();
+        }
+
         public Book findBookReviewById(long idBook)
         {
 

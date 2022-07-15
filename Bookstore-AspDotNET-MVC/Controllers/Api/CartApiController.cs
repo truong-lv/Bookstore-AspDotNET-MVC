@@ -1,5 +1,6 @@
 ﻿using Bookstore_AspDotNET_MVC.IService;
 using Bookstore_AspDotNET_MVC.Models;
+using Bookstore_AspDotNET_MVC.Models.ModelView;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -37,7 +38,7 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Api
 
             if (item != null)
             {
-                item.QuantityBooks += quantity;
+                item.QuantityBooks = quantity;
                 isUpdate = await itemService.updateItem(item);
             }
             else
@@ -51,11 +52,32 @@ namespace Bookstore_AspDotNET_MVC.Controllers.Api
 
             if (isUpdate)
             {
-                return Ok("Cập nhập giỏ hàng thành công!!");
+                UserItem userItem = itemService.GetUserItems(userId);
+                return Ok(userItem.totalPrice().ToString());
             }
             else
             {
                 return BadRequest("Cập nhập giỏ hàng thất bại!!");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(long bookId)
+        {
+            long userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+
+            var item = itemService.findItemById(bookId, userId);
+            bool isDelete= await itemService.deleteItem(item);
+            if (isDelete)
+            {
+                UserItem userItem = itemService.GetUserItems(userId);
+                return Ok(userItem.totalPrice().ToString());
+            }
+            else
+            {
+                return BadRequest("false");
             }
         }
     }

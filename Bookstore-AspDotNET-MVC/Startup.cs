@@ -43,12 +43,13 @@ namespace Bookstore_AspDotNET_MVC
             services.AddScoped<IReviewService, ReviewService>();
             services.AddScoped<IDiscountService, DiscountService>();
             services.AddScoped<IItemService, ItemService>();
+            services.AddScoped<IAddressService, AddressService>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
             {
                 o.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                 o.AccessDeniedPath = new PathString("/Erorr/AccessDenied/");
-                o.LoginPath = new PathString("/Erorr/AccessDenied/");
+                o.LoginPath = new PathString("/Auth/Login/");
                 //o.LogoutPath = new PathString("/Erorr/AccessDenied/");
             });
 
