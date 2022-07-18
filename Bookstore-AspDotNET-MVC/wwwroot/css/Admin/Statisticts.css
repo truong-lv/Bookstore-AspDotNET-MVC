@@ -8,8 +8,7 @@
     font-size: 18px;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
-    -webkit-box-shadow: 0 8px 15px rgb(62 57 107 / 20%);
-    box-shadow: 0 8px 15px rgb(62 57 107 / 20%);
+
 }
 
 .text-c-red {

@@ -1,0 +1,162 @@
+[
+  //Bundle and Minify style
+  {
+    "outputFileName": "wwwroot/css/Admin/AdminStyle.min.css",
+    "inputFiles": [
+      "wwwroot/css/Admin/AdminStyle.css",
+      "wwwroot/lib/bootstrap/dist/css/bootstrap.min.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/Admin/Order.min.css",
+    "inputFiles": [
+      "wwwroot/css/Admin/Order.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/Admin/Review.min.css",
+    "inputFiles": [
+      "wwwroot/css/Admin/Review.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/Admin/Statisticts.min.css",
+    "inputFiles": [
+      "wwwroot/css/Admin/Statisticts.css"
+    ]
+  },
+
+  {
+    "outputFileName": "wwwroot/css/AccessDenied.min.css",
+    "inputFiles": [
+      "wwwroot/css/AccessDenied.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/layout.min.css",
+    "inputFiles": [
+      "wwwroot/css/grid.css",
+      "wwwroot/css/layout.css",
+      "wwwroot/css/reset.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/home.min.css",
+    "inputFiles": [
+      "wwwroot/css/book.css",
+      "wwwroot/css/sliderStyle.css",
+      "wwwroot/css/slick/slick.css",
+      "wwwroot/css/slick/slick-theme.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/bookDetail.min.css",
+    "inputFiles": [
+      "wwwroot/css/bookDetail.css",
+      "wwwroot/css/book.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/book.min.css",
+    "inputFiles": [
+      "wwwroot/css/book.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/cart.min.css",
+    "inputFiles": [
+      "wwwroot/css/cart.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/login.min.css",
+    "inputFiles": [
+      "wwwroot/css/login.css",
+      "wwwroot/css/reset.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/orderHistory.min.css",
+    "inputFiles": [
+      "wwwroot/css/orderHistory.css",
+      "wwwroot/css/book.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/userCart.min.css",
+    "inputFiles": [
+      "wwwroot/css/book.css",
+      "wwwroot/css/cart.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/userInfo.min.css",
+    "inputFiles": [
+      "wwwroot/css/userInfo.css"
+    ]
+  },
+
+  //Bundle and Minify scripts
+  {
+    "outputFileName": "wwwroot/js/site.min.js",
+    "inputFiles": [
+      "wwwroot/lib/jquery/dist/jquery.min.js",
+      "wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/Admin/userAjaxHandler.min.js",
+    "inputFiles": [
+      "wwwroot/js/Admin/userAjaxHandler.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/Admin/bookAjaxHandler.min.js",
+    "inputFiles": [
+      "wwwroot/js/Admin/bookAjaxHandler.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/Admin/orderHandler.min.js",
+    "inputFiles": [
+      "wwwroot/js/Admin/orderHandler.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/Admin/reviewAjaxHandler.min.js",
+    "inputFiles": [
+      "wwwroot/js/Admin/reviewAjaxHandler.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/Admin/statistictHandler.min.js",
+    "inputFiles": [
+      "wwwroot/js/Admin/statistictHandler.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/mySlider.min.js",
+    "inputFiles": [
+      "wwwroot/js/mySlider.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/productDetail.min.js",
+    "inputFiles": [
+      "wwwroot/js/Ajax/ajaxForCart.js",
+      "wwwroot/js/Ajax/ajaxForReview.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/Ajax/ajaxForOrders.min.js",
+    "inputFiles": [
+      "wwwroot/js/Ajax/ajaxForOrders.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/Ajax/ajaxForCart.min.js",
+    "inputFiles": [
+      "wwwroot/js/Ajax/ajaxForCart.js"
+    ]
+  }
+]
